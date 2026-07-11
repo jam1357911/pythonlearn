@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python、Appium、pytest 教學地圖</title>
+    <meta
+      name="description"
+      content="從 Python 基礎、OOP、Appium、pytest 到 uv 與 poetry 的單頁教學網站。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="aurora aurora-left"></div>
+    <div class="aurora aurora-right"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#top">
+        <span class="brand-mark">PY</span>
+        <span>Python 自動化學習站</span>
+      </a>
+      <nav class="site-nav" aria-label="主要導覽">
+        <a href="#basics">Python 基礎</a>
+        <a href="#oop">OOP 重點</a>
+        <a href="#appium">Appium</a>
+        <a href="#pytest">pytest</a>
+        <a href="#packages">uv / poetry</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section">
+        <div class="hero-copy" data-reveal>
+          <p class="eyebrow">Python Learning Roadmap</p>
+          <h1>用一頁掌握 Python、OOP、Appium、pytest 與套件管理</h1>
+          <p class="hero-text">
+            這個頁面從基礎語法一路帶到行動自動化測試。重點放在
+            <strong>Python OOP</strong> 的核心觀念，以及 Appium 在
+            <strong>Android / iOS 兼容</strong>、locator、wait 與座標點擊的實戰技巧。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#oop">先看 OOP 重點</a>
+            <a class="button button-secondary" href="#appium">看 Appium 實戰</a>
+          </div>
+        </div>
+
+        <div class="hero-panel" data-reveal>
+          <div class="stat-card">
+            <span class="stat-label">學習主線</span>
+            <strong>基礎 → OOP → 自動化 → 測試 → 套件管理</strong>
+          </div>
+          <div class="terminal-card">
+            <div class="terminal-head">
+              <span></span><span></span><span></span>
+            </div>
+            <pre><code>python basics
+python oop
+appium locator
+appium wait
+pytest fixtures
+uv / poetry</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section roadmap" aria-labelledby="roadmap-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">學習地圖</p>
+          <h2 id="roadmap-title">五個章節，一條清楚的進階路線</h2>
+        </div>
+        <div class="roadmap-grid">
+          <article class="roadmap-card" data-reveal>
+            <span>01</span>
+            <h3>Python 基礎</h3>
+            <p>變數、資料類型、條件判斷、迴圈與函式。</p>
+          </article>
+          <article class="roadmap-card featured" data-reveal>
+            <span>02</span>
+            <h3>Python OOP</h3>
+            <p>最重要章節，深入 class、object、method、繼承與封裝。</p>
+          </article>
+          <article class="roadmap-card" data-reveal>
+            <span>03</span>
+            <h3>Appium</h3>
+            <p>學會寫跨 Android / iOS 的 locator 與等待策略。</p>
+          </article>
+          <article class="roadmap-card" data-reveal>
+            <span>04</span>
+            <h3>pytest</h3>
+            <p>用 pytest 組織測試，讓自動化腳本可維護、可重跑。</p>
+          </article>
+          <article class="roadmap-card" data-reveal>
+            <span>05</span>
+            <h3>uv / poetry</h3>
+            <p>管理虛擬環境、依賴與專案結構，讓開發流程更乾淨。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="basics" class="section" aria-labelledby="basics-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Chapter 1</p>
+          <h2 id="basics-title">Python 基本語法、完整資料類型、Flow Control</h2>
+        </div>
+        
+        <div class="two-column">
+          <article class="info-card deep-dive" data-reveal>
+            <h3>1. 基本語法介紹</h3>
+            <ul>
+              <li>**縮排原則**：用 4 個空格縮排表示程式區塊，不要混合 tab 與空格。</li>
+              <li>**變數宣告**：直接指定值，不需要宣告型別，但 Python 依然有強型別特性。</li>
+              <li>**註解**：單行註解用 `#`，多行註解用 `"""` 或 `'''`。</li>
+              <li>**語句結束**：多行語句用 `\` 或在容器中自動斷行。</li>
+              <li>**常用內建函式**：`print()`、`input()`、`len()`、`type()`、`range()`、`sum()` 等。</li>
+            </ul>
+          </article>
+          
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>基本語法範例</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python"># 單行註解
+"""
+多行註解 - 這裡可以寫功能說明
+或段落式註解
+"""
+
+# 變數宣告
+name = "Ken"  # str
+age = 30       # int
+score = 89.5   # float
+is_active = True  # bool
+
+# 基本輸入輸出
+user_input = input("請輸入姓名: ")
+print(f"你好, {user_input}!")
+print(f"年齡: {age}, 分數: {score}")
+
+# 資料類型轉換
+num_str = "100"
+num_int = int(num_str)  # 100
+num_float = float(num_int)  # 100.0</code></pre>
+          </article>
+        </div>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>2. 完整資料類型介紹</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 1) 數字類型 (Numbers)
+num_int = 100         # 整數
+num_float = 3.14      # 浮點數
+num_complex = 3 + 4j  # 複數
+
+# 2) 字串類型 (String)
+str1 = "單引號字串"
+str2 = "雙引號字串"
+str3 = """多行
+字串"""
+str4 = r"原始字串 \n 不轉義"
+
+# 字串操作
+greeting = "Hello" + " " + "World"
+repeated = "Ha" * 3
+sub_str = greeting[0:5]  # "Hello"
+upper_case = greeting.upper()
+lower_case = greeting.lower()
+split_str = greeting.split(" ")
+
+# 3) 布林值 (Boolean)
+is_true = True
+is_false = False
+result1 = 10 > 5    # True
+result2 = 10 == 5   # False
+
+# 4) 列表 (List) - 有序、可變容器
+fruits = ["apple", "banana", "cherry"]
+fruits.append("orange")    # 添加
+fruits.insert(1, "grape")  # 插入
+fruits.remove("banana")    # 移除
+fruits.sort()              # 排序
+first_fruit = fruits[0]    # 存取
+last_fruit = fruits[-1]    # 倒數存取
+slice_fruits = fruits[1:3] # 切片
+
+# 5) 元組 (Tuple) - 有序、不可變容器
+point = (10, 20)
+x, y = point  # 解包
+same_tuple = (10,)  # 單元素元組需要逗號
+
+# 6) 字典 (Dictionary) - 鍵值對容器
+person = {
+    "name": "Ken",
+    "age": 30,
+    "is_active": True,
+    "scores": [85, 90, 95]
+}
+person["email"] = "ken@example.com"  # 新增
+name = person.get("name")           # 安全存取
+keys = person.keys()
+values = person.values()
+items = person.items()
+
+# 7) 集合 (Set) - 無序、不重複容器
+unique_numbers = {1, 2, 3, 3, 4}    # {1, 2, 3, 4}
+unique_numbers.add(5)
+unique_numbers.remove(2)
+intersection = {1, 2, 3} & {2, 3, 4}  # {2, 3}
+union = {1, 2} | {3, 4}             # {1, 2, 3, 4}
+
+# 8) 空值 (None)
+data = None
+if data is None:
+    print("資料不存在")</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>3.1 if 語句 - 基本條件判斷</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 基本 if 語句
+age = 18
+if age >= 18:
+    print("你是成年人")
+
+# 判斷數值大小
+score = 85
+if score >= 90:
+    print("優秀")
+if score >= 80 and score < 90:
+    print("良好")
+if score >= 70 and score < 80:
+    print("中等")
+if score < 70:
+    print("需要努力")</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>3.2 if-else 語句 - 二元判斷</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 判斷奇偶數
+num = 7
+if num % 2 == 0:
+    print(f"{num} 是偶數")
+else:
+    print(f"{num} 是奇數")
+
+# 檢查密碼長度
+password = "secure123"
+if len(password) >= 8:
+    print("密碼長度符合要求")
+else:
+    print("密碼長度不足")
+
+# 檢查用戶是否登錄
+is_logged_in = False
+if is_logged_in:
+    print("歡迎回來")
+else:
+    print("請先登錄")</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>3.3 if-elif-else 語句 - 多條件判斷</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 成績等級評定
+score = 87
+if score >= 90:
+    grade = "A"
+    comment = "優秀"
+elif score >= 80:
+    grade = "B"
+    comment = "良好"
+elif score >= 70:
+    grade = "C"
+    comment = "中等"
+elif score >= 60:
+    grade = "D"
+    comment = "及格"
+else:
+    grade = "F"
+    comment = "不及格"
+print(f"成績: {score}, 等級: {grade}, 評語: {comment}")
+
+# 根據季節判斷穿著建議
+month = 11
+if 3 <= month <= 5:
+    print("春季：穿薄外套")
+elif 6 <= month <= 8:
+    print("夏季：穿短袖")
+elif 9 <= month <= 11:
+    print("秋季：穿厚外套")
+else:
+    print("冬季：穿羽絨服")
+
+# 根據時間回應問候
+hour = 14
+if hour < 12:
+    print("早安")
+elif hour < 18:
+    print("下午好")
+else:
+    print("晚上好")</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>3.4 嵌套條件判斷</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 判斷是否可以開車
+age = 25
+has_license = True
+if age >= 18:
+    if has_license:
+        print("可以開車")
+    else:
+        print("需要考駕照")
+else:
+    print("未成年，不能開車")
+
+# 線上購物折扣計算
+total_amount = 150
+member_level = "gold"
+if total_amount > 100:
+    if member_level == "gold":
+        discount = 0.15
+    elif member_level == "silver":
+        discount = 0.10
+    else:
+        discount = 0.05
+else:
+    discount = 0
+final_amount = total_amount * (1 - discount)
+print(f"原價: {total_amount}, 折扣: {discount*100}%, 價格: {final_amount:.2f}")
+
+# 檢查密碼強度
+password = "SecurePass123!"
+if len(password) >= 8:
+    has_uppercase = any(c.isupper() for c in password)
+    has_lowercase = any(c.islower() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_special = any(not c.isalnum() for c in password)
+    
+    if has_uppercase and has_lowercase and has_digit and has_special:
+        print("密碼強度: 強")
+    elif has_uppercase and has_lowercase and has_digit:
+        print("密碼強度: 中等")
+    else:
+        print("密碼強度: 弱")
+else:
+    print("密碼長度不足")</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>4.1 for 迴圈 - 固定次數重複</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 基本 for 迴圈
+for i in range(1, 6):
+    print(f"第 {i} 次迭代")
+
+# 計算總和
+total = 0
+for num in range(1, 11):
+    total += num
+print(f"1到10的總和: {total}")
+
+# 乘法表
+for i in range(1, 10):
+    for j in range(1, i+1):
+        print(f"{j}×{i}={j*i}", end="\t")
+    print()</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>4.2 for 迴圈 - 遍歷容器</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 遍歷列表
+fruits = ["apple", "banana", "cherry", "orange"]
+print("水果列表:")
+for fruit in fruits:
+    print(f"- {fruit}")
+
+# 計算列表元素總和
+numbers = [10, 20, 30, 40, 50]
+sum_numbers = 0
+for num in numbers:
+    sum_numbers += num
+print(f"列表元素總和: {sum_numbers}")
+
+# 獲取索引與值
+print("\n帶索引的水果列表:")
+for index, fruit in enumerate(fruits, start=1):
+    print(f"{index}. {fruit}")
+
+# 遍歷字典
+person = {"name": "Ken", "age": 30, "email": "ken@example.com"}
+print("\n使用者資訊:")
+for key, value in person.items():
+    print(f"{key}: {value}")</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>4.3 while 迴圈 - 條件滿足時重複</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 基本 while 迴圈
+count = 1
+while count <= 5:
+    print(f"Count: {count}")
+    count += 1
+
+# 計算階乘
+n = 5
+factorial = 1
+while n > 0:
+    factorial *= n
+    n -= 1
+print(f"5的階乘: {factorial}")
+
+# 猜數字遊戲
+import random
+target = random.randint(1, 10)
+guess = None
+attempts = 0
+while guess != target:
+    attempts += 1
+    guess = int(input("請猜一個1到10之間的數字: "))
+    if guess < target:
+        print("太小了，再試一次")
+    elif guess > target:
+        print("太大了，再試一次")
+print(f"恭喜你，猜對了！用了 {attempts} 次")</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>4.4 迴圈控制 - break 和 continue</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 使用 break 終止迴圈
+for num in range(1, 10):
+    if num == 6:
+        print(f"找到目標數字 {num}，終止迴圈")
+        break
+    print(num)
+
+# 使用 continue 跳過特定元素
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print("\n偶數列表:")
+for num in numbers:
+    if num % 2 != 0:
+        continue
+    print(num)
+
+# 在 while 迴圈中使用 break
+count = 1
+while True:
+    print(f"Count: {count}")
+    if count == 5:
+        break
+    count += 1
+
+# 在嵌套迴圈中使用 break
+for i in range(1, 4):
+    for j in range(1, 4):
+        if i * j == 4:
+            print(f"找到 i={i}, j={j}")
+            break  # 只終止內層迴圈
+    print(f"外層迴圈 i={i}")</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>4.5 列表解析式 - 快速創建列表</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 基本列表解析式
+numbers = [1, 2, 3, 4, 5]
+squared = [x**2 for x in numbers]
+print("平方列表:", squared)
+
+# 帶有條件的列表解析式
+even_squared = [x**2 for x in numbers if x % 2 == 0]
+print("偶數平方列表:", even_squared)
+
+# 嵌套列表解析式
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flattened = [num for row in matrix for num in row]
+print("扁平化矩陣:", flattened)
+
+# 複雜條件的列表解析式
+numbers = range(1, 21)
+filtered = [
+    x for x in numbers 
+    if x % 2 == 0 and x % 3 == 0
+]
+print("能被2和3整除的數:", filtered)
+
+# 字典解析式
+names = ["Alice", "Bob", "Charlie"]
+name_lengths = {name: len(name) for name in names}
+print("名字長度字典:", name_lengths)</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>5.1 基本函式定義</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 基本函式定義
+def greet(name):
+    """這是一個問候函式"""
+    return f"你好, {name}!"
+
+print(greet("Ken"))  # 輸出: 你好, Ken!
+
+# 無參數函式
+def say_hello():
+    """列印問候訊息"""
+    print("你好！歡迎來到 Python 世界")
+
+say_hello()
+
+# 多個參數的函式
+def add_numbers(x, y):
+    """計算兩個數的和"""
+    return x + y
+
+result = add_numbers(3, 4)
+print(result)  # 7</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>5.2 函式參數類型</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 預設參數
+def calculate_total(price, tax_rate=0.05):
+    total = price * (1 + tax_rate)
+    return round(total, 2)
+
+print(calculate_total(100))       # 105.0 (使用預設稅率)
+print(calculate_total(100, 0.08)) # 108.0 (自訂稅率)
+
+# 可變長度參數 (*args)
+def add_numbers(*args):
+    """計算任意數量數字的和"""
+    return sum(args)
+
+print(add_numbers(1, 2, 3))     # 6
+print(add_numbers(10, 20, 30, 40))  # 100
+
+# 關鍵字參數 (**kwargs)
+def create_user(name, email, **kwargs):
+    """建立用戶物件，支援額外屬性"""
+    user = {
+        "name": name,
+        "email": email,
+        **kwargs
+    }
+    return user
+
+user1 = create_user("Ken", "ken@example.com", age=30, city="Taipei")
+user2 = create_user("Jane", "jane@example.com", role="admin")
+print(user1)
+print(user2)</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>5.3 高階函式</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 函式作為參數
+def apply_operation(x, y, operation):
+    """對兩個數應用指定的操作"""
+    return operation(x, y)
+
+def add(x, y): return x + y
+def multiply(x, y): return x * y
+def subtract(x, y): return x - y
+
+print(apply_operation(10, 5, add))      # 15
+print(apply_operation(10, 5, multiply)) # 50
+print(apply_operation(10, 5, subtract)) # 5
+
+# 函式作為回傳值
+def create_multiplier(factor):
+    """建立一個乘法函式"""
+    def multiplier(x):
+        return x * factor
+    return multiplier
+
+double = create_multiplier(2)
+triple = create_multiplier(3)
+print(double(5))  # 10
+print(triple(5))  # 15
+
+# Lambda 函式
+double = lambda x: x * 2
+square = lambda x: x ** 2
+add = lambda x, y: x + y
+
+print(double(5))    # 10
+print(square(4))    # 16
+print(add(3, 4))    # 7</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>5.4 函式修飾器 (Decorators)</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 基本修飾器
+def debug_decorator(func):
+    """印出函式呼叫和回傳值的修飾器"""
+    def wrapper(*args, **kwargs):
+        print(f"呼叫函式 {func.__name__}，參數: {args}, {kwargs}")
+        result = func(*args, **kwargs)
+        print(f"函式 {func.__name__} 回傳: {result}")
+        return result
+    return wrapper
+
+@debug_decorator
+def add(x, y):
+    return x + y
+
+@debug_decorator
+def multiply(x, y):
+    return x * y
+
+add(3, 4)
+multiply(5, 6)
+
+# 計時修飾器
+import time
+def timing_decorator(func):
+    """測量函式執行時間的修飾器"""
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"{func.__name__} 執行時間: {end - start:.4f} 秒")
+        return result
+    return wrapper
+
+@timing_decorator
+def slow_function():
+    time.sleep(0.5)
+    return "Done"
+
+slow_function()</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>5.5 模組與套件</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 基本模組使用
+import math
+print(math.pi)          # 3.141592653589793
+print(math.sqrt(16))    # 4.0
+print(math.pow(2, 3))   # 8.0
+
+# 從模組匯入特定函式
+from datetime import datetime, date, time
+
+current_datetime = datetime.now()
+print(f"現在時間: {current_datetime}")
+
+specific_date = date(2023, 12, 25)
+print(f"聖誕節: {specific_date}")
+
+specific_time = time(15, 30, 45)
+print(f"特定時間: {specific_time}")
+
+# 使用別名導入
+import numpy as np
+array = np.array([1, 2, 3, 4, 5])
+print(f"陣列平均值: {np.mean(array)}")
+print(f"陣列總和: {np.sum(array)}")
+
+# 匯入整個模組內容
+from math import *
+print(sin(pi/2))  # 1.0
+print(cos(pi))    # -1.0</code></pre>
+        </article>
+      </section>
+
+      <section id="oop" class="section section-emphasis" aria-labelledby="oop-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Chapter 2 / 這一章最重要</p>
+          <h2 id="oop-title">Python OOP 重點教學</h2>
+          <p class="section-intro">
+            OOP 是把資料與行為包在一起的方式。當專案變大、角色變多、狀態變複雜時，
+            OOP 可以讓你的程式更容易維護、測試與擴充。
+          </p>
+        </div>
+
+        <div class="oop-grid">
+          <article class="info-card highlight" data-reveal>
+            <h3>Class 是藍圖</h3>
+            <p>Class 定義有哪些屬性與方法，例如「使用者」、「購物車」、「測試頁面」。</p>
+          </article>
+          <article class="info-card highlight" data-reveal>
+            <h3>Object 是實例</h3>
+            <p>Object 是根據 class 建立出來的實際物件，每個物件可以有不同資料。</p>
+          </article>
+          <article class="info-card highlight" data-reveal>
+            <h3>Attribute 是狀態</h3>
+            <p>例如 `name`、`balance`、`platform_name`，用來保存物件的資料。</p>
+          </article>
+          <article class="info-card highlight" data-reveal>
+            <h3>Method 是行為</h3>
+            <p>例如 `deposit()`、`login()`、`run_test()`，代表物件能做什麼事。</p>
+          </article>
+        </div>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>1. 類別與物件的基本概念</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 定義類別
+class Person:
+    """代表人類的類別"""
+    species = "Homo sapiens"
+    
+    def __init__(self, name, age):
+        """初始化方法"""
+        self.name = name
+        self.age = age
+    
+    def greet(self):
+        """問候方法"""
+        print(f"你好，我叫 {self.name}，今年 {self.age} 歲")
+    
+    def celebrate_birthday(self):
+        """過生日方法"""
+        self.age += 1
+        print(f"祝 {self.name} 生日快樂！現在 {self.age} 歲了")
+
+# 建立物件
+person1 = Person("張小明", 25)
+person2 = Person("李小華", 30)
+
+# 存取類別屬性
+print(Person.species)  # 輸出: Homo sapiens
+print(person1.species)  # 輸出: Homo sapiens
+print(person2.species)  # 輸出: Homo sapiens
+
+# 存取實例屬性
+print(person1.name)  # 輸出: 張小明
+print(person2.age)  # 輸出: 30
+
+# 呼叫實例方法
+person1.greet()  # 輸出: 你好，我叫 張小明，今年 25 歲
+person2.celebrate_birthday()  # 輸出: 祝 李小華 生日快樂！現在 31 歲了
+
+# 檢查物件類型
+print(type(person1))  # 輸出: <class '__main__.Person'>
+print(isinstance(person1, Person))  # 輸出: True</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>2. 屬性和方法的詳細說明</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 類別屬性和實例屬性的區別
+class MyClass:
+    # 類別屬性（所有實例共享）
+    class_attr = 0
+    
+    def __init__(self, instance_attr):
+        # 實例屬性（每個實例獨有）
+        self.instance_attr = instance_attr
+        MyClass.class_attr += 1
+
+obj1 = MyClass("first")
+obj2 = MyClass("second")
+
+# 類別屬性值相同
+print(MyClass.class_attr)  # 2
+print(obj1.class_attr)     # 2
+print(obj2.class_attr)     # 2
+
+# 實例屬性值不同
+print(obj1.instance_attr)  # first
+print(obj2.instance_attr)  # second
+
+# 修改類別屬性會影響所有實例
+MyClass.class_attr = 10
+print(obj1.class_attr)  # 10
+print(obj2.class_attr)  # 10
+
+# 修改實例屬性不會影響其他實例
+obj1.instance_attr = "modified"
+print(obj1.instance_attr)  # modified
+print(obj2.instance_attr)  # second</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>3. 繼承的基本應用</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 基類（父類）
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def make_sound(self):
+        print(f"{self.name} 發出聲音")
+    
+    def move(self):
+        print(f"{self.name} 在移動")
+
+# 子類（繼承自 Animal）
+class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)  # 呼叫父類建構函式
+        self.breed = breed
+    
+    def make_sound(self):
+        print(f"{self.name} 汪汪叫")
+    
+    def wag_tail(self):
+        print(f"{self.name} 搖尾巴")
+
+class Cat(Animal):
+    def __init__(self, name, color):
+        super().__init__(name)
+        self.color = color
+    
+    def make_sound(self):
+        print(f"{self.name} 喵喵叫")
+    
+    def purr(self):
+        print(f"{self.name} 在呼嚕")
+
+# 使用繼承
+dog = Dog("小黃", "拉布拉多")
+dog.make_sound()  # 輸出: 小黃 汪汪叫
+dog.move()        # 輸出: 小黃 在移動
+dog.wag_tail()    # 輸出: 小黃 搖尾巴
+
+cat = Cat("小貓", "白色")
+cat.make_sound()  # 輸出: 小貓 喵喵叫
+cat.move()        # 輸出: 小貓 在移動
+cat.purr()        # 輸出: 小貓 在呼嚕
+
+# 檢查繼承關係
+print(isinstance(dog, Animal))  # True
+print(isinstance(cat, Animal))  # True
+print(issubclass(Dog, Animal))  # True
+print(issubclass(Cat, Animal))  # True</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>4. 多重繼承和方法解析順序</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 定義多個基類
+class Flyable:
+    def fly(self):
+        print("會飛")
+
+class Swimmable:
+    def swim(self):
+        print("會游泳")
+
+class Bird(Flyable):
+    def make_sound(self):
+        print("鳥鳴")
+
+class Fish(Swimmable):
+    def make_sound(self):
+        print("魚冒泡")
+
+class Duck(Flyable, Swimmable):
+    def make_sound(self):
+        print("呱呱叫")
+    
+    def quack(self):
+        print("鴨子呱呱叫")
+
+# 使用多重繼承
+duck = Duck()
+duck.fly()         # 輸出: 會飛
+duck.swim()        # 輸出: 會游泳
+duck.make_sound()  # 輸出: 呱呱叫
+duck.quack()       # 輸出: 鴨子呱呱叫
+
+# 檢查方法解析順序
+print(Duck.mro())  # 輸出: [&lt;class '__main__.Duck'&gt;, &lt;class '__main__.Flyable'&gt;, &lt;class '__main__.Swimmable'&gt;, &lt;class 'object'&gt;]
+
+# 單繼承和多重繼承的比較
+bird = Bird()
+bird.fly()          # 輸出: 會飛
+bird.make_sound()   # 輸出: 鳥鳴
+
+fish = Fish()
+fish.swim()         # 輸出: 會游泳
+fish.make_sound()   # 輸出: 魚冒泡</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>5. 多型和方法重寫</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 定義基類
+class Shape:
+    def area(self):
+        """計算面積的方法（需在子類中實現）"""
+        raise NotImplementedError("Subclasses must implement this method")
+    
+    def perimeter(self):
+        """計算周長的方法（需在子類中實現）"""
+        raise NotImplementedError("Subclasses must implement this method")
+
+# 定義子類
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+    
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def area(self):
+        import math
+        return math.pi * self.radius ** 2
+    
+    def perimeter(self):
+        import math
+        return 2 * math.pi * self.radius
+
+# 使用多型
+shapes = [
+    Rectangle(5, 3),
+    Circle(4),
+    Rectangle(2, 6),
+    Circle(2.5)
+]
+
+for shape in shapes:
+    print(f"形狀: {type(shape).__name__}")
+    print(f"面積: {shape.area():.2f}")
+    print(f"周長: {shape.perimeter():.2f}")
+    print()
+
+# 測試多型性
+def print_shape_info(shape):
+    """處理任意 Shape 子類物件的函式"""
+    print(f"形狀: {type(shape).__name__}")
+    print(f"面積: {shape.area():.2f}")
+    print(f"周長: {shape.perimeter():.2f}")
+
+circle = Circle(5)
+print_shape_info(circle)
+
+rectangle = Rectangle(4, 6)
+print_shape_info(rectangle)</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>6. 封裝和屬性裝飾器</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 使用封裝保護內部狀態
+class BankAccount:
+    def __init__(self, account_number, initial_balance):
+        self._account_number = account_number  # 受保護屬性
+        self.__balance = initial_balance      # 私有屬性
+    
+    @property
+    def account_number(self):
+        """帳號屬性的 getter"""
+        return self._account_number
+    
+    @property
+    def balance(self):
+        """餘額屬性的 getter"""
+        return self.__balance
+    
+    def deposit(self, amount):
+        """存款方法"""
+        if amount > 0:
+            self.__balance += amount
+            print(f"存款成功，金額: {amount}")
+            print(f"新餘額: {self.__balance}")
+        else:
+            print("存款金額必須大於0")
+    
+    def withdraw(self, amount):
+        """取款方法"""
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+            print(f"取款成功，金額: {amount}")
+            print(f"新餘額: {self.__balance}")
+        else:
+            print("取款金額無效或餘額不足")
+
+# 使用 BankAccount
+account = BankAccount("123456789", 1000)
+
+# 存取屬性
+print(account.account_number)  # 輸出: 123456789
+print(account.balance)        # 輸出: 1000
+
+# 存取私有屬性會引發錯誤
+# print(account.__balance)  # AttributeError
+
+# 存取受保護屬性（不推薦）
+# print(account._BankAccount__balance)
+
+# 存款和取款
+account.deposit(500)    # 存款成功
+account.withdraw(300)   # 取款成功
+account.withdraw(2000)  # 餘額不足
+account.deposit(-50)    # 存款金額無效</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>7. 類別方法和靜態方法</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">class MyClass:
+    class_variable = 0
+    
+    def __init__(self, instance_variable):
+        self.instance_variable = instance_variable
+        MyClass.class_variable += 1
+    
+    def instance_method(self):
+        """實例方法 - 需要 self 參數"""
+        print(f"實例方法: instance_variable = {self.instance_variable}")
+        print(f"實例方法: class_variable = {MyClass.class_variable}")
+    
+    @classmethod
+    def class_method(cls):
+        """類別方法 - 需要 cls 參數"""
+        print(f"類別方法: class_variable = {cls.class_variable}")
+        cls.class_variable += 1
+    
+    @staticmethod
+    def static_method(x, y):
+        """靜態方法 - 不需要 self 或 cls 參數"""
+        return x + y
+
+# 使用實例方法
+obj1 = MyClass(10)
+obj1.instance_method()
+
+obj2 = MyClass(20)
+obj2.instance_method()
+
+# 使用類別方法
+MyClass.class_method()
+print(f"class_variable 現在為: {MyClass.class_variable}")
+
+obj1.class_method()
+print(f"class_variable 現在為: {MyClass.class_variable}")
+
+# 使用靜態方法
+result = MyClass.static_method(5, 3)
+print(f"靜態方法計算結果: {result}")
+
+result = obj1.static_method(10, 20)
+print(f"靜態方法計算結果: {result}")
+
+# 比較三種方法的使用情境
+# 1. 實例方法：需要存取實例屬性或方法時
+# 2. 類別方法：需要存取類別屬性或方法時
+# 3. 靜態方法：不需要存取實例或類別屬性時</code></pre>
+        </article>
+
+        <div class="table-card" data-reveal>
+          <h3>OOP 核心觀念速查</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>概念</th>
+                <th>用途</th>
+                <th>你要記得的事</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>`__init__`</td>
+                <td>建立物件時初始化資料</td>
+                <td>第一個參數永遠是 `self`</td>
+              </tr>
+              <tr>
+                <td>Instance Method</td>
+                <td>操作單一物件自己的資料</td>
+                <td>最常用，第一個參數是 `self`</td>
+              </tr>
+              <tr>
+                <td>Class Method</td>
+                <td>操作整個 class 共用狀態</td>
+                <td>用 `@classmethod`，第一個參數是 `cls`</td>
+              </tr>
+              <tr>
+                <td>Static Method</td>
+                <td>邏輯相關但不依賴物件狀態</td>
+                <td>用 `@staticmethod`，沒有 `self` / `cls`</td>
+              </tr>
+              <tr>
+                <td>Inheritance</td>
+                <td>讓子類別重用父類別邏輯</td>
+                <td>用 `super()` 取用父類別初始化或方法</td>
+              </tr>
+              <tr>
+                <td>Encapsulation</td>
+                <td>限制外部直接亂改內部狀態</td>
+                <td>Python 常用 `_name` 與 method 包裝操作</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="two-column">
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>OOP 完整範例</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python">class User:
+    total_users = 0
+
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+        self._login_count = 0
+        User.total_users += 1
+
+    def login(self):
+        self._login_count += 1
+        return f"{self.name} logged in"
+
+    def profile(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "login_count": self._login_count,
+        }
+
+    @classmethod
+    def how_many_users(cls):
+        return cls.total_users
+
+    @staticmethod
+    def is_valid_email(email):
+        return "@" in email
+
+
+class AdminUser(User):
+    def __init__(self, name, email, role):
+        super().__init__(name, email)
+        self.role = role
+
+    def profile(self):
+        data = super().profile()
+        data["role"] = self.role
+        return data
+
+
+admin = AdminUser("Ken", "ken@example.com", "super_admin")
+print(admin.login())
+print(admin.profile())
+print(User.how_many_users())</code></pre>
+          </article>
+
+          <article class="info-card deep-dive" data-reveal>
+            <h3>這段 OOP 範例要怎樣讀</h3>
+            <ol>
+              <li>`User` 是 class，`admin` 是 object。</li>
+              <li>`name`、`email`、`_login_count` 是 attribute。</li>
+              <li>`login()`、`profile()` 是 instance method。</li>
+              <li>`how_many_users()` 是 class method，操作 class 共用資料。</li>
+              <li>`is_valid_email()` 是 static method，跟物件狀態無關。</li>
+              <li>`AdminUser(User)` 表示繼承，子類別能重用父類別功能。</li>
+            </ol>
+            <p>
+              實務上，Page Object、API Client、資料模型、商業邏輯服務都很適合用 OOP 來整理。
+            </p>
+          </article>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card" data-reveal>
+            <h3>什麼時候該用 OOP</h3>
+            <ul>
+              <li>資料和行為要綁在一起時。</li>
+              <li>系統裡有多個角色或型別時。</li>
+              <li>需要重用、繼承、擴充功能時。</li>
+            </ul>
+          </article>
+          <article class="info-card" data-reveal>
+            <h3>新手最常犯的錯</h3>
+            <ul>
+              <li>把所有東西都塞進一個 class。</li>
+              <li>分不清 `self`、`cls` 與普通函式。</li>
+              <li>只會背語法，不知道為什麼要封裝。</li>
+            </ul>
+          </article>
+          <article class="info-card" data-reveal>
+            <h3>你可以這樣練習</h3>
+            <ul>
+              <li>寫一個 `BankAccount` 類別練習狀態與方法。</li>
+              <li>寫 `Student` / `Teacher` 練習繼承。</li>
+              <li>把 Appium Page Object 也當成 OOP 練習題。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="appium" class="section" aria-labelledby="appium-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Chapter 3</p>
+          <h2 id="appium-title">Appium 教學：環境設定、元素定位、跨平台 locator、wait、座標點擊</h2>
+          <p class="section-intro">
+            Appium 是一個開源的行動自動化測試框架，支援 Android 與 iOS 平台。本章節會詳細介紹
+            環境設定、元素定位、等待策略、跨平台適配、以及當 click() 失敗時的處理方法。
+          </p>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card highlight" data-reveal>
+            <h3>1. 什麼是 Appium</h3>
+            <ul>
+              <li>開源行動自動化測試工具</li>
+              <li>支援 Android (UIAutomator2、Espresso)、iOS (XCUITest)</li>
+              <li>使用 WebDriver 協定，不需要改動 App 原始碼</li>
+              <li>可以用 Python、Java、JavaScript 等語言編寫測試</li>
+            </ul>
+          </article>
+          <article class="info-card highlight" data-reveal>
+            <h3>2. 為什麼選擇 Appium</h3>
+            <ul>
+              <li>可以同時測試原生、混和、Web App</li>
+              <li>跨平台測試程式碼可以重用</li>
+              <li>社群活躍，資源豐富</li>
+              <li>免費且開源</li>
+            </ul>
+          </article>
+          <article class="info-card highlight" data-reveal>
+            <h3>3. 應用場景</h3>
+            <ul>
+              <li>功能測試自動化</li>
+              <li>回歸測試自動化</li>
+              <li>效能測試</li>
+              <li>多設備並行測試</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>4. 環境設定</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python"># 1) 安裝 Appium Server
+# 使用 Node.js 安裝
+# npm install -g appium
+
+# 2) 安裝驅動程式
+# appium driver install uiautomator2  # Android 驅動
+# appium driver install xcuitest      # iOS 驅動
+
+# 3) 安裝 Python 客戶端
+# pip install Appium-Python-Client
+
+# 4) 安裝其他必要工具
+# Android SDK (Android Studio)
+# Xcode (Mac 用於 iOS 測試)
+# Appium Inspector (元素定位工具)</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>5. 基本配置與啟動</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">from appium import webdriver
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# Android 配置
+desired_caps_android = {
+    "platformName": "Android",
+    "platformVersion": "13",       # 裝置 Android 版本
+    "deviceName": "emulator-5554", # 裝置名稱
+    "appPackage": "com.android.calculator2",  # App 套件名稱
+    "appActivity": ".Calculator",           # App 啟動 Activity
+    "automationName": "UiAutomator2",     # 自動化引擎
+    "noReset": True,                      # 不清空 App 資料
+    "fullReset": False,
+    "unicodeKeyboard": True,
+    "resetKeyboard": True
+}
+
+# iOS 配置
+desired_caps_ios = {
+    "platformName": "iOS",
+    "platformVersion": "16",           # 裝置 iOS 版本
+    "deviceName": "iPhone 14",        # 裝置名稱
+    "bundleId": "com.apple.calculator", # App Bundle ID
+    "automationName": "XCUITest",     # 自動化引擎
+    "noReset": True,
+    "fullReset": False
+}
+
+# 連接到 Appium Server
+driver = webdriver.Remote(
+    command_executor="http://localhost:4723/wd/hub",
+    desired_capabilities=desired_caps_android
+)
+
+# 獲取設備資訊
+print(f"裝置名稱: {driver.capabilities['deviceName']}")
+print(f"平台版本: {driver.capabilities['platformVersion']}")
+
+# 關閉 App
+driver.quit()</code></pre>
+        </article>
+
+        <div class="two-column">
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>6. 常用元素定位方法</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
+
+# 1) By.ID (Android)
+element = driver.find_element(AppiumBy.ID, "com.android.calculator2:id/digit_1")
+
+# 2) By.ACCESSIBILITY_ID (推薦跨平台)
+element = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "digit_1")
+
+# 3) By.XPATH
+# 絕對路徑 (不推薦，維護困難)
+element = driver.find_element(AppiumBy.XPATH, "/hierarchy/android.widget.FrameLayout...")
+# 相對路徑 (推薦)
+element = driver.find_element(AppiumBy.XPATH, "//*[@text='1']")
+element = driver.find_element(AppiumBy.XPATH, "//android.widget.Button[@resource-id='digit_1']")
+
+# 4) By.CLASS_NAME (Android)
+element = driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Button")
+
+# 5) By.NAME (已棄用)
+# element = driver.find_element(AppiumBy.NAME, "1")
+
+# 6) By.IOS_PREDICATE (iOS)
+element = driver.find_element(AppiumBy.IOS_PREDICATE, 'name == "1" OR label == "1"')
+element = driver.find_element(AppiumBy.IOS_PREDICATE, 'type == "XCUIElementTypeButton" AND name CONTAINS "1"')
+
+# 7) By.IOS_CLASS_CHAIN (iOS)
+element = driver.find_element(AppiumBy.IOS_CLASS_CHAIN, '**/XCUIElementTypeButton[`name == "1"`]')
+
+# 8) By.ANDROID_UIAUTOMATOR
+element = driver.find_element(
+    AppiumBy.ANDROID_UIAUTOMATOR, 
+    'new UiSelector().text("1")'
+)
+element = driver.find_element(
+    AppiumBy.ANDROID_UIAUTOMATOR,
+    'new UiSelector().resourceId("com.android.calculator2:id/digit_1")'
+)</code></pre>
+          </article>
+          
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>7. 元素操作方法</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python"># 基本操作
+element.click()           # 點擊
+element.send_keys("text") # 輸入文字
+element.clear()           # 清除文字
+text = element.text       # 獲取文字
+
+# 獲取元素屬性
+resource_id = element.get_attribute("resource-id")  # Android
+text_value = element.get_attribute("text")
+name = element.get_attribute("name")
+class_name = element.get_attribute("class")
+
+# 判斷元素狀態
+is_displayed = element.is_displayed()
+is_enabled = element.is_enabled()
+is_selected = element.is_selected()
+
+# 獲取元素位置與尺寸
+location = element.location   # {x, y}
+size = element.size           # {width, height}
+
+# 螢幕截圖
+driver.save_screenshot("screenshot.png")
+element_screenshot = element.screenshot_as_base64
+
+# 模擬操作
+driver.press_keycode(4)      # Android: 按返回鍵
+driver.press_keycode(3)      # Android: 按 Home 鍵
+
+# 滑動
+driver.swipe(start_x, start_y, end_x, end_y, duration=1000)
+
+# 拖放
+driver.drag_and_drop(element1, element2)
+
+# 多點觸控
+# Python Client 中可使用 ActionChains
+from selenium.webdriver.common.action_chains import ActionChains
+actions = ActionChains(driver)
+actions.tap(element).perform()
+
+# 長按
+from selenium.webdriver.common.touch_actions import TouchActions
+actions = TouchActions(driver)
+actions.long_press(element).perform()</code></pre>
+          </article>
+        </div>
+
+        <div class="two-column">
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>同一個元素兼容 Android / iOS locator</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
+
+
+class LoginPage:
+    LOCATORS = {
+        "login_button": {
+            "android": (AppiumBy.ID, "com.demo:id/btn_login"),
+            "ios": (AppiumBy.ACCESSIBILITY_ID, "login_button"),
+        },
+        "username_input": {
+            "android": (AppiumBy.ID, "com.demo:id/input_username"),
+            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input"'),
+        },
+    }
+
+    def __init__(self, driver):
+        self.driver = driver
+        self.platform = driver.capabilities.get("platformName", "").lower()
+
+    def locator(self, name):
+        return self.LOCATORS[name][self.platform]
+
+    def find(self, name):
+        by, value = self.locator(name)
+        return self.driver.find_element(by, value)</code></pre>
+          </article>
+
+          <article class="info-card deep-dive" data-reveal>
+            <h3>這個模式的重點</h3>
+            <ul>
+              <li>測試腳本只寫 `find("login_button")`，不用到處寫平台判斷。</li>
+              <li>定位差異集中管理，頁面改版時比較好維護。</li>
+              <li>Page Object 很適合和 Python OOP 一起學。</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="two-column">
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>Appium wait 範例</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python">from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
+def wait_for_element(driver, locator, timeout=15):
+    return WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located(locator)
+    )
+
+
+def wait_until_clickable(driver, locator, timeout=15):
+    return WebDriverWait(driver, timeout).until(
+        EC.element_to_be_clickable(locator)
+    )
+
+
+login_button = wait_until_clickable(
+    driver,
+    (AppiumBy.ACCESSIBILITY_ID, "login_button"),
+    timeout=20,
+)
+login_button.click()</code></pre>
+          </article>
+
+          <article class="info-card" data-reveal>
+            <h3>wait 的實戰建議</h3>
+            <ul>
+              <li>少用固定 `sleep()`，優先用顯式等待。</li>
+              <li>分清楚要等的是存在、可見，還是可點擊。</li>
+              <li>如果畫面有 loading、toast、動畫，也要等它消失。</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="two-column">
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>click 不到時，改用元素中心點座標點擊</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python">from selenium.webdriver.common.actions.action_builder import ActionBuilder
+from selenium.webdriver.common.actions.pointer_input import PointerInput
+
+
+def tap_by_coordinates(driver, x, y):
+    finger = PointerInput("touch", "finger")
+    actions = ActionBuilder(driver, mouse=finger)
+    actions.pointer_action.move_to_location(x, y)
+    actions.pointer_action.pointer_down()
+    actions.pointer_action.pause(0.1)
+    actions.pointer_action.pointer_up()
+    actions.perform()
+
+
+element = wait_for_element(driver, (AppiumBy.ACCESSIBILITY_ID, "login_button"))
+rect = element.rect
+center_x = int(rect["x"] + rect["width"] / 2)
+center_y = int(rect["y"] + rect["height"] / 2)
+tap_by_coordinates(driver, center_x, center_y)</code></pre>
+          </article>
+
+          <article class="info-card" data-reveal>
+            <h3>什麼時候用座標點擊</h3>
+            <ul>
+              <li>元素存在，但被遮罩或動畫影響，`click()` 不穩。</li>
+              <li>元素是畫布、地圖、客製元件，沒有好 locator。</li>
+              <li>你已經確認畫面位置穩定，且這是最後備援方案。</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="table-card" data-reveal>
+          <h3>Appium 除錯順序</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>問題</th>
+                <th>先檢查</th>
+                <th>再處理</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>找不到元素</td>
+                <td>locator 是否對、頁面是否已出現</td>
+                <td>補 wait、換更穩的 accessibility id</td>
+              </tr>
+              <tr>
+                <td>元素可見但點不到</td>
+                <td>是否被遮住、是否還在動畫</td>
+                <td>等可點、scroll、座標點擊</td>
+              </tr>
+              <tr>
+                <td>Android / iOS 寫兩套太亂</td>
+                <td>是否有 Page Object 與 locator map</td>
+                <td>集中管理平台差異</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="pytest" class="section" aria-labelledby="pytest-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Chapter 4</p>
+          <h2 id="pytest-title">pytest 教學：從基礎到進階的測試架構</h2>
+          <p class="section-intro">
+            pytest 是 Python 中最受歡迎的測試框架之一，支援單元測試、整合測試、功能測試。
+            本章節詳細介紹 pytest 的基本用法、fixture、標記、參數化、以及如何結合 Appium 使用。
+          </p>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card highlight" data-reveal>
+            <h3>1. 為什麼選擇 pytest</h3>
+            <ul>
+              <li>語法簡潔，使用 `assert` 即可，不需要特定的斷言方法</li>
+              <li>強大的 fixture 系統，用於共享資源與設定</li>
+              <li>豐富的外掛生態系統 (pytest-xdist、pytest-html 等)</li>
+              <li>支援標記 (marker) 用於分類與選取測試</li>
+              <li>整合性強，適合從單元測試到端對端測試</li>
+            </ul>
+          </article>
+          <article class="info-card highlight" data-reveal>
+            <h3>2. 文件與命名約定</h3>
+            <ul>
+              <li>測試檔案：以 `test_` 開頭或 `_test` 結尾</li>
+              <li>測試函式：以 `test_` 開頭</li>
+              <li>測試類別：以 `Test` 開頭，且不能有 `__init__` 方法</li>
+              <li>常見命名：`test_login.py`、`test_cart_functionality.py`</li>
+            </ul>
+          </article>
+          <article class="info-card highlight" data-reveal>
+            <h3>3. 安裝與執行</h3>
+            <ul>
+              <li>安裝：`pip install pytest`</li>
+              <li>執行所有測試：`pytest`</li>
+              <li>執行特定檔案：`pytest test_login.py`</li>
+              <li>執行特定函式：`pytest test_login.py::test_login_success`</li>
+              <li>顯示詳細資訊：`pytest -v` 或 `pytest -v -s`</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>4. 基本用法與斷言</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">import pytest
+
+
+def test_basic_assertions():
+    # 基本斷言
+    assert 1 + 1 == 2
+    assert "Hello".upper() == "HELLO"
+    assert len([1, 2, 3]) == 3
+    
+    # 斷言失敗訊息
+    x = 5
+    y = 3
+    assert x == y, f"預期 {x} 等於 {y}"
+
+
+def test_list_contains():
+    fruits = ["apple", "banana", "cherry"]
+    assert "banana" in fruits
+    assert "grape" not in fruits
+
+
+def test_dict_content():
+    person = {"name": "Ken", "age": 30, "email": "ken@example.com"}
+    assert "name" in person
+    assert person["age"] == 30
+    assert "ken@example.com" in person.values()
+
+
+def test_exceptions():
+    # 斷言會引發特定異常
+    with pytest.raises(ValueError):
+        int("not a number")
+    
+    # 檢查異常資訊
+    with pytest.raises(ValueError) as excinfo:
+        int("invalid")
+    assert "invalid literal" in str(excinfo.value)
+
+
+class TestMathOperations:
+    def test_addition(self):
+        assert 2 + 3 == 5
+    
+    def test_subtraction(self):
+        assert 5 - 3 == 2
+    
+    def test_multiplication(self):
+        assert 3 * 4 == 12</code></pre>
+        </article>
+
+        <div class="two-column">
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>5. Fixture 基礎</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python">import pytest
+
+
+# 基本 fixture
+@pytest.fixture
+def user_data():
+    """提供測試用的使用者資料"""
+    return {"name": "Ken", "email": "ken@example.com", "age": 30}
+
+
+def test_user_profile(user_data):
+    assert user_data["name"] == "Ken"
+    assert user_data["email"] == "ken@example.com"
+    assert user_data["age"] > 20
+
+
+# Scope 控制 fixture 生命週期
+@pytest.fixture(scope="module")  # 整個模組只執行一次
+def module_setup():
+    print("\n[模組設定]")
+    yield
+    print("\n[模組清除]")
+
+
+@pytest.fixture(scope="function")  # 每個函式執行一次 (預設)
+def function_setup():
+    print("\n[函式設定]")
+    yield
+    print("\n[函式清除]")
+
+
+def test_function1(function_setup, module_setup):
+    print("執行測試函式 1")
+    assert True
+
+
+def test_function2(function_setup, module_setup):
+    print("執行測試函式 2")
+    assert True
+
+
+# Autouse fixture
+@pytest.fixture(autouse=True, scope="session")
+def session_setup():
+    """會話級別的自動 fixture，不需要在參數中指定"""
+    print("\n[會話設定]")
+    yield
+    print("\n[會話清除]")</code></pre>
+          </article>
+          
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>6. Fixture 進階用法</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python">import pytest
+
+
+# Fixture 依賴
+@pytest.fixture
+def user_profile():
+    return {"name": "Ken", "email": "ken@example.com"}
+
+
+@pytest.fixture
+def user_with_address(user_profile):
+    user_profile["address"] = "123 Main St"
+    return user_profile
+
+
+def test_user_address(user_with_address):
+    assert "address" in user_with_address
+    assert user_with_address["address"] == "123 Main St"
+
+
+# Fixture 工廠
+@pytest.fixture
+def user_factory():
+    def create_user(name, email, age=30):
+        return {"name": name, "email": email, "age": age}
+    return create_user
+
+
+def test_create_user(user_factory):
+    user1 = user_factory("Ken", "ken@example.com")
+    user2 = user_factory("Jane", "jane@example.com", 25)
+    
+    assert user1["name"] == "Ken"
+    assert user2["age"] == 25
+
+
+# 参数化 Fixture
+@pytest.fixture(params=["chrome", "firefox", "safari"])
+def browser(request):
+    browser_name = request.param
+    print(f"\n正在使用瀏覽器: {browser_name}")
+    yield browser_name
+    print(f"\n關閉瀏覽器: {browser_name}")
+
+
+def test_browser_support(browser):
+    assert browser in ["chrome", "firefox", "safari"]</code></pre>
+          </article>
+        </div>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>7. 參數化測試</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">import pytest
+
+
+# 基本參數化
+@pytest.mark.parametrize("x, y, expected", [
+    (1, 2, 3),
+    (0, 0, 0),
+    (-1, 5, 4),
+    (10, -3, 7),
+])
+def test_addition(x, y, expected):
+    assert x + y == expected
+
+
+# 參數化多個參數
+@pytest.mark.parametrize("username", ["ken", "jane", "alice"])
+@pytest.mark.parametrize("status", ["active", "inactive"])
+def test_user_status(username, status):
+    assert isinstance(username, str)
+    assert status in ["active", "inactive"]
+
+
+# 帶有 id 的參數化
+@pytest.mark.parametrize("test_input, expected", [
+    ("1+1", 2),
+    ("2*3", 6),
+    ("10/5", 2),
+], ids=["add", "multiply", "divide"])
+def test_eval(test_input, expected):
+    assert eval(test_input) == expected
+
+
+# 使用 dictionary 作為參數
+test_data = [
+    {"input": "hello", "expected": "HELLO"},
+    {"input": "world", "expected": "WORLD"},
+    {"input": "python", "expected": "PYTHON"},
+]
+
+
+@pytest.mark.parametrize("data", test_data)
+def test_upper_case(data):
+    assert data["input"].upper() == data["expected"]</code></pre>
+        </article>
+
+        <div class="two-column">
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>8. 標記 (Markers)</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python">import pytest
+
+
+# 基本標記
+@pytest.mark.slow
+def test_slow_operation():
+    # 模擬慢速操作
+    import time
+    time.sleep(2)
+    assert True
+
+
+@pytest.mark.fast
+def test_fast_operation():
+    assert 1 + 1 == 2
+
+
+# 自訂標記
+@pytest.mark.android
+def test_android_specific():
+    assert True
+
+
+@pytest.mark.ios
+def test_ios_specific():
+    assert True
+
+
+@pytest.mark.smoke
+def test_core_functionality():
+    # 煙霧測試 - 核心功能檢查
+    assert True
+
+
+# 使用標記選擇測試
+# pytest -m "not slow"  # 不執行慢速測試
+# pytest -m "fast or smoke"  # 執行快速或煙霧測試
+# pytest -m "android"  # 只執行 Android 特定測試
+
+
+# 標記參數化
+@pytest.mark.parametrize("os", ["android", "ios"])
+def test_cross_platform(os):
+    assert os in ["android", "ios"]
+
+
+# 預期失敗的測試
+@pytest.mark.xfail(reason="這個功能還在開發中")
+def test_unfinished_feature():
+    assert False  # 預期會失敗
+
+
+# 跳過測試
+@pytest.mark.skipif(True, reason="暫時跳過這個測試")
+def test_skip_example():
+    assert True</code></pre>
+          </article>
+          
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>9. pytest 與 Appium 整合</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-python">import pytest
+from appium import webdriver
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
+@pytest.fixture(scope="session")
+def driver(request):
+    """Appium Driver 初始化與關閉"""
+    desired_caps = {
+        "platformName": "Android",
+        "platformVersion": "13",
+        "deviceName": "emulator-5554",
+        "appPackage": "com.example.app",
+        "appActivity": ".MainActivity",
+        "automationName": "UiAutomator2",
+        "noReset": True,
+        "unicodeKeyboard": True,
+        "resetKeyboard": True
+    }
+    
+    driver = webdriver.Remote(
+        command_executor="http://localhost:4723/wd/hub",
+        desired_capabilities=desired_caps
+    )
+    
+    def teardown():
+        driver.quit()
+    
+    request.addfinalizer(teardown)
+    return driver
+
+
+@pytest.fixture(scope="function")
+def login_page(driver):
+    """登錄頁面物件"""
+    class LoginPage:
+        def __init__(self, driver):
+            self.driver = driver
+        
+        def login(self, username, password):
+            # 找到並輸入用戶名
+            username_field = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/et_username"))
+            )
+            username_field.clear()
+            username_field.send_keys(username)
+            
+            # 找到並輸入密碼
+            password_field = driver.find_element(AppiumBy.ID, "com.example.app:id/et_password")
+            password_field.clear()
+            password_field.send_keys(password)
+            
+            # 點擊登錄按鈕
+            login_button = driver.find_element(AppiumBy.ID, "com.example.app:id/btn_login")
+            login_button.click()
+    
+    return LoginPage(driver)
+
+
+@pytest.mark.smoke
+def test_login_success(login_page):
+    """測試成功登錄"""
+    login_page.login("testuser", "password123")
+    # 驗證登錄成功後的元素
+    welcome_text = WebDriverWait(login_page.driver, 10).until(
+        EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/tv_welcome"))
+    )
+    assert welcome_text.is_displayed()
+    assert "Welcome" in welcome_text.text
+
+
+@pytest.mark.negative
+def test_login_invalid_credentials(login_page):
+    """測試無效憑證登錄"""
+    login_page.login("invalid", "wrong")
+    # 驗證錯誤訊息
+    error_message = WebDriverWait(login_page.driver, 10).until(
+        EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/tv_error"))
+    )
+    assert "Invalid" in error_message.text
+
+
+@pytest.mark.parametrize("username, password", [
+    ("emptyuser", ""),
+    ("", "password123"),
+    ("", ""),
+])
+def test_login_empty_fields(login_page, username, password):
+    """測試空字段登錄"""
+    login_page.login(username, password)
+    assert True  # 應顯示字段驗證訊息</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <section id="packages" class="section" aria-labelledby="packages-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Chapter 5</p>
+          <h2 id="packages-title">Python Package Control：uv 與 poetry 詳細教學</h2>
+          <p class="section-intro">
+            Python 套件管理工具用於管理虛擬環境、依賴套件與專案結構。本章節詳細介紹
+            uv (快速輕巧) 與 poetry (完整管理) 兩種主流工具的安裝、設定與使用。
+          </p>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card highlight" data-reveal>
+            <h3>1. 為什麼需要套件管理工具</h3>
+            <ul>
+              <li>管理虛擬環境，避免套件衝突</li>
+              <li>追蹤依賴套件版本，確保開發與生產環境一致性</li>
+              <li>簡化安裝、升級、移除套件的流程</li>
+              <li>支援專案打包與發佈</li>
+              <li>提高開發效率與程式碼品質</li>
+            </ul>
+          </article>
+          <article class="info-card highlight" data-reveal>
+            <h3>2. 傳統方法的問題</h3>
+            <ul>
+              <li>直接使用 global pip 安裝會導致依賴衝突</li>
+              <li>virtualenv 操作複雜，需要手動啟動與停止</li>
+              <li>requirements.txt 格式不標準，依賴解析困難</li>
+              <li>缺少 lock 文件，無法確保精確的依賴版本</li>
+            </ul>
+          </article>
+          <article class="info-card highlight" data-reveal>
+            <h3>3. 兩種主流工具比較</h3>
+            <ul>
+              <li><strong>uv</strong>：快速、輕巧，適合小型專案與腳本</li>
+              <li><strong>poetry</strong>：完整管理，適合大型專案與團隊開發</li>
+              <li>兩者都支援 `pyproject.toml` 規範</li>
+              <li>都提供虛擬環境管理與 lock 文件功能</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="two-column">
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>4. uv 詳細教學</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-bash"># 1) 安裝 uv (Windows)
+# 使用 Scoop: scoop install uv
+# 使用 Winget: winget install astral-sh.uv
+# 使用 pip: pip install uv
+
+# 1) 安裝 uv (Mac)
+# 使用 Homebrew: brew install uv
+
+# 1) 安裝 uv (Linux)
+# curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 2) 創建新專案
+uv init my-project
+cd my-project
+
+# 3) 建立並啟動虛擬環境
+uv venv
+uv venv --python 3.11  # 指定 Python 版本
+
+# 4) 安裝套件
+uv pip install pytest
+uv pip install appium-python-client
+uv pip install requests==2.31.0  # 安裝特定版本
+
+# 5) 安裝開發依賴
+uv pip install -e .[dev]  # 從 pyproject.toml 安裝開發依賴
+
+# 6) 執行命令
+uv run python script.py
+uv run pytest
+
+# 7) 查看安裝的套件
+uv pip list
+uv pip list --outdated  # 檢查過時套件
+
+# 8) 建立 requirements.txt
+uv pip freeze > requirements.txt
+
+# 9) 從 requirements.txt 安裝
+uv pip install -r requirements.txt
+
+# 10) 移除套件
+uv pip uninstall pytest
+
+# 11) 升級 uv
+uv self update
+
+# 12) 建立與執行指令
+uv run python -m pip install --upgrade pip</code></pre>
+          </article>
+          
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>5. Poetry 詳細教學</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <pre><code class="language-bash"># 1) 安裝 Poetry (Windows)
+# 使用 PowerShell: (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+
+# 1) 安裝 Poetry (Mac/Linux)
+# curl -sSL https://install.python-poetry.org | python3 -
+
+# 2) 創建新專案
+poetry new my-project
+cd my-project
+
+# 3) 在現有目錄初始化
+poetry init
+
+# 4) 建立並啟動虛擬環境
+poetry env use 3.11  # 指定 Python 版本
+poetry shell  # 啟動虛擬環境
+
+# 5) 安裝套件
+poetry add pytest
+poetry add appium-python-client
+poetry add requests@latest  # 安裝最新版本
+poetry add requests=^2.31  # 安裝 2.x 系列最新版本
+
+# 6) 安裝開發依賴
+poetry add --dev pytest-xdist
+poetry add --dev pytest-html
+
+# 7) 執行命令
+poetry run python script.py
+poetry run pytest
+
+# 8) 查看安裝的套件
+poetry show
+poetry show --tree  # 顯示依賴樹
+poetry show --latest  # 檢查過時套件
+
+# 9) 更新依賴
+poetry update
+poetry update pytest  # 更新特定套件
+
+# 10) 移除套件
+poetry remove pytest
+poetry remove --dev pytest-xdist
+
+# 11) 建立 requirements.txt (不建議，建議使用 poetry.lock)
+poetry export -f requirements.txt --output requirements.txt
+poetry export -f requirements.txt --output requirements.txt --without-hashes
+
+# 12) 升級 Poetry
+poetry self update
+poetry self update --preview  # 升級到預覽版本
+
+# 13) 設定與配置
+poetry config --list
+poetry config virtualenvs.create true
+poetry config virtualenvs.in-project true</code></pre>
+          </article>
+        </div>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>6. pyproject.toml 範例</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-toml">[project]
+name = "appium-automation"
+version = "0.1.0"
+description = "Appium 自動化測試專案"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Your Name", email = "your.email@example.com" },
+]
+dependencies = [
+    "appium-python-client>=2.0,<3.0",
+    "pytest>=7.0,<8.0",
+    "selenium>=4.0,<5.0",
+    "requests>=2.31,<3.0",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest-xdist>=3.0,<4.0",
+    "pytest-html>=3.0,<4.0",
+    "pytest-cov>=4.0,<5.0",
+    "black>=23.0,<24.0",
+    "flake8>=6.0,<7.0",
+]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# uv 配置
+[tool.uv]
+python-version = "3.11"
+asyncio-backend = "uvloop"
+
+[tool.uv.project]
+dev-dependencies = [
+    "pytest-xdist",
+    "pytest-html",
+    "pytest-cov",
+    "black",
+    "flake8",
+]
+
+# pytest 配置
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v -s --tb=short"
+markers = [
+    "smoke: 煙霧測試",
+    "regression: 回歸測試",
+    "android: Android 特定測試",
+    "ios: iOS 特定測試",
+    "negative: 負面測試",
+    "positive: 正面測試",
+]
+
+# black 格式化配置
+[tool.black]
+line-length = 88
+target-version = ['py39', 'py310', 'py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+# flake8 代碼檢查配置
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+per-file-ignores = [
+    "__init__.py:F401",
+]
+exclude = [
+    ".git",
+    "__pycache__",
+    "*.pyc",
+    "*.pyo",
+    "*.pyd",
+    "build",
+    "dist",
+    "venv",
+]
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80</code></pre>
+        </article>
+
+        <div class="compare-grid">
+          <article class="compare-card" data-reveal>
+            <h3>uv 使用情境</h3>
+            <ul>
+              <li>快速原型開發</li>
+              <li>小型自動化腳本</li>
+              <li>簡單的測試框架</li>
+              <li>需要快速建立與執行虛擬環境</li>
+              <li>喜歡命令簡潔的開發體驗</li>
+            </ul>
+          </article>
+          <article class="compare-card" data-reveal>
+            <h3>poetry 使用情境</h3>
+            <ul>
+              <li>大型專案開發</li>
+              <li>團隊協作開發</li>
+              <li>需要精確的依賴管理</li>
+              <li>需要專案打包與發佈</li>
+              <li>有複雜的開發工作流程</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>7. 實務工作流程範例</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-bash"># 使用 uv 的工作流程
+mkdir appium-test-project
+cd appium-test-project
+uv venv
+uv pip install appium-python-client pytest pytest-html
+# 建立測試檔案
+cat > test_calculator.py << 'EOF'
+from appium import webdriver
+from appium.webdriver.common.appiumby import AppiumBy
+import pytest
+
+
+@pytest.fixture
+def driver():
+    desired_caps = {
+        "platformName": "Android",
+        "platformVersion": "13",
+        "deviceName": "emulator-5554",
+        "appPackage": "com.android.calculator2",
+        "appActivity": ".Calculator",
+        "automationName": "UiAutomator2",
+        "noReset": True,
+    }
+    driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
+    yield driver
+    driver.quit()
+
+
+def test_addition(driver):
+    driver.find_element(AppiumBy.ID, "com.android.calculator2:id/digit_1").click()
+    driver.find_element(AppiumBy.ID, "com.android.calculator2:id/op_add").click()
+    driver.find_element(AppiumBy.ID, "com.android.calculator2:id/digit_2").click()
+    driver.find_element(AppiumBy.ID, "com.android.calculator2:id/eq").click()
+    result = driver.find_element(AppiumBy.ID, "com.android.calculator2:id/result").text
+    assert result == "3"
+EOF
+# 執行測試
+uv run pytest test_calculator.py -v --html=report.html
+
+
+# 使用 poetry 的工作流程
+poetry new appium-test-project
+cd appium-test-project
+poetry add appium-python-client pytest pytest-html
+# 建立測試檔案 (同上)
+poetry run pytest tests/test_calculator.py -v --html=report.html
+
+# 建立 .gitignore
+cat > .gitignore << 'EOF'
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.env
+.venv
+env/
+venv/
+ENV/
+.pytest_cache
+EOF</code></pre>
+        </article>
+      </section>
+
+      <section class="section final-section" aria-labelledby="next-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Next Step</p>
+          <h2 id="next-title">推薦學習順序</h2>
+        </div>
+        <div class="info-grid">
+          <article class="info-card" data-reveal>
+            <h3>1. 先打穩基礎</h3>
+            <p>先把基本語法、資料型別、條件與迴圈練熟。</p>
+          </article>
+          <article class="info-card" data-reveal>
+            <h3>2. OOP 一定要多練</h3>
+            <p>因為 Page Object、測試封裝、工具類別都會用到 OOP。</p>
+          </article>
+          <article class="info-card" data-reveal>
+            <h3>3. 再進 Appium + pytest</h3>
+            <p>先學定位與等待，再學測試結構，整體會更穩。</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Built for Python learners who want readable concepts and practical Appium patterns.</p>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
