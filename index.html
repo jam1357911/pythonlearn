@@ -1544,7 +1544,7 @@ login_button.click()</code></pre>
         <div class="two-column">
           <article class="code-panel" data-reveal>
             <div class="code-head">
-              <h3>click 不到時，改用元素中心點座標點擊</h3>
+              <h3>元素定位成功但無法點擊的解決方案</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <pre><code class="language-python">from selenium.webdriver.common.actions.action_builder import ActionBuilder
@@ -1552,6 +1552,7 @@ from selenium.webdriver.common.actions.pointer_input import PointerInput
 
 
 def tap_by_coordinates(driver, x, y):
+    """使用座標點擊元素"""
     finger = PointerInput("touch", "finger")
     actions = ActionBuilder(driver, mouse=finger)
     actions.pointer_action.move_to_location(x, y)
@@ -1561,19 +1562,81 @@ def tap_by_coordinates(driver, x, y):
     actions.perform()
 
 
+# 場景：元素定位成功但 click() 方法失敗
+# 步驟1: 先找到元素
 element = wait_for_element(driver, (AppiumBy.ACCESSIBILITY_ID, "login_button"))
+
+# 步驟2: 獲取元素的位置和大小
 rect = element.rect
-center_x = int(rect["x"] + rect["width"] / 2)
-center_y = int(rect["y"] + rect["height"] / 2)
-tap_by_coordinates(driver, center_x, center_y)</code></pre>
+x = rect["x"]
+y = rect["y"]
+width = rect["width"]
+height = rect["height"]
+
+# 步驟3: 計算元素的中心座標
+center_x = int(x + width / 2)
+center_y = int(y + height / 2)
+
+# 步驟4: 使用座標點擊
+print(f"元素中心座標: ({center_x}, {center_y})")
+tap_by_coordinates(driver, center_x, center_y)
+
+
+# 進階應用：根據元素區域內的偏移量點擊
+def tap_element_at_offset(element, x_offset, y_offset):
+    """在元素內部指定偏移量的位置點擊"""
+    rect = element.rect
+    x = rect["x"] + x_offset
+    y = rect["y"] + y_offset
+    tap_by_coordinates(driver, x, y)
+
+
+# 點擊元素右下角（偏移量從左上角算起）
+tap_element_at_offset(element, rect["width"] - 10, rect["height"] - 10)
+
+
+# 確保點擊操作成功的重試機制
+def safe_tap_element(element, retries=3):
+    """安全點擊元素，失敗時使用座標點擊作為備援"""
+    for attempt in range(retries):
+        try:
+            element.click()
+            return True
+        except Exception as e:
+            print(f"第 {attempt + 1} 次點擊失敗: {e}")
+            if attempt < retries - 1:
+                print("嘗試使用座標點擊")
+                rect = element.rect
+                center_x = int(rect["x"] + rect["width"] / 2)
+                center_y = int(rect["y"] + rect["height"] / 2)
+                tap_by_coordinates(driver, center_x, center_y)
+                return True
+    return False
+
+
+# 使用安全點擊
+if safe_tap_element(element):
+    print("點擊成功")
+else:
+    print("所有點擊方法都失敗")</code></pre>
           </article>
 
           <article class="info-card" data-reveal>
-            <h3>什麼時候用座標點擊</h3>
+            <h3>什麼時候需要使用座標點擊</h3>
             <ul>
-              <li>元素存在，但被遮罩或動畫影響，`click()` 不穩。</li>
-              <li>元素是畫布、地圖、客製元件，沒有好 locator。</li>
-              <li>你已經確認畫面位置穩定，且這是最後備援方案。</li>
+              <li><strong>元素定位成功但 click() 失敗</strong>：這是最常見的場景，可能是因為元素被覆蓋、透明、或者 App 對 click 事件進行了特殊處理</li>
+              <li><strong>動畫或遮罩問題</strong>：當元素正在動畫中或被半透明遮罩覆蓋時，普通的 click() 可能會失敗</li>
+              <li><strong>客製化控件</strong>：某些應用有自己實現的控件（如自定義按鈕或選單），Appium 可能無法正確模擬點擊</li>
+              <li><strong>畫布或地圖類元素</strong>：這些元素可能沒有可識別的子元素，需要精確的座標點擊</li>
+              <li><strong>特殊交互場景</strong>：如雙擊、長按、多指操作等，普通的 click() 方法無法滿足需求</li>
+            </ul>
+            
+            <h4 style="margin-top: 1rem;">實戰建議</h4>
+            <ul>
+              <li>永遠先嘗試使用標準的 element.click() 方法，只有在失敗時才使用座標點擊作為備援</li>
+              <li>結合等待策略使用，確保元素真的可以點擊時再進行操作</li>
+              <li>記錄點擊失敗的場景和解決方案，建立自己的問題排查手冊</li>
+              <li>在 CI/CD 流程中添加點擊失敗的監控和報告機制</li>
             </ul>
           </article>
         </div>
@@ -1943,20 +2006,48 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+# 命令行參數配置
+def pytest_addoption(parser):
+    parser.addoption(
+        "--platform", 
+        action="store", 
+        default="android", 
+        help="指定測試平台: android 或 ios"
+    )
+
+
 @pytest.fixture(scope="session")
-def driver(request):
-    """Appium Driver 初始化與關閉"""
+def platform(request):
+    """獲取命令行參數 --platform 的值"""
+    return request.config.getoption("--platform").lower()
+
+
+@pytest.fixture(scope="session")
+def driver(request, platform):
+    """根據平台參數初始化 Appium Driver"""
     desired_caps = {
-        "platformName": "Android",
-        "platformVersion": "13",
-        "deviceName": "emulator-5554",
-        "appPackage": "com.example.app",
-        "appActivity": ".MainActivity",
-        "automationName": "UiAutomator2",
+        "platformName": platform.capitalize(),
         "noReset": True,
         "unicodeKeyboard": True,
         "resetKeyboard": True
     }
+    
+    # 根據平台設置特定的 desired capabilities
+    if platform == "android":
+        desired_caps.update({
+            "platformVersion": "13",
+            "deviceName": "emulator-5554",
+            "appPackage": "com.example.app",
+            "appActivity": ".MainActivity",
+            "automationName": "UiAutomator2"
+        })
+    elif platform == "ios":
+        desired_caps.update({
+            "platformVersion": "16.4",
+            "deviceName": "iPhone 14",
+            "bundleId": "com.example.app",
+            "automationName": "XCUITest"
+        })
     
     driver = webdriver.Remote(
         command_executor="http://localhost:4723/wd/hub",
@@ -1970,31 +2061,84 @@ def driver(request):
     return driver
 
 
+# 定位器管理
+class LoginPageLocators:
+    """登錄頁面定位器 - 根據平台返回對應的定位器"""
+    LOCATORS = {
+        "username_input": {
+            "android": (AppiumBy.ID, "com.example.app:id/et_username"),
+            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input" OR label == "username_input"')
+        },
+        "password_input": {
+            "android": (AppiumBy.ID, "com.example.app:id/et_password"),
+            "ios": (AppiumBy.IOS_PREDICATE, 'name == "password_input" OR label == "password_input"')
+        },
+        "login_button": {
+            "android": (AppiumBy.ID, "com.example.app:id/btn_login"),
+            "ios": (AppiumBy.ACCESSIBILITY_ID, "login_button")
+        },
+        "welcome_text": {
+            "android": (AppiumBy.ID, "com.example.app:id/tv_welcome"),
+            "ios": (AppiumBy.IOS_PREDICATE, 'name CONTAINS "Welcome"')
+        },
+        "error_message": {
+            "android": (AppiumBy.ID, "com.example.app:id/tv_error"),
+            "ios": (AppiumBy.IOS_PREDICATE, 'name CONTAINS "Error"')
+        }
+    }
+    
+    @classmethod
+    def get_locator(cls, element_name, platform):
+        """根據元素名稱和平台獲取定位器"""
+        if element_name not in cls.LOCATORS:
+            raise ValueError(f"Element '{element_name}' not found in locators")
+        
+        if platform not in cls.LOCATORS[element_name]:
+            raise ValueError(f"Platform '{platform}' not supported for element '{element_name}'")
+        
+        return cls.LOCATORS[element_name][platform]
+
+
 @pytest.fixture(scope="function")
-def login_page(driver):
+def login_page(driver, platform):
     """登錄頁面物件"""
     class LoginPage:
-        def __init__(self, driver):
+        def __init__(self, driver, platform):
             self.driver = driver
+            self.platform = platform
         
         def login(self, username, password):
             # 找到並輸入用戶名
             username_field = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/et_username"))
+                EC.presence_of_element_located(LoginPageLocators.get_locator("username_input", self.platform))
             )
             username_field.clear()
             username_field.send_keys(username)
             
             # 找到並輸入密碼
-            password_field = driver.find_element(AppiumBy.ID, "com.example.app:id/et_password")
+            password_field = driver.find_element(*LoginPageLocators.get_locator("password_input", self.platform))
             password_field.clear()
             password_field.send_keys(password)
             
             # 點擊登錄按鈕
-            login_button = driver.find_element(AppiumBy.ID, "com.example.app:id/btn_login")
+            login_button = driver.find_element(*LoginPageLocators.get_locator("login_button", self.platform))
             login_button.click()
+        
+        def get_welcome_text(self):
+            """獲取歡迎文字"""
+            welcome_text = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located(LoginPageLocators.get_locator("welcome_text", self.platform))
+            )
+            return welcome_text.text
+        
+        def get_error_message(self):
+            """獲取錯誤訊息"""
+            error_message = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located(LoginPageLocators.get_locator("error_message", self.platform))
+            )
+            return error_message.text
     
-    return LoginPage(driver)
+    return LoginPage(driver, platform)
 
 
 @pytest.mark.smoke
@@ -2002,11 +2146,8 @@ def test_login_success(login_page):
     """測試成功登錄"""
     login_page.login("testuser", "password123")
     # 驗證登錄成功後的元素
-    welcome_text = WebDriverWait(login_page.driver, 10).until(
-        EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/tv_welcome"))
-    )
-    assert welcome_text.is_displayed()
-    assert "Welcome" in welcome_text.text
+    welcome_text = login_page.get_welcome_text()
+    assert "Welcome" in welcome_text
 
 
 @pytest.mark.negative
@@ -2014,10 +2155,8 @@ def test_login_invalid_credentials(login_page):
     """測試無效憑證登錄"""
     login_page.login("invalid", "wrong")
     # 驗證錯誤訊息
-    error_message = WebDriverWait(login_page.driver, 10).until(
-        EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/tv_error"))
-    )
-    assert "Invalid" in error_message.text
+    error_message = login_page.get_error_message()
+    assert "Invalid" in error_message
 
 
 @pytest.mark.parametrize("username, password", [
@@ -2028,7 +2167,43 @@ def test_login_invalid_credentials(login_page):
 def test_login_empty_fields(login_page, username, password):
     """測試空字段登錄"""
     login_page.login(username, password)
-    assert True  # 應顯示字段驗證訊息</code></pre>
+    assert True  # 應顯示字段驗證訊息
+
+
+        </pre>
+          </article>
+        </div>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>10. 使用命令行參數執行平台專屬測試</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-bash"># 基本執行方式
+pytest test_appium.py
+
+# 執行 Android 平台的測試
+pytest test_appium.py --platform android
+
+# 執行 iOS 平台的測試
+pytest test_appium.py --platform ios
+
+# 顯示詳細資訊
+pytest test_appium.py --platform ios -v -s
+
+# 只執行特定測試函式
+pytest test_appium.py::test_login_success --platform android
+
+# 執行多個測試
+pytest test_appium.py::test_login_success test_appium.py::test_login_invalid_credentials --platform ios
+
+# 顯示幫助訊息
+pytest test_appium.py --help
+
+# 使用 config 檔案設定預設平台
+# 在 pytest.ini 或 conftest.py 中添加
+# [pytest]
+# addopts = --platform android</code></pre>
           </article>
         </div>
       </section>
