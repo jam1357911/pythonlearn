@@ -1315,40 +1315,39 @@ print(User.how_many_users())</code></pre>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>5. 基本配置與啟動</h3>
+            <h3>5. 使用 YAML 配置文件管理 Capability</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python">from appium import webdriver
-from appium.webdriver.common.appiumby import AppiumBy
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+          <pre><code class="language-yaml"># capabilities.yaml
+platforms:
+  android:
+    platformName: "Android"
+    platformVersion: "13"
+    deviceName: "emulator-5554"
+    appPackage: "com.android.calculator2"
+    appActivity: ".Calculator"
+    automationName: "UiAutomator2"
+    noReset: true
+    fullReset: false
+    unicodeKeyboard: true
+    resetKeyboard: true
+    app: "/path/to/your/android/app.apk"
+  
+  ios:
+    platformName: "iOS"
+    platformVersion: "16"
+    deviceName: "iPhone 14"
+    bundleId: "com.apple.calculator"
+    automationName: "XCUITest"
+    noReset: true
+    fullReset: false
+    app: "/path/to/your/ios/app.ipa"
 
-# Android 配置
-desired_caps_android = {
-    "platformName": "Android",
-    "platformVersion": "13",       # 裝置 Android 版本
-    "deviceName": "emulator-5554", # 裝置名稱
-    "appPackage": "com.android.calculator2",  # App 套件名稱
-    "appActivity": ".Calculator",           # App 啟動 Activity
-    "automationName": "UiAutomator2",     # 自動化引擎
-    "noReset": True,                      # 不清空 App 資料
-    "fullReset": False,
-    "unicodeKeyboard": True,
-    "resetKeyboard": True
-}
-
-# iOS 配置
-desired_caps_ios = {
-    "platformName": "iOS",
-    "platformVersion": "16",           # 裝置 iOS 版本
-    "deviceName": "iPhone 14",        # 裝置名稱
-    "bundleId": "com.apple.calculator", # App Bundle ID
-    "automationName": "XCUITest",     # 自動化引擎
-    "noReset": True,
-    "fullReset": False
-}
-
-# 連接到 Appium Server
+# 共用配置
+common:
+  newCommandTimeout: 60
+  language: "zh-CN"
+  locale: "zh_CN"
 driver = webdriver.Remote(
     command_executor="http://localhost:4723/wd/hub",
     desired_capabilities=desired_caps_android
@@ -1459,6 +1458,336 @@ actions = TouchActions(driver)
 actions.long_press(element).perform()</code></pre>
           </article>
         </div>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>6. 頁面滾動操作</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# 1) 向下滑動到特定元素可見
+def scroll_to_element(driver, locator, direction="down"):
+    """
+    滑動頁面直到指定元素可見
+    Args:
+        driver: Appium Driver 實例
+        locator: 元素定位器 (By, value)
+        direction: 滑動方向 ("down" 或 "up")
+    Returns:
+        WebElement: 找到的元素
+    """
+    # 獲取裝置螢幕尺寸
+    screen_size = driver.get_window_size()
+    screen_width = screen_size['width']
+    screen_height = screen_size['height']
+    
+    # 計算滑動起點和終點座標
+    start_x = int(screen_width / 2)
+    end_x = start_x
+    
+    if direction == "down":
+        start_y = int(screen_height * 0.8)  # 從底部 80% 位置開始
+        end_y = int(screen_height * 0.2)    # 滑動到頂部 20% 位置
+    else:
+        start_y = int(screen_height * 0.2)  # 從頂部 20% 位置開始
+        end_y = int(screen_height * 0.8)    # 滑動到底部 80% 位置
+    
+    # 滑動並查找元素，最多嘗試 5 次
+    for _ in range(5):
+        try:
+            element = driver.find_element(*locator)
+            # 如果元素可見，返回該元素
+            if element.is_displayed():
+                return element
+        except:
+            pass
+        
+        # 執行滑動操作
+        driver.swipe(start_x, start_y, end_x, end_y, duration=800)
+        # 等待滑動動畫完成
+        driver.implicitly_wait(1)
+    
+    raise Exception(f"無法找到元素: {locator}")
+
+# 使用示例
+try:
+    # 定位到需要滑動到的元素
+    target_locator = (AppiumBy.ACCESSIBILITY_ID, "target_element")
+    element = scroll_to_element(driver, target_locator)
+    element.click()
+except Exception as e:
+    print(f"滑動操作失敗: {e}")
+
+# 2) 向上滑動頁面
+def swipe_up(driver, percentage=0.8, duration=500):
+    """向上滑動頁面"""
+    screen_size = driver.get_window_size()
+    width = screen_size['width']
+    height = screen_size['height']
+    start_x = int(width / 2)
+    start_y = int(height * percentage)
+    end_x = start_x
+    end_y = int(height * (1 - percentage))
+    driver.swipe(start_x, start_y, end_x, end_y, duration=duration)
+
+# 3) 向下滑動頁面
+def swipe_down(driver, percentage=0.8, duration=500):
+    """向下滑動頁面"""
+    screen_size = driver.get_window_size()
+    width = screen_size['width']
+    height = screen_size['height']
+    start_x = int(width / 2)
+    start_y = int(height * (1 - percentage))
+    end_x = start_x
+    end_y = int(height * percentage)
+    driver.swipe(start_x, start_y, end_x, end_y, duration=duration)
+
+# 4) 向左滑動頁面
+def swipe_left(driver, percentage=0.8, duration=500):
+    """向左滑動頁面"""
+    screen_size = driver.get_window_size()
+    width = screen_size['width']
+    height = screen_size['height']
+    start_x = int(width * percentage)
+    start_y = int(height / 2)
+    end_x = int(width * (1 - percentage))
+    end_y = start_y
+    driver.swipe(start_x, start_y, end_x, end_y, duration=duration)
+
+# 5) 向右滑動頁面
+def swipe_right(driver, percentage=0.8, duration=500):
+    """向右滑動頁面"""
+    screen_size = driver.get_window_size()
+    width = screen_size['width']
+    height = screen_size['height']
+    start_x = int(width * (1 - percentage))
+    start_y = int(height / 2)
+    end_x = int(width * percentage)
+    end_y = start_y
+    driver.swipe(start_x, start_y, end_x, end_y, duration=duration)
+
+# 測試滑動功能
+print("測試向上滑動...")
+swipe_up(driver)
+driver.implicitly_wait(2)  # 等待 2 秒
+
+print("測試向下滑動...")
+swipe_down(driver)
+driver.implicitly_wait(2)  # 等待 2 秒
+
+print("測試向左滑動...")
+swipe_left(driver)
+driver.implicitly_wait(2)  # 等待 2 秒
+
+print("測試向右滑動...")
+swipe_right(driver)
+driver.implicitly_wait(2)  # 等待 2 秒</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>7. 日期選擇器操作</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from datetime import datetime
+
+# 1) 日期選擇器類別
+class DatePicker:
+    """處理日期選擇器操作"""
+    
+    def __init__(self, driver):
+        self.driver = driver
+        self.platform = driver.capabilities.get("platformName").lower()
+    
+    def select_date(self, year, month, day):
+        """選擇日期
+        Args:
+            year: 年份
+            month: 月份 (1-12)
+            day: 日期 (1-31)
+        """
+        if self.platform == "android":
+            self._select_date_android(year, month, day)
+        elif self.platform == "ios":
+            self._select_date_ios(year, month, day)
+        else:
+            raise Exception(f"不支援的平台: {self.platform}")
+    
+    def _select_date_android(self, year, month, day):
+        """Android 日期選擇器操作"""
+        # 定位到年份選擇器並選擇年份
+        year_picker = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/year_picker"))
+        )
+        year_picker.click()
+        
+        # 選擇年份（這裡假設是滾輪選擇器）
+        target_year = str(year)
+        while True:
+            current_year = year_picker.text
+            if current_year == target_year:
+                break
+            elif int(current_year) < year:
+                # 向上滑動
+                self._swipe_wheel_up(year_picker)
+            else:
+                # 向下滑動
+                self._swipe_wheel_down(year_picker)
+        
+        # 定位到月份選擇器並選擇月份
+        month_picker = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/month_picker"))
+        )
+        month_picker.click()
+        
+        # 選擇月份
+        target_month = str(month)
+        while True:
+            current_month = month_picker.text
+            if current_month == target_month:
+                break
+            elif int(current_month) < month:
+                self._swipe_wheel_up(month_picker)
+            else:
+                self._swipe_wheel_down(month_picker)
+        
+        # 定位到日期選擇器並選擇日期
+        day_picker = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/day_picker"))
+        )
+        day_picker.click()
+        
+        # 選擇日期
+        target_day = str(day)
+        while True:
+            current_day = day_picker.text
+            if current_day == target_day:
+                break
+            elif int(current_day) < day:
+                self._swipe_wheel_up(day_picker)
+            else:
+                self._swipe_wheel_down(day_picker)
+    
+    def _select_date_ios(self, year, month, day):
+        """iOS 日期選擇器操作"""
+        # iOS 日期選擇器通常是 PickerWheel 類型
+        try:
+            # 定位到日期選擇器
+            date_picker = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((AppiumBy.CLASS_NAME, "XCUIElementTypePickerWheel"))
+            )
+            
+            # 設置日期格式（這取決於實際的日期選擇器格式）
+            date_str = f"{month}/{day}/{year}"
+            date_picker.send_keys(date_str)
+            
+            # 等待日期選擇器更新
+            self.driver.implicitly_wait(1)
+        except Exception as e:
+            print(f"iOS 日期選擇器操作失敗: {e}")
+            # 如果標準方法失敗，嘗試手動滑動
+            self._manual_date_select_ios(year, month, day)
+    
+    def _manual_date_select_ios(self, year, month, day):
+        """手動滑動選擇日期（作為後備方法）"""
+        # 定位到年、月、日選擇器
+        pickers = self.driver.find_elements(AppiumBy.CLASS_NAME, "XCUIElementTypePickerWheel")
+        
+        if len(pickers) == 3:  # 假設有三個選擇器：年、月、日
+            # 選擇年份
+            self._select_value_ios_picker(pickers[0], str(year))
+            # 選擇月份
+            self._select_value_ios_picker(pickers[1], str(month))
+            # 選擇日期
+            self._select_value_ios_picker(pickers[2], str(day))
+    
+    def _select_value_ios_picker(self, picker, target_value):
+        """選擇 iOS PickerWheel 的值"""
+        current_value = picker.text
+        while current_value != target_value:
+            if int(current_value) < int(target_value):
+                picker.send_keys("down")
+            else:
+                picker.send_keys("up")
+            
+            # 等待選擇器更新
+            self.driver.implicitly_wait(0.5)
+            current_value = picker.text
+    
+    def _swipe_wheel_up(self, element):
+        """向上滑動選擇器（Android）"""
+        rect = element.rect
+        center_x = rect['x'] + rect['width'] / 2
+        start_y = rect['y'] + rect['height'] * 0.8
+        end_y = rect['y'] + rect['height'] * 0.2
+        self.driver.swipe(center_x, start_y, center_x, end_y, duration=500)
+    
+    def _swipe_wheel_down(self, element):
+        """向下滑動選擇器（Android）"""
+        rect = element.rect
+        center_x = rect['x'] + rect['width'] / 2
+        start_y = rect['y'] + rect['height'] * 0.2
+        end_y = rect['y'] + rect['height'] * 0.8
+        self.driver.swipe(center_x, start_y, center_x, end_y, duration=500)
+
+# 使用示例
+try:
+    # 初始化日期選擇器類
+    date_picker = DatePicker(driver)
+    
+    # 選擇 2024 年 5 月 20 日
+    date_picker.select_date(2024, 5, 20)
+    
+    # 點擊確認按鈕
+    confirm_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((AppiumBy.ACCESSIBILITY_ID, "confirm_button"))
+    )
+    confirm_button.click()
+    
+    print("日期選擇成功")
+except Exception as e:
+    print(f"日期選擇失敗: {e}")
+
+# 2) 檢查當前日期
+def check_current_date(driver):
+    """獲取當前選擇的日期"""
+    try:
+        # 定位到日期顯示元素
+        date_display = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((AppiumBy.ACCESSIBILITY_ID, "date_display"))
+        )
+        
+        return date_display.text
+    except Exception as e:
+        print(f"獲取當前日期失敗: {e}")
+        return None
+
+# 3) 重置日期選擇器
+def reset_date_picker(driver):
+    """重置日期選擇器"""
+    try:
+        reset_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((AppiumBy.ACCESSIBILITY_ID, "reset_button"))
+        )
+        reset_button.click()
+        print("日期選擇器已重置")
+    except Exception as e:
+        print(f"重置日期選擇器失敗: {e}")
+
+# 測試日期選擇器功能
+print("檢查當前選擇的日期:", check_current_date(driver))
+
+# 選擇另一個日期
+date_picker.select_date(2025, 12, 31)
+
+print("檢查更新後的日期:", check_current_date(driver))</code></pre>
+        </article>
 
         <div class="two-column">
           <article class="code-panel" data-reveal>
@@ -2056,6 +2385,60 @@ def driver(request, platform):
             "bundleId": "com.example.app",        # 應用 Bundle ID
             "automationName": "XCUITest"          # 自動化引擎
         })
+    
+    </code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>6. 使用 Fixture 載入 YAML 配置</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">import yaml
+import pytest
+from appium import webdriver
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# 載入 YAML 配置
+def load_config():
+    """載入 capabilities.yaml 配置文件"""
+    with open('capabilities.yaml', 'r', encoding='utf-8') as file:
+        return yaml.safe_load(file)
+
+# 獲取指定平台的配置
+def get_capabilities(platform):
+    """獲取指定平台的 capabilities 配置"""
+    config = load_config()
+    # 合併平台特定配置和共用配置
+    capabilities = config['platforms'].get(platform, {})
+    capabilities.update(config.get('common', {}))
+    return capabilities
+
+# 命令行參數配置
+def pytest_addoption(parser):
+    parser.addoption(
+        "--platform", 
+        action="store", 
+        default="android", 
+        help="指定測試平台: android 或 ios"
+    )
+
+@pytest.fixture(scope="session")
+def platform(request):
+    """獲取命令行參數 --platform 的值"""
+    return request.config.getoption("--platform").lower()
+
+@pytest.fixture(scope="session")
+def driver(platform):
+    """根據平台參數初始化 Appium Driver"""
+    capabilities = get_capabilities(platform)
+    
+    print(f"正在初始化 {platform} 平台的 Driver...")
+    print("使用的 Capabilities 配置:")
+    for key, value in capabilities.items():
+        print(f"  {key}: {value}")
     
     driver = webdriver.Remote(
         command_executor="http://localhost:4723/wd/hub",
