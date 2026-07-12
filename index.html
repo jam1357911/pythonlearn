@@ -222,105 +222,7 @@ if data is None:
     print("資料不存在")</code></pre>
         </article>
 
-        <article class="code-panel wide" data-reveal>
-          <div class="code-head">
-            <h3>6. 直接讀取 YAML 文件示例</h3>
-            <button class="copy-button" type="button">複製程式碼</button>
-          </div>
-          <pre><code class="language-python">import yaml
-import os
-from appium import webdriver
 
-# 直接讀取 YAML 文件的基本方法
-def read_yaml_file():
-    """
-    直接使用 with open() 和 yaml.safe_load() 讀取配置文件
-    """
-    
-    config_file = 'config/capabilities.yaml'
-    
-    if not os.path.exists(config_file):
-        return None
-    
-    try:
-        with open(config_file, 'r', encoding='utf-8') as f:
-            config = yaml.safe_load(f)
-        return config
-    except Exception:
-        return None
-
-# 使用讀取到的配置初始化 Appium Driver
-def initialize_driver(platform="android"):
-    """
-    使用配置文件初始化 Appium Driver
-    """
-    
-    config = read_yaml_file()
-    if not config:
-        return None
-    
-    # 檢查平台是否受支援
-    if platform not in config.get('platforms', {}):
-        return None
-    
-    # 獲取平台特定配置
-    platform_config = config['platforms'][platform]
-    
-    # 合併共用配置
-    capabilities = platform_config.copy()
-    capabilities.update(config.get('common', {}))
-    
-    print(f"正在初始化 {platform} 平台的 Driver...")
-    
-    driver = webdriver.Remote(
-        command_executor="http://localhost:4723/wd/hub",
-        desired_capabilities=capabilities
-    )
-    
-    return driver
-
-# 使用示例
-if __name__ == "__main__":
-    # 使用 Android 平台
-    android_driver = initialize_driver("android")
-    if android_driver:
-        print("Android Driver 初始化成功")
-        
-        # 顯示設備資訊
-        print(f"裝置名稱: {android_driver.capabilities['deviceName']}")
-        print(f"平台版本: {android_driver.capabilities['platformVersion']}")
-        
-        android_driver.quit()
-        print("Android Driver 已關閉")
-    
-    print()
-    
-    # 使用 iOS 平台
-    ios_driver = initialize_driver("ios")
-    if ios_driver:
-        print("iOS Driver 初始化成功")
-        
-        # 顯示設備資訊
-        print(f"裝置名稱: {ios_driver.capabilities['deviceName']}")
-        print(f"平台版本: {ios_driver.capabilities['platformVersion']}")
-        
-        ios_driver.quit()
-        print("iOS Driver 已關閉")
-
-# === 運行結果範例 ===
-# 正在初始化 android 平台的 Driver...
-# Android Driver 初始化成功
-# 裝置名稱: emulator-5554
-# 平台版本: 13
-# Android Driver 已關閉
-# 
-# 正在初始化 ios 平台的 Driver...
-# iOS Driver 初始化成功
-# 裝置名稱: iPhone 14
-# 平台版本: 16
-# iOS Driver 已關閉
-</code></pre>
-        </article>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
@@ -1482,10 +1384,110 @@ print(f"平台版本: {driver.capabilities['platformVersion']}")
 driver.quit()</code></pre>
         </article>
 
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>6. 直接讀取 YAML 文件示例</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">import yaml
+import os
+from appium import webdriver
+
+# 直接讀取 YAML 文件的基本方法
+def read_yaml_file():
+    """
+    直接使用 with open() 和 yaml.safe_load() 讀取配置文件
+    """
+    
+    config_file = 'config/capabilities.yaml'
+    
+    if not os.path.exists(config_file):
+        return None
+    
+    try:
+        with open(config_file, 'r', encoding='utf-8') as f:
+            config = yaml.safe_load(f)
+        return config
+    except Exception:
+        return None
+
+# 使用讀取到的配置初始化 Appium Driver
+def initialize_driver(platform="android"):
+    """
+    使用配置文件初始化 Appium Driver
+    """
+    
+    config = read_yaml_file()
+    if not config:
+        return None
+    
+    # 檢查平台是否受支援
+    if platform not in config.get('platforms', {}):
+        return None
+    
+    # 獲取平台特定配置
+    platform_config = config['platforms'][platform]
+    
+    # 合併共用配置
+    capabilities = platform_config.copy()
+    capabilities.update(config.get('common', {}))
+    
+    print(f"正在初始化 {platform} 平台的 Driver...")
+    
+    driver = webdriver.Remote(
+        command_executor="http://localhost:4723/wd/hub",
+        desired_capabilities=capabilities
+    )
+    
+    return driver
+
+# 使用示例
+if __name__ == "__main__":
+    # 使用 Android 平台
+    android_driver = initialize_driver("android")
+    if android_driver:
+        print("Android Driver 初始化成功")
+        
+        # 顯示設備資訊
+        print(f"裝置名稱: {android_driver.capabilities['deviceName']}")
+        print(f"平台版本: {android_driver.capabilities['platformVersion']}")
+        
+        android_driver.quit()
+        print("Android Driver 已關閉")
+    
+    print()
+    
+    # 使用 iOS 平台
+    ios_driver = initialize_driver("ios")
+    if ios_driver:
+        print("iOS Driver 初始化成功")
+        
+        # 顯示設備資訊
+        print(f"裝置名稱: {ios_driver.capabilities['deviceName']}")
+        print(f"平台版本: {ios_driver.capabilities['platformVersion']}")
+        
+        ios_driver.quit()
+        print("iOS Driver 已關閉")
+
+# === 運行結果範例 ===
+# 正在初始化 android 平台的 Driver...
+# Android Driver 初始化成功
+# 裝置名稱: emulator-5554
+# 平台版本: 13
+# Android Driver 已關閉
+# 
+# 正在初始化 ios 平台的 Driver...
+# iOS Driver 初始化成功
+# 裝置名稱: iPhone 14
+# 平台版本: 16
+# iOS Driver 已關閉
+</code></pre>
+        </article>
+
         <div class="two-column">
           <article class="code-panel" data-reveal>
             <div class="code-head">
-              <h3>6. 常用元素定位方法</h3>
+              <h3>7. 常用元素定位方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
