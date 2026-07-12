@@ -224,6 +224,106 @@ if data is None:
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
+            <h3>6. 直接讀取 YAML 文件示例</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">import yaml
+import os
+from appium import webdriver
+
+# 直接讀取 YAML 文件的基本方法
+def read_yaml_file():
+    """
+    直接使用 with open() 和 yaml.safe_load() 讀取配置文件
+    """
+    
+    config_file = 'config/capabilities.yaml'
+    
+    if not os.path.exists(config_file):
+        return None
+    
+    try:
+        with open(config_file, 'r', encoding='utf-8') as f:
+            config = yaml.safe_load(f)
+        return config
+    except Exception:
+        return None
+
+# 使用讀取到的配置初始化 Appium Driver
+def initialize_driver(platform="android"):
+    """
+    使用配置文件初始化 Appium Driver
+    """
+    
+    config = read_yaml_file()
+    if not config:
+        return None
+    
+    # 檢查平台是否受支援
+    if platform not in config.get('platforms', {}):
+        return None
+    
+    # 獲取平台特定配置
+    platform_config = config['platforms'][platform]
+    
+    # 合併共用配置
+    capabilities = platform_config.copy()
+    capabilities.update(config.get('common', {}))
+    
+    print(f"正在初始化 {platform} 平台的 Driver...")
+    
+    driver = webdriver.Remote(
+        command_executor="http://localhost:4723/wd/hub",
+        desired_capabilities=capabilities
+    )
+    
+    return driver
+
+# 使用示例
+if __name__ == "__main__":
+    # 使用 Android 平台
+    android_driver = initialize_driver("android")
+    if android_driver:
+        print("Android Driver 初始化成功")
+        
+        # 顯示設備資訊
+        print(f"裝置名稱: {android_driver.capabilities['deviceName']}")
+        print(f"平台版本: {android_driver.capabilities['platformVersion']}")
+        
+        android_driver.quit()
+        print("Android Driver 已關閉")
+    
+    print()
+    
+    # 使用 iOS 平台
+    ios_driver = initialize_driver("ios")
+    if ios_driver:
+        print("iOS Driver 初始化成功")
+        
+        # 顯示設備資訊
+        print(f"裝置名稱: {ios_driver.capabilities['deviceName']}")
+        print(f"平台版本: {ios_driver.capabilities['platformVersion']}")
+        
+        ios_driver.quit()
+        print("iOS Driver 已關閉")
+
+# === 運行結果範例 ===
+# 正在初始化 android 平台的 Driver...
+# Android Driver 初始化成功
+# 裝置名稱: emulator-5554
+# 平台版本: 13
+# Android Driver 已關閉
+# 
+# 正在初始化 ios 平台的 Driver...
+# iOS Driver 初始化成功
+# 裝置名稱: iPhone 14
+# 平台版本: 16
+# iOS Driver 已關閉
+</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
             <h3>3.1 if 語句 - 基本條件判斷</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
@@ -1315,109 +1415,6 @@ print(User.how_many_users())</code></pre>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>6. 直接讀取 YAML 文件示例</h3>
-            <button class="copy-button" type="button">複製程式碼</button>
-          </div>
-          <pre><code class="language-python">import yaml
-import os
-
-# 直接讀取 YAML 文件的基本方法
-def read_yaml_file():
-    """
-    直接使用 with open() 和 yaml.safe_load() 讀取配置文件
-    """
-    
-    # 配置文件路徑
-    config_file = 'config/capabilities.yaml'
-    
-    # 檢查文件是否存在
-    if not os.path.exists(config_file):
-        print(f"配置文件不存在: {config_file}")
-        return None
-    
-    try:
-        # 使用 with open() 讀取文件
-        with open(config_file, 'r', encoding='utf-8') as f:
-            # 使用 yaml.safe_load() 載入 YAML 數據
-            config = yaml.safe_load(f)
-        
-        print("配置文件讀取成功")
-        return config
-    
-    except yaml.YAMLError as e:
-        print(f"配置文件格式錯誤: {e}")
-        return None
-    except Exception as e:
-        print(f"讀取配置文件時發生錯誤: {e}")
-        return None
-
-# 使用示例
-if __name__ == "__main__":
-    # 直接讀取配置文件
-    config = read_yaml_file()
-    
-    if config:
-        # 顯示完整配置內容
-        print("\n完整配置:")
-        print(config)
-        
-        # 顯示平台配置
-        print("\nAndroid 平台配置:")
-        print(config['platforms']['android'])
-        
-        print("\niOS 平台配置:")
-        print(config['platforms']['ios'])
-        
-        # 顯示共用配置
-        print("\n共用配置:")
-        print(config['common'])
-        
-        # 顯示測試數據
-        print("\n登錄測試數據:")
-        print(config['test_data']['login'])
-        
-        # 提取有效登錄憑證
-        print("\n有效登錄憑證:")
-        valid_login = config['test_data']['login']['valid']
-        print(f"用戶名: {valid_login['username']}")
-        print(f"密碼: {valid_login['password']}")
-        
-        # 提取無效登錄憑證
-        print("\n無效登錄憑證:")
-        invalid_login = config['test_data']['login']['invalid']
-        print(f"用戶名: {invalid_login['username']}")
-        print(f"密碼: {invalid_login['password']}")
-        print()
-        print("=== 運行結果範例 ===")
-        print("配置文件讀取成功")
-        print()
-        print("完整配置:")
-        print("{'platforms': {'android': {'platformName': 'Android', 'platformVersion': '13', 'deviceName': 'emulator-5554', ...}, 'ios': {'platformName': 'iOS', 'platformVersion': '16', 'deviceName': 'iPhone 14', ...}, 'common': {'newCommandTimeout': 60, 'language': 'zh-CN', 'locale': 'zh_CN'}, 'test_data': {'login': {'valid': {'username': 'testuser', 'password': 'password123'}, 'invalid': {'username': 'invalid', 'password': 'wrong'}}}}")
-        print()
-        print("Android 平台配置:")
-        print("{'platformName': 'Android', 'platformVersion': '13', 'deviceName': 'emulator-5554', 'appPackage': 'com.android.calculator2', 'appActivity': '.Calculator', 'automationName': 'UiAutomator2', 'noReset': True, 'fullReset': False, 'unicodeKeyboard': True, 'resetKeyboard': True, 'app': '/path/to/your/android/app.apk'}")
-        print()
-        print("iOS 平台配置:")
-        print("{'platformName': 'iOS', 'platformVersion': '16', 'deviceName': 'iPhone 14', 'bundleId': 'com.apple.calculator', 'automationName': 'XCUITest', 'noReset': True, 'fullReset': False, 'app': '/path/to/your/ios/app.ipa'}")
-        print()
-        print("共用配置:")
-        print("{'newCommandTimeout': 60, 'language': 'zh-CN', 'locale': 'zh_CN'}")
-        print()
-        print("登錄測試數據:")
-        print("{'valid': {'username': 'testuser', 'password': 'password123'}, 'invalid': {'username': 'invalid', 'password': 'wrong'}}")
-        print()
-        print("有效登錄憑證:")
-        print("用戶名: testuser")
-        print("密碼: password123")
-        print()
-        print("無效登錄憑證:")
-        print("用戶名: invalid")
-        print("密碼: wrong")
-</code></pre>
-        </article>
-
-        <article class="code-panel wide" data-reveal>
-          <div class="code-head">
             <h3>5. 使用 YAML 配置文件管理 Capability</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
@@ -1457,8 +1454,14 @@ common:
   locale: "zh_CN"
 
 # 測試數據配置
-test_data:
   login:
+    valid:
+      username: "testuser"
+      password: "password123"
+    invalid:
+      username: "invalid"
+      password: "wrong"
+EOF
     valid:
       username: "testuser"
       password: "password123"
