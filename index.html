@@ -1315,6 +1315,109 @@ print(User.how_many_users())</code></pre>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
+            <h3>6. 直接讀取 YAML 文件示例</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">import yaml
+import os
+
+# 直接讀取 YAML 文件的基本方法
+def read_yaml_file():
+    """
+    直接使用 with open() 和 yaml.safe_load() 讀取配置文件
+    """
+    
+    # 配置文件路徑
+    config_file = 'config/capabilities.yaml'
+    
+    # 檢查文件是否存在
+    if not os.path.exists(config_file):
+        print(f"配置文件不存在: {config_file}")
+        return None
+    
+    try:
+        # 使用 with open() 讀取文件
+        with open(config_file, 'r', encoding='utf-8') as f:
+            # 使用 yaml.safe_load() 載入 YAML 數據
+            config = yaml.safe_load(f)
+        
+        print("配置文件讀取成功")
+        return config
+    
+    except yaml.YAMLError as e:
+        print(f"配置文件格式錯誤: {e}")
+        return None
+    except Exception as e:
+        print(f"讀取配置文件時發生錯誤: {e}")
+        return None
+
+# 使用示例
+if __name__ == "__main__":
+    # 直接讀取配置文件
+    config = read_yaml_file()
+    
+    if config:
+        # 顯示完整配置內容
+        print("\n完整配置:")
+        print(config)
+        
+        # 顯示平台配置
+        print("\nAndroid 平台配置:")
+        print(config['platforms']['android'])
+        
+        print("\niOS 平台配置:")
+        print(config['platforms']['ios'])
+        
+        # 顯示共用配置
+        print("\n共用配置:")
+        print(config['common'])
+        
+        # 顯示測試數據
+        print("\n登錄測試數據:")
+        print(config['test_data']['login'])
+        
+        # 提取有效登錄憑證
+        print("\n有效登錄憑證:")
+        valid_login = config['test_data']['login']['valid']
+        print(f"用戶名: {valid_login['username']}")
+        print(f"密碼: {valid_login['password']}")
+        
+        # 提取無效登錄憑證
+        print("\n無效登錄憑證:")
+        invalid_login = config['test_data']['login']['invalid']
+        print(f"用戶名: {invalid_login['username']}")
+        print(f"密碼: {invalid_login['password']}")
+        print()
+        print("=== 運行結果範例 ===")
+        print("配置文件讀取成功")
+        print()
+        print("完整配置:")
+        print("{'platforms': {'android': {'platformName': 'Android', 'platformVersion': '13', 'deviceName': 'emulator-5554', ...}, 'ios': {'platformName': 'iOS', 'platformVersion': '16', 'deviceName': 'iPhone 14', ...}, 'common': {'newCommandTimeout': 60, 'language': 'zh-CN', 'locale': 'zh_CN'}, 'test_data': {'login': {'valid': {'username': 'testuser', 'password': 'password123'}, 'invalid': {'username': 'invalid', 'password': 'wrong'}}}}")
+        print()
+        print("Android 平台配置:")
+        print("{'platformName': 'Android', 'platformVersion': '13', 'deviceName': 'emulator-5554', 'appPackage': 'com.android.calculator2', 'appActivity': '.Calculator', 'automationName': 'UiAutomator2', 'noReset': True, 'fullReset': False, 'unicodeKeyboard': True, 'resetKeyboard': True, 'app': '/path/to/your/android/app.apk'}")
+        print()
+        print("iOS 平台配置:")
+        print("{'platformName': 'iOS', 'platformVersion': '16', 'deviceName': 'iPhone 14', 'bundleId': 'com.apple.calculator', 'automationName': 'XCUITest', 'noReset': True, 'fullReset': False, 'app': '/path/to/your/ios/app.ipa'}")
+        print()
+        print("共用配置:")
+        print("{'newCommandTimeout': 60, 'language': 'zh-CN', 'locale': 'zh_CN'}")
+        print()
+        print("登錄測試數據:")
+        print("{'valid': {'username': 'testuser', 'password': 'password123'}, 'invalid': {'username': 'invalid', 'password': 'wrong'}}")
+        print()
+        print("有效登錄憑證:")
+        print("用戶名: testuser")
+        print("密碼: password123")
+        print()
+        print("無效登錄憑證:")
+        print("用戶名: invalid")
+        print("密碼: wrong")
+</code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
             <h3>5. 使用 YAML 配置文件管理 Capability</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
@@ -2553,29 +2656,74 @@ def pytest_addoption(parser):
         help="指定配置文件路徑"
     )
 
+# ==================== Fixture 詳細解釋 ====================
+
+# 1. 平台參數 Fixture（session 級別）
 @pytest.fixture(scope="session")
 def platform(request):
-    """獲取命令行參數 --platform 的值"""
+    """
+    獲取命令行參數 --platform 的值
+    
+    Scope: session（整個測試會話只執行一次）
+    用途: 獲取測試平台參數（android 或 ios）
+    返回: 小寫的平台名稱字符串
+    """
     return request.config.getoption("--platform").lower()
 
+# 2. 配置文件路徑 Fixture（session 級別）
 @pytest.fixture(scope="session")
 def config_file(request):
-    """獲取命令行參數 --config-file 的值"""
+    """
+    獲取命令行參數 --config-file 的值
+    
+    Scope: session（整個測試會話只執行一次）
+    用途: 獲取配置文件路徑
+    返回: 配置文件路徑字符串，預設為 config/capabilities.yaml
+    """
     return request.config.getoption("--config-file")
 
+# 3. 配置管理器 Fixture（session 級別）
 @pytest.fixture(scope="session")
 def config_manager(config_file):
-    """獲取配置管理器實例"""
+    """
+    獲取配置管理器實例（單例模式）
+    
+    Scope: session（整個測試會話只執行一次）
+    用途: 管理配置文件的載入和解析
+    依賴: config_file fixture
+    返回: ConfigManager 實例
+    """
     return get_config_manager(config_file)
 
+# 4. 平台 Capabilities Fixture（session 級別）
 @pytest.fixture(scope="session")
 def capabilities(config_manager, platform):
-    """獲取指定平台的 capabilities 配置"""
+    """
+    獲取指定平台的 capabilities 配置
+    
+    Scope: session（整個測試會話只執行一次）
+    用途: 根據平台參數獲取對應的 Appium 啟動配置
+    依賴: config_manager 和 platform fixtures
+    返回: 包含平台特定配置的字典
+    """
     return config_manager.get_platform_capabilities(platform)
 
+# 5. Appium Driver Fixture（session 級別）
 @pytest.fixture(scope="session")
 def driver(capabilities):
-    """根據平台參數初始化 Appium Driver"""
+    """
+    根據平台參數初始化 Appium Driver
+    
+    Scope: session（整個測試會話只執行一次）
+    用途: 建立和關閉 Appium Driver 連接
+    依賴: capabilities fixture
+    返回: Appium Driver 實例
+    
+    特點: 
+    - 在測試開始時自動初始化 Driver
+    - 在測試結束後自動關閉 Driver
+    - 使用 request.addfinalizer() 保證資源釋放
+    """
     print(f"正在初始化平台的 Driver...")
     print("使用的 Capabilities 配置:")
     for key, value in capabilities.items():
@@ -2586,10 +2734,14 @@ def driver(capabilities):
         desired_capabilities=capabilities
     )
 
+    # 測試結束後的清理函數
     def teardown():
+        print("\n正在關閉 Driver 連接...")
         driver.quit()
     
+    # 註冊清理函數
     request.addfinalizer(teardown)
+    
     return driver
 
         </code></pre>
