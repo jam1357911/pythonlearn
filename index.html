@@ -1318,7 +1318,11 @@ print(User.how_many_users())</code></pre>
             <h3>5. 使用 YAML 配置文件管理 Capability</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-yaml"># capabilities.yaml
+          <pre><code class="language-bash"># 1) 創建配置文件結構
+mkdir -p config
+# 創建 capabilities.yaml 文件
+cat > config/capabilities.yaml << 'EOF'
+# Appium 配置文件
 platforms:
   android:
     platformName: "Android"
@@ -1348,6 +1352,17 @@ common:
   newCommandTimeout: 60
   language: "zh-CN"
   locale: "zh_CN"
+
+# 測試數據配置
+test_data:
+  login:
+    valid:
+      username: "testuser"
+      password: "password123"
+    invalid:
+      username: "invalid"
+      password: "wrong"
+EOF
 driver = webdriver.Remote(
     command_executor="http://localhost:4723/wd/hub",
     desired_capabilities=desired_caps_android
@@ -2391,30 +2406,137 @@ def driver(request, platform):
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>6. 使用 Fixture 載入 YAML 配置</h3>
+            <h3>6. 創建配置管理模組</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python">import yaml
-import pytest
+          <pre><code class="language-bash"># 2) 創建配置管理文件
+touch config/__init__.py
+cat > config/config_manager.py << 'EOF'
+import yaml
+import os
+
+class ConfigManager:
+    """配置管理器 - 用於加載和管理 YAML 配置文件"""
+    
+    def __init__(self, config_file="config/capabilities.yaml"):
+        """初始化配置管理器
+        
+        Args:
+            config_file: 配置文件路徑，預設為 config/capabilities.yaml
+        """
+        self.config_file = config_file
+        self._config = None
+        self._load_config()
+    
+    def _load_config(self):
+        """載入配置文件"""
+        try:
+            with open(self.config_file, 'r', encoding='utf-8') as file:
+                self._config = yaml.safe_load(file)
+            print(f"成功載入配置文件: {self.config_file}")
+        except FileNotFoundError:
+            raise Exception(f"配置文件未找到: {self.config_file}")
+        except yaml.YAMLError as e:
+            raise Exception(f"配置文件格式錯誤: {e}")
+        except Exception as e:
+            raise Exception(f"載入配置文件時發生錯誤: {e}")
+    
+    def reload_config(self):
+        """重新載入配置文件"""
+        self._load_config()
+    
+    def get_platform_capabilities(self, platform):
+        """獲取指定平台的 capabilities 配置
+        
+        Args:
+            platform: 平台名稱 ("android" 或 "ios")
+            
+        Returns:
+            dict: 平台的 capabilities 配置
+        """
+        if platform not in self._config.get('platforms', {}):
+            raise Exception(f"不支援的平台: {platform}")
+        
+        # 合併平台特定配置和共用配置
+        capabilities = self._config['platforms'][platform].copy()
+        capabilities.update(self._config.get('common', {}))
+        return capabilities
+    
+    def get_test_data(self, key_path):
+        """獲取測試數據配置
+        
+        Args:
+            key_path: 配置項的路徑，例如 "login.valid"
+            
+        Returns:
+            配置項的值
+        """
+        keys = key_path.split('.')
+        data = self._config.get('test_data', {})
+        
+        try:
+            for key in keys:
+                data = data[key]
+            return data
+        except KeyError:
+            raise Exception(f"配置項未找到: {key_path}")
+    
+    def get_all_config(self):
+        """獲取完整的配置字典"""
+        return self._config
+    
+    def get_config_value(self, key_path, default=None):
+        """獲取配置值
+        
+        Args:
+            key_path: 配置項的路徑，例如 "common.language"
+            default: 預設值，若配置項不存在則返回此值
+            
+        Returns:
+            配置項的值或預設值
+        """
+        keys = key_path.split('.')
+        data = self._config
+        
+        try:
+            for key in keys:
+                data = data[key]
+            return data
+        except (KeyError, TypeError):
+            return default
+
+# 創建單例實例
+_config_manager = None
+
+def get_config_manager(config_file="config/capabilities.yaml"):
+    """獲取配置管理器實例
+    
+    Args:
+        config_file: 配置文件路徑
+        
+    Returns:
+        ConfigManager: 配置管理器實例
+    """
+    global _config_manager
+    if _config_manager is None:
+        _config_manager = ConfigManager(config_file)
+    return _config_manager
+EOF
+
+        </code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>7. 在 pytest 中使用配置管理器</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">import pytest
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
-# 載入 YAML 配置
-def load_config():
-    """載入 capabilities.yaml 配置文件"""
-    with open('capabilities.yaml', 'r', encoding='utf-8') as file:
-        return yaml.safe_load(file)
-
-# 獲取指定平台的配置
-def get_capabilities(platform):
-    """獲取指定平台的 capabilities 配置"""
-    config = load_config()
-    # 合併平台特定配置和共用配置
-    capabilities = config['platforms'].get(platform, {})
-    capabilities.update(config.get('common', {}))
-    return capabilities
+from config.config_manager import get_config_manager
 
 # 命令行參數配置
 def pytest_addoption(parser):
@@ -2424,6 +2546,12 @@ def pytest_addoption(parser):
         default="android", 
         help="指定測試平台: android 或 ios"
     )
+    parser.addoption(
+        "--config-file", 
+        action="store", 
+        default="config/capabilities.yaml", 
+        help="指定配置文件路徑"
+    )
 
 @pytest.fixture(scope="session")
 def platform(request):
@@ -2431,25 +2559,226 @@ def platform(request):
     return request.config.getoption("--platform").lower()
 
 @pytest.fixture(scope="session")
-def driver(platform):
+def config_file(request):
+    """獲取命令行參數 --config-file 的值"""
+    return request.config.getoption("--config-file")
+
+@pytest.fixture(scope="session")
+def config_manager(config_file):
+    """獲取配置管理器實例"""
+    return get_config_manager(config_file)
+
+@pytest.fixture(scope="session")
+def capabilities(config_manager, platform):
+    """獲取指定平台的 capabilities 配置"""
+    return config_manager.get_platform_capabilities(platform)
+
+@pytest.fixture(scope="session")
+def driver(capabilities):
     """根據平台參數初始化 Appium Driver"""
-    capabilities = get_capabilities(platform)
-    
-    print(f"正在初始化 {platform} 平台的 Driver...")
+    print(f"正在初始化平台的 Driver...")
     print("使用的 Capabilities 配置:")
     for key, value in capabilities.items():
         print(f"  {key}: {value}")
     
     driver = webdriver.Remote(
         command_executor="http://localhost:4723/wd/hub",
-        desired_capabilities=desired_caps
+        desired_capabilities=capabilities
     )
-    
+
     def teardown():
         driver.quit()
     
     request.addfinalizer(teardown)
     return driver
+
+        </code></pre>
+        </article>
+
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>8. 在測試中使用配置數據</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">import pytest
+from config.config_manager import get_config_manager
+
+@pytest.fixture(scope="function")
+def test_data(config_manager):
+    """獲取測試數據配置"""
+    return config_manager.get_test_data
+
+def test_load_config():
+    """測試配置文件載入"""
+    config_manager = get_config_manager()
+    assert config_manager is not None
+    print("配置文件載入成功")
+    
+    # 獲取完整配置
+    full_config = config_manager.get_all_config()
+    assert 'platforms' in full_config
+    assert 'common' in full_config
+    assert 'test_data' in full_config
+    
+    print("配置結構正確")
+
+def test_get_platform_capabilities():
+    """測試獲取平台 capabilities 配置"""
+    config_manager = get_config_manager()
+    
+    # 獲取 Android 平台配置
+    android_caps = config_manager.get_platform_capabilities('android')
+    assert android_caps['platformName'] == 'Android'
+    assert android_caps['platformVersion'] == '13'
+    assert 'appPackage' in android_caps
+    print("Android 平台配置獲取成功")
+    
+    # 獲取 iOS 平台配置
+    ios_caps = config_manager.get_platform_capabilities('ios')
+    assert ios_caps['platformName'] == 'iOS'
+    assert ios_caps['platformVersion'] == '16'
+    assert 'bundleId' in ios_caps
+    print("iOS 平台配置獲取成功")
+
+def test_get_test_data():
+    """測試獲取測試數據配置"""
+    config_manager = get_config_manager()
+    
+    # 獲取登錄數據
+    login_data = config_manager.get_test_data('login')
+    assert 'valid' in login_data
+    assert 'invalid' in login_data
+    print("登錄測試數據獲取成功")
+    
+    # 獲取有效的登錄數據
+    valid_login = config_manager.get_test_data('login.valid')
+    assert valid_login['username'] == 'testuser'
+    assert valid_login['password'] == 'password123'
+    print("有效登錄數據獲取成功")
+    
+    # 獲取無效的登錄數據
+    invalid_login = config_manager.get_test_data('login.invalid')
+    assert invalid_login['username'] == 'invalid'
+    assert invalid_login['password'] == 'wrong'
+    print("無效登錄數據獲取成功")
+
+def test_get_config_value():
+    """測試獲取配置值的方法"""
+    config_manager = get_config_manager()
+    
+    # 獲取存在的配置項
+    language = config_manager.get_config_value('common.language')
+    assert language == 'zh-CN'
+    print(f"語言配置: {language}")
+    
+    # 獲取不存在的配置項
+    not_exists = config_manager.get_config_value('not.exists', 'default')
+    assert not_exists == 'default'
+    print(f"不存在的配置項返回預設值: {not_exists}")
+
+def test_combined_usage(test_data):
+    """測試配置數據在測試中的使用"""
+    # 使用 fixture 獲取測試數據
+    valid_credentials = test_data('login.valid')
+    invalid_credentials = test_data('login.invalid')
+    
+    print("有效的登錄憑證:")
+    print(f"  用戶名: {valid_credentials['username']}")
+    print(f"  密碼: {valid_credentials['password']}")
+    
+    print("\n無效的登錄憑證:")
+    print(f"  用戶名: {invalid_credentials['username']}")
+    print(f"  密碼: {invalid_credentials['password']}")
+    
+    # 模擬登錄測試
+    assert len(valid_credentials['username']) > 0
+    assert len(valid_credentials['password']) >= 8
+
+def test_load_config():
+    """測試配置文件載入"""
+    config_manager = get_config_manager()
+    assert config_manager is not None
+    print("配置文件載入成功")
+    
+    # 獲取完整配置
+    full_config = config_manager.get_all_config()
+    assert 'platforms' in full_config
+    assert 'common' in full_config
+    assert 'test_data' in full_config
+    
+    print("配置結構正確")
+
+def test_get_platform_capabilities():
+    """測試獲取平台 capabilities 配置"""
+    config_manager = get_config_manager()
+    
+    # 獲取 Android 平台配置
+    android_caps = config_manager.get_platform_capabilities('android')
+    assert android_caps['platformName'] == 'Android'
+    assert android_caps['platformVersion'] == '13'
+    assert 'appPackage' in android_caps
+    print("Android 平台配置獲取成功")
+    
+    # 獲取 iOS 平台配置
+    ios_caps = config_manager.get_platform_capabilities('ios')
+    assert ios_caps['platformName'] == 'iOS'
+    assert ios_caps['platformVersion'] == '16'
+    assert 'bundleId' in ios_caps
+    print("iOS 平台配置獲取成功")
+
+def test_get_test_data():
+    """測試獲取測試數據配置"""
+    config_manager = get_config_manager()
+    
+    # 獲取登錄數據
+    login_data = config_manager.get_test_data('login')
+    assert 'valid' in login_data
+    assert 'invalid' in login_data
+    print("登錄測試數據獲取成功")
+    
+    # 獲取有效的登錄數據
+    valid_login = config_manager.get_test_data('login.valid')
+    assert valid_login['username'] == 'testuser'
+    assert valid_login['password'] == 'password123'
+    print("有效登錄數據獲取成功")
+    
+    # 獲取無效的登錄數據
+    invalid_login = config_manager.get_test_data('login.invalid')
+    assert invalid_login['username'] == 'invalid'
+    assert invalid_login['password'] == 'wrong'
+    print("無效登錄數據獲取成功")
+
+def test_get_config_value():
+    """測試獲取配置值的方法"""
+    config_manager = get_config_manager()
+    
+    # 獲取存在的配置項
+    language = config_manager.get_config_value('common.language')
+    assert language == 'zh-CN'
+    print(f"語言配置: {language}")
+    
+    # 獲取不存在的配置項
+    not_exists = config_manager.get_config_value('not.exists', 'default')
+    assert not_exists == 'default'
+    print(f"不存在的配置項返回預設值: {not_exists}")
+
+def test_combined_usage(test_data):
+    """測試配置數據在測試中的使用"""
+    # 使用 fixture 獲取測試數據
+    valid_credentials = test_data('login.valid')
+    invalid_credentials = test_data('login.invalid')
+    
+    print("有效的登錄憑證:")
+    print(f"  用戶名: {valid_credentials['username']}")
+    print(f"  密碼: {valid_credentials['password']}")
+    
+    print("\n無效的登錄憑證:")
+    print(f"  用戶名: {invalid_credentials['username']}")
+    print(f"  密碼: {invalid_credentials['password']}")
+    
+    # 模擬登錄測試
+    assert len(valid_credentials['username']) > 0
+    assert len(valid_credentials['password']) >= 8
 
 
 # 定位器管理
