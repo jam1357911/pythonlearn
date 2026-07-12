@@ -228,20 +228,20 @@ if data is None:
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python"># 基本 if 語句
-age = 18
-if age >= 18:
-    print("你是成年人")
+age = 18                          # 定義變數 age，值為 18
+if age >= 18:                     # 條件判斷：如果 age 大於等於 18
+    print("你是成年人")          # 條件成立時執行此程式碼
 
 # 判斷數值大小
-score = 85
-if score >= 90:
-    print("優秀")
-if score >= 80 and score < 90:
-    print("良好")
-if score >= 70 and score < 80:
-    print("中等")
-if score < 70:
-    print("需要努力")</code></pre>
+score = 85                        # 定義變數 score，值為 85
+if score >= 90:                   # 如果分數大於等於 90
+    print("優秀")                 # 輸出 "優秀"
+if score >= 80 and score < 90:    # 如果分數在 80-89 之間
+    print("良好")                 # 輸出 "良好"
+if score >= 70 and score < 80:    # 如果分數在 70-79 之間
+    print("中等")                 # 輸出 "中等"
+if score < 70:                    # 如果分數小於 70
+    print("需要努力")            # 輸出 "需要努力"</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
@@ -250,25 +250,25 @@ if score < 70:
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python"># 判斷奇偶數
-num = 7
-if num % 2 == 0:
-    print(f"{num} 是偶數")
-else:
-    print(f"{num} 是奇數")
+num = 7                          # 定義變數 num，值為 7
+if num % 2 == 0:                 # 條件判斷：如果 num 除以 2 的餘數為 0
+    print(f"{num} 是偶數")      # 條件成立時執行，使用 f-string 格式化輸出
+else:                            # 條件不成立時執行
+    print(f"{num} 是奇數")      # 輸出 num 是奇數
 
 # 檢查密碼長度
-password = "secure123"
-if len(password) >= 8:
-    print("密碼長度符合要求")
-else:
-    print("密碼長度不足")
+password = "secure123"          # 定義變數 password，值為 "secure123"
+if len(password) >= 8:          # 條件判斷：如果 password 的長度大於等於 8
+    print("密碼長度符合要求")    # 條件成立時執行，輸出 "密碼長度符合要求"
+else:                            # 條件不成立時執行
+    print("密碼長度不足")       # 輸出 "密碼長度不足"
 
 # 檢查用戶是否登錄
-is_logged_in = False
-if is_logged_in:
-    print("歡迎回來")
-else:
-    print("請先登錄")</code></pre>
+is_logged_in = False            # 定義布爾變數 is_logged_in，值為 False（未登錄）
+if is_logged_in:                # 條件判斷：如果 is_logged_in 為 True（已登錄）
+    print("歡迎回來")           # 已登錄時顯示歡迎信息
+else:                            # 未登錄時執行
+    print("請先登錄")           # 提示用戶先登錄</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
@@ -745,42 +745,42 @@ print(cos(pi))    # -1.0</code></pre>
           <pre><code class="language-python"># 定義類別
 class Person:
     """代表人類的類別"""
-    species = "Homo sapiens"
+    species = "Homo sapiens"              # 類別屬性：所有 Person 物件共享此屬性
     
     def __init__(self, name, age):
-        """初始化方法"""
-        self.name = name
-        self.age = age
+        """初始化方法 - 物件建立時自動呼叫"""
+        self.name = name                  # 實例屬性：name 屬性
+        self.age = age                    # 實例屬性：age 屬性
     
     def greet(self):
         """問候方法"""
-        print(f"你好，我叫 {self.name}，今年 {self.age} 歲")
+        print(f"你好，我叫 {self.name}，今年 {self.age} 歲")  # 使用 self 存取實例屬性
     
     def celebrate_birthday(self):
         """過生日方法"""
-        self.age += 1
-        print(f"祝 {self.name} 生日快樂！現在 {self.age} 歲了")
+        self.age += 1                     # 修改 age 屬性
+        print(f"祝 {self.name} 生日快樂！現在 {self.age} 歲了")  # 顯示生日祝福
 
 # 建立物件
-person1 = Person("張小明", 25)
-person2 = Person("李小華", 30)
+person1 = Person("張小明", 25)           # 建立第一個 Person 物件
+person2 = Person("李小華", 30)           # 建立第二個 Person 物件
 
 # 存取類別屬性
-print(Person.species)  # 輸出: Homo sapiens
-print(person1.species)  # 輸出: Homo sapiens
-print(person2.species)  # 輸出: Homo sapiens
+print(Person.species)                    # 直接透過類別存取，輸出: Homo sapiens
+print(person1.species)                   # 透過物件存取，輸出: Homo sapiens
+print(person2.species)                   # 透過物件存取，輸出: Homo sapiens
 
 # 存取實例屬性
-print(person1.name)  # 輸出: 張小明
-print(person2.age)  # 輸出: 30
+print(person1.name)                     # 輸出: 張小明
+print(person2.age)                      # 輸出: 30
 
 # 呼叫實例方法
-person1.greet()  # 輸出: 你好，我叫 張小明，今年 25 歲
-person2.celebrate_birthday()  # 輸出: 祝 李小華 生日快樂！現在 31 歲了
+person1.greet()                         # 輸出: 你好，我叫 張小明，今年 25 歲
+person2.celebrate_birthday()            # 輸出: 祝 李小華 生日快樂！現在 31 歲了
 
 # 檢查物件類型
-print(type(person1))  # 輸出: <class '__main__.Person'>
-print(isinstance(person1, Person))  # 輸出: True</code></pre>
+print(type(person1))                    # 檢查物件類型，輸出: <class '__main__.Person'>
+print(isinstance(person1, Person))      # 檢查物件是否為 Person 類型，輸出: True</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
@@ -1464,31 +1464,36 @@ actions.long_press(element).perform()</code></pre>
               <h3>同一個元素兼容 Android / iOS locator</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
-            <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
+            <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy  # 導入 Appium 的定位器類
 
 
 class LoginPage:
+    # 定位器字典：根據平台返回對應的定位器
     LOCATORS = {
         "login_button": {
-            "android": (AppiumBy.ID, "com.demo:id/btn_login"),
-            "ios": (AppiumBy.ACCESSIBILITY_ID, "login_button"),
+            "android": (AppiumBy.ID, "com.demo:id/btn_login"),      # Android 平台使用 ID 定位
+            "ios": (AppiumBy.ACCESSIBILITY_ID, "login_button"),    # iOS 平台使用 Accessibility ID 定位
         },
         "username_input": {
-            "android": (AppiumBy.ID, "com.demo:id/input_username"),
-            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input"'),
+            "android": (AppiumBy.ID, "com.demo:id/input_username"), # Android 平台使用 ID 定位
+            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input"'),  # iOS 平台使用 Predicate 定位
         },
     }
 
     def __init__(self, driver):
-        self.driver = driver
+        """初始化 LoginPage 類"""
+        self.driver = driver                                      # 保存 Appium Driver 實例
+        # 獲取當前平台名稱，並轉為小寫
         self.platform = driver.capabilities.get("platformName", "").lower()
 
     def locator(self, name):
+        """根據元素名稱和當前平台返回定位器"""
         return self.LOCATORS[name][self.platform]
 
     def find(self, name):
-        by, value = self.locator(name)
-        return self.driver.find_element(by, value)</code></pre>
+        """根據元素名稱找到元素"""
+        by, value = self.locator(name)                            # 獲取定位方式和值
+        return self.driver.find_element(by, value)                 # 找到並返回元素</code></pre>
           </article>
 
           <article class="info-card deep-dive" data-reveal>
@@ -1999,54 +2004,55 @@ def test_skip_example():
               <h3>9. pytest 與 Appium 整合</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
-            <pre><code class="language-python">import pytest
-from appium import webdriver
-from appium.webdriver.common.appiumby import AppiumBy
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+            <pre><code class="language-python">import pytest                                            # 導入 pytest 框架
+from appium import webdriver                              # 導入 Appium WebDriver
+from appium.webdriver.common.appiumby import AppiumBy      # 導入 Appium 定位器
+from selenium.webdriver.support.ui import WebDriverWait    # 導入顯式等待工具
+from selenium.webdriver.support import expected_conditions as EC  # 導入預期條件
 
 
 # 命令行參數配置
 def pytest_addoption(parser):
+    """配置 pytest 命令行參數"""
     parser.addoption(
         "--platform", 
-        action="store", 
-        default="android", 
-        help="指定測試平台: android 或 ios"
+        action="store",                          # 參數存儲類型
+        default="android",                       # 預設值為 android
+        help="指定測試平台: android 或 ios"      # 參數說明
     )
 
 
 @pytest.fixture(scope="session")
 def platform(request):
     """獲取命令行參數 --platform 的值"""
-    return request.config.getoption("--platform").lower()
+    return request.config.getoption("--platform").lower()  # 獲取參數值並轉為小寫
 
 
 @pytest.fixture(scope="session")
 def driver(request, platform):
     """根據平台參數初始化 Appium Driver"""
     desired_caps = {
-        "platformName": platform.capitalize(),
-        "noReset": True,
-        "unicodeKeyboard": True,
-        "resetKeyboard": True
+        "platformName": platform.capitalize(),    # 平台名稱（首字母大寫）
+        "noReset": True,                          # 不要重置應用狀態
+        "unicodeKeyboard": True,                  # 使用 Unicode 鍵盤
+        "resetKeyboard": True                     # 測試後重置鍵盤
     }
     
     # 根據平台設置特定的 desired capabilities
     if platform == "android":
         desired_caps.update({
-            "platformVersion": "13",
-            "deviceName": "emulator-5554",
-            "appPackage": "com.example.app",
-            "appActivity": ".MainActivity",
-            "automationName": "UiAutomator2"
+            "platformVersion": "13",              # Android 版本
+            "deviceName": "emulator-5554",        # 模擬器名稱
+            "appPackage": "com.example.app",      # 應用包名
+            "appActivity": ".MainActivity",       # 啟動 Activity
+            "automationName": "UiAutomator2"      # 自動化引擎
         })
     elif platform == "ios":
         desired_caps.update({
-            "platformVersion": "16.4",
-            "deviceName": "iPhone 14",
-            "bundleId": "com.example.app",
-            "automationName": "XCUITest"
+            "platformVersion": "16.4",            # iOS 版本
+            "deviceName": "iPhone 14",            # 設備名稱
+            "bundleId": "com.example.app",        # 應用 Bundle ID
+            "automationName": "XCUITest"          # 自動化引擎
         })
     
     driver = webdriver.Remote(
@@ -2066,24 +2072,24 @@ class LoginPageLocators:
     """登錄頁面定位器 - 根據平台返回對應的定位器"""
     LOCATORS = {
         "username_input": {
-            "android": (AppiumBy.ID, "com.example.app:id/et_username"),
-            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input" OR label == "username_input"')
+            "android": (AppiumBy.ID, "com.example.app:id/et_username"),  # Android 使用 ID 定位
+            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input" OR label == "username_input"')  # iOS 使用 Predicate 定位
         },
         "password_input": {
-            "android": (AppiumBy.ID, "com.example.app:id/et_password"),
-            "ios": (AppiumBy.IOS_PREDICATE, 'name == "password_input" OR label == "password_input"')
+            "android": (AppiumBy.ID, "com.example.app:id/et_password"),  # Android 使用 ID 定位
+            "ios": (AppiumBy.IOS_PREDICATE, 'name == "password_input" OR label == "password_input"')  # iOS 使用 Predicate 定位
         },
         "login_button": {
-            "android": (AppiumBy.ID, "com.example.app:id/btn_login"),
-            "ios": (AppiumBy.ACCESSIBILITY_ID, "login_button")
+            "android": (AppiumBy.ID, "com.example.app:id/btn_login"),    # Android 使用 ID 定位
+            "ios": (AppiumBy.ACCESSIBILITY_ID, "login_button")          # iOS 使用 Accessibility ID 定位
         },
         "welcome_text": {
-            "android": (AppiumBy.ID, "com.example.app:id/tv_welcome"),
-            "ios": (AppiumBy.IOS_PREDICATE, 'name CONTAINS "Welcome"')
+            "android": (AppiumBy.ID, "com.example.app:id/tv_welcome"),  # Android 使用 ID 定位
+            "ios": (AppiumBy.IOS_PREDICATE, 'name CONTAINS "Welcome"')  # iOS 使用 Predicate 定位，包含文本
         },
         "error_message": {
-            "android": (AppiumBy.ID, "com.example.app:id/tv_error"),
-            "ios": (AppiumBy.IOS_PREDICATE, 'name CONTAINS "Error"')
+            "android": (AppiumBy.ID, "com.example.app:id/tv_error"),    # Android 使用 ID 定位
+            "ios": (AppiumBy.IOS_PREDICATE, 'name CONTAINS "Error"')    # iOS 使用 Predicate 定位，包含文本
         }
     }
     
@@ -2091,82 +2097,83 @@ class LoginPageLocators:
     def get_locator(cls, element_name, platform):
         """根據元素名稱和平台獲取定位器"""
         if element_name not in cls.LOCATORS:
-            raise ValueError(f"Element '{element_name}' not found in locators")
+            raise ValueError(f"Element '{element_name}' not found in locators")  # 元素不存在時拋異常
         
         if platform not in cls.LOCATORS[element_name]:
-            raise ValueError(f"Platform '{platform}' not supported for element '{element_name}'")
+            raise ValueError(f"Platform '{platform}' not supported for element '{element_name}'")  # 平台不支持時拋異常
         
-        return cls.LOCATORS[element_name][platform]
+        return cls.LOCATORS[element_name][platform]  # 返回定位器
 
 
 @pytest.fixture(scope="function")
 def login_page(driver, platform):
-    """登錄頁面物件"""
+    """登錄頁面物件 - Page Object 模式"""
     class LoginPage:
         def __init__(self, driver, platform):
-            self.driver = driver
-            self.platform = platform
+            self.driver = driver              # 保存 Driver 實例
+            self.platform = platform          # 保存平台信息
         
         def login(self, username, password):
-            # 找到並輸入用戶名
+            """登錄方法"""
+            # 找到並輸入用戶名（等待最多 10 秒）
             username_field = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(LoginPageLocators.get_locator("username_input", self.platform))
             )
-            username_field.clear()
-            username_field.send_keys(username)
+            username_field.clear()            # 清除輸入框
+            username_field.send_keys(username)  # 輸入用戶名
             
             # 找到並輸入密碼
             password_field = driver.find_element(*LoginPageLocators.get_locator("password_input", self.platform))
-            password_field.clear()
-            password_field.send_keys(password)
+            password_field.clear()            # 清除輸入框
+            password_field.send_keys(password)  # 輸入密碼
             
             # 點擊登錄按鈕
             login_button = driver.find_element(*LoginPageLocators.get_locator("login_button", self.platform))
-            login_button.click()
+            login_button.click()              # 點擊登錄按鈕
         
         def get_welcome_text(self):
             """獲取歡迎文字"""
             welcome_text = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(LoginPageLocators.get_locator("welcome_text", self.platform))
             )
-            return welcome_text.text
+            return welcome_text.text          # 返回歡迎文字
         
         def get_error_message(self):
             """獲取錯誤訊息"""
             error_message = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(LoginPageLocators.get_locator("error_message", self.platform))
             )
-            return error_message.text
+            return error_message.text         # 返回錯誤訊息
     
     return LoginPage(driver, platform)
 
 
 @pytest.mark.smoke
 def test_login_success(login_page):
-    """測試成功登錄"""
-    login_page.login("testuser", "password123")
+    """測試成功登錄 - 煙霧測試"""
+    login_page.login("testuser", "password123")  # 使用有效憑證登錄
     # 驗證登錄成功後的元素
-    welcome_text = login_page.get_welcome_text()
-    assert "Welcome" in welcome_text
+    welcome_text = login_page.get_welcome_text()  # 獲取歡迎文字
+    assert "Welcome" in welcome_text             # 驗證歡迎文字包含 "Welcome"
 
 
 @pytest.mark.negative
 def test_login_invalid_credentials(login_page):
-    """測試無效憑證登錄"""
-    login_page.login("invalid", "wrong")
+    """測試無效憑證登錄 - 負面測試"""
+    login_page.login("invalid", "wrong")        # 使用無效憑證登錄
     # 驗證錯誤訊息
-    error_message = login_page.get_error_message()
-    assert "Invalid" in error_message
+    error_message = login_page.get_error_message()  # 獲取錯誤訊息
+    assert "Invalid" in error_message           # 驗證錯誤訊息包含 "Invalid"
 
 
 @pytest.mark.parametrize("username, password", [
-    ("emptyuser", ""),
-    ("", "password123"),
-    ("", ""),
+    ("emptyuser", ""),   # 用戶名不為空，密碼為空
+    ("", "password123"), # 用戶名為空，密碼不為空
+    ("", ""),            # 用戶名和密碼都為空
 ])
 def test_login_empty_fields(login_page, username, password):
-    """測試空字段登錄"""
-    login_page.login(username, password)
+    """測試空字段登錄 - 參數化測試"""
+    login_page.login(username, password)        # 使用參數化的字段值登錄
     assert True  # 應顯示字段驗證訊息
 
 
