@@ -277,43 +277,44 @@ else:                            # 未登錄時執行
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python"># 成績等級評定
-score = 87
-if score >= 90:
-    grade = "A"
-    comment = "優秀"
-elif score >= 80:
-    grade = "B"
-    comment = "良好"
-elif score >= 70:
-    grade = "C"
-    comment = "中等"
-elif score >= 60:
-    grade = "D"
-    comment = "及格"
-else:
-    grade = "F"
-    comment = "不及格"
+score = 87                    # 定義變數 score，值為 87
+if score >= 90:               # 如果分數大於等於 90
+    grade = "A"               # 等級為 A
+    comment = "優秀"          # 評語為 "優秀"
+elif score >= 80:             # 如果分數在 80-89 之間
+    grade = "B"               # 等級為 B
+    comment = "良好"          # 評語為 "良好"
+elif score >= 70:             # 如果分數在 70-79 之間
+    grade = "C"               # 等級為 C
+    comment = "中等"          # 評語為 "中等"
+elif score >= 60:             # 如果分數在 60-69 之間
+    grade = "D"               # 等級為 D
+    comment = "及格"          # 評語為 "及格"
+else:                         # 如果分數低於 60
+    grade = "F"               # 等級為 F
+    comment = "不及格"        # 評語為 "不及格"
+# 使用 f-string 格式化輸出
 print(f"成績: {score}, 等級: {grade}, 評語: {comment}")
 
 # 根據季節判斷穿著建議
-month = 11
-if 3 <= month <= 5:
-    print("春季：穿薄外套")
-elif 6 <= month <= 8:
-    print("夏季：穿短袖")
-elif 9 <= month <= 11:
-    print("秋季：穿厚外套")
-else:
-    print("冬季：穿羽絨服")
+month = 11                    # 定義變數 month，值為 11（11月）
+if 3 <= month <= 5:           # 如果是 3-5 月（春季）
+    print("春季：穿薄外套")     # 輸出春季穿著建議
+elif 6 <= month <= 8:         # 如果是 6-8 月（夏季）
+    print("夏季：穿短袖")       # 輸出夏季穿著建議
+elif 9 <= month <= 11:        # 如果是 9-11 月（秋季）
+    print("秋季：穿厚外套")     # 輸出秋季穿著建議
+else:                         # 如果是其他月份（冬季）
+    print("冬季：穿羽絨服")     # 輸出冬季穿著建議
 
 # 根據時間回應問候
-hour = 14
-if hour < 12:
-    print("早安")
-elif hour < 18:
-    print("下午好")
-else:
-    print("晚上好")</code></pre>
+hour = 14                     # 定義變數 hour，值為 14（下午 2 點）
+if hour < 12:                 # 如果是上午（小於 12 點）
+    print("早安")             # 輸出 "早安"
+elif hour < 18:               # 如果是下午（12-18 點）
+    print("下午好")           # 輸出 "下午好"
+else:                         # 如果是晚上（大於等於 18 點）
+    print("晚上好")           # 輸出 "晚上好"</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
@@ -791,34 +792,35 @@ print(isinstance(person1, Person))      # 檢查物件是否為 Person 類型，
           <pre><code class="language-python"># 類別屬性和實例屬性的區別
 class MyClass:
     # 類別屬性（所有實例共享）
-    class_attr = 0
+    class_attr = 0                    # 類別屬性，所有 MyClass 的實例共享此值
     
     def __init__(self, instance_attr):
+        """初始化方法"""
         # 實例屬性（每個實例獨有）
-        self.instance_attr = instance_attr
-        MyClass.class_attr += 1
+        self.instance_attr = instance_attr  # 實例屬性，每個實例有自己的值
+        MyClass.class_attr += 1       # 每次創建實例時，類別屬性加 1
 
-obj1 = MyClass("first")
-obj2 = MyClass("second")
+obj1 = MyClass("first")              # 創建第一個 MyClass 實例
+obj2 = MyClass("second")             # 創建第二個 MyClass 實例
 
 # 類別屬性值相同
-print(MyClass.class_attr)  # 2
-print(obj1.class_attr)     # 2
-print(obj2.class_attr)     # 2
+print(MyClass.class_attr)            # 輸出: 2，類別屬性直接從類別訪問
+print(obj1.class_attr)               # 輸出: 2，透過實例訪問類別屬性
+print(obj2.class_attr)               # 輸出: 2，透過實例訪問類別屬性
 
 # 實例屬性值不同
-print(obj1.instance_attr)  # first
-print(obj2.instance_attr)  # second
+print(obj1.instance_attr)            # 輸出: first，第一個實例的屬性值
+print(obj2.instance_attr)            # 輸出: second，第二個實例的屬性值
 
 # 修改類別屬性會影響所有實例
-MyClass.class_attr = 10
-print(obj1.class_attr)  # 10
-print(obj2.class_attr)  # 10
+MyClass.class_attr = 10              # 直接修改類別屬性
+print(obj1.class_attr)               # 輸出: 10，實例屬性隨之改變
+print(obj2.class_attr)               # 輸出: 10，實例屬性隨之改變
 
 # 修改實例屬性不會影響其他實例
-obj1.instance_attr = "modified"
-print(obj1.instance_attr)  # modified
-print(obj2.instance_attr)  # second</code></pre>
+obj1.instance_attr = "modified"      # 修改第一個實例的屬性
+print(obj1.instance_attr)            # 輸出: modified，只影響該實例
+print(obj2.instance_attr)            # 輸出: second，其他實例不受影響</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
@@ -2278,39 +2280,38 @@ uv init my-project
 cd my-project
 
 # 3) 建立並啟動虛擬環境
-uv venv
-uv venv --python 3.11  # 指定 Python 版本
+uv venv                                     # 建立預設 Python 版本的虛擬環境
+uv venv --python 3.11                       # 建立指定 Python 3.11 版本的虛擬環境
 
 # 4) 安裝套件
-uv pip install pytest
-uv pip install appium-python-client
-uv pip install requests==2.31.0  # 安裝特定版本
+uv pip install pytest                       # 使用 pip 安裝 pytest 測試框架
+uv pip install appium-python-client         # 安裝 Appium Python 客戶端
+uv pip install requests==2.31.0             # 安裝 requests 2.31.0 特定版本
 
 # 5) 安裝開發依賴
-uv pip install -e .[dev]  # 從 pyproject.toml 安裝開發依賴
+uv pip install -e .[dev]                    # 從 pyproject.toml 安裝開發依賴
 
 # 6) 執行命令
-uv run python script.py
-uv run pytest
+uv run python script.py                     # 使用 uv 虛擬環境執行 Python 腳本
+uv run pytest                               # 使用 uv 虛擬環境執行 pytest 測試
 
 # 7) 查看安裝的套件
-uv pip list
-uv pip list --outdated  # 檢查過時套件
+uv pip list                                 # 列出當前安裝的所有套件
+uv pip list --outdated                      # 檢查哪些套件有最新版本可用
 
 # 8) 建立 requirements.txt
-uv pip freeze > requirements.txt
-
+uv pip freeze > requirements.txt            # 凍結當前環境的套件版本
 # 9) 從 requirements.txt 安裝
-uv pip install -r requirements.txt
+uv pip install -r requirements.txt          # 從 requirements.txt 安裝套件
 
 # 10) 移除套件
-uv pip uninstall pytest
+uv pip uninstall pytest                     # 移除 pytest 套件
 
 # 11) 升級 uv
-uv self update
+uv self update                              # 更新 uv 工具本身
 
 # 12) 建立與執行指令
-uv run python -m pip install --upgrade pip</code></pre>
+uv run python -m pip install --upgrade pip  # 更新 pip 到最新版本</code></pre>
           </article>
           
           <article class="code-panel" data-reveal>
@@ -2336,26 +2337,26 @@ poetry env use 3.11  # 指定 Python 版本
 poetry shell  # 啟動虛擬環境
 
 # 5) 安裝套件
-poetry add pytest
-poetry add appium-python-client
-poetry add requests@latest  # 安裝最新版本
-poetry add requests=^2.31  # 安裝 2.x 系列最新版本
+poetry add pytest                          # 安裝 pytest 測試框架
+poetry add appium-python-client            # 安裝 Appium Python 客戶端
+poetry add requests@latest                 # 安裝 requests 庫的最新版本
+poetry add requests=^2.31                  # 安裝 requests 2.x 系列的最新版本
 
 # 6) 安裝開發依賴
-poetry add --dev pytest-xdist
-poetry add --dev pytest-html
+poetry add --dev pytest-xdist              # 安裝開發依賴：pytest 並行執行插件
+poetry add --dev pytest-html               # 安裝開發依賴：pytest HTML 報告插件
 
 # 7) 執行命令
-poetry run python script.py
-poetry run pytest
+poetry run python script.py                # 使用 poetry 虛擬環境執行 Python 腳本
+poetry run pytest                          # 使用 poetry 虛擬環境執行 pytest 測試
 
 # 8) 查看安裝的套件
-poetry show
-poetry show --tree  # 顯示依賴樹
-poetry show --latest  # 檢查過時套件
+poetry show                                 # 列出當前安裝的所有套件
+poetry show --tree                         # 顯示套件依賴樹結構
+poetry show --latest                       # 檢查哪些套件有最新版本可用
 
 # 9) 更新依賴
-poetry update
+poetry update                               # 更新所有套件到最新版本
 poetry update pytest  # 更新特定套件
 
 # 10) 移除套件
