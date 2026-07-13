@@ -113,11 +113,11 @@ uv / poetry</code></pre>
           <article class="info-card deep-dive" data-reveal>
             <h3>1. 基本語法介紹</h3>
             <ul>
-              <li>**縮排原則**：用 4 個空格縮排表示程式區塊，不要混合 tab 與空格。</li>
-              <li>**變數宣告**：直接指定值，不需要宣告型別，但 Python 依然有強型別特性。</li>
-              <li>**註解**：單行註解用 `#`，多行註解用 `"""` 或 `'''`。</li>
-              <li>**語句結束**：多行語句用 `\` 或在容器中自動斷行。</li>
-              <li>**常用內建函式**：`print()`、`input()`、`len()`、`type()`、`range()`、`sum()` 等。</li>
+              <li><strong>縮排原則</strong>：用 4 個空格縮排表示程式區塊，不要混合 tab 與空格。</li>
+              <li><strong>變數宣告</strong>：直接指定值，不需要宣告型別，但 Python 依然有強型別特性。</li>
+              <li><strong>註解</strong>：單行註解用 `#`；`"""` 或 `'''` 是字串（常作 docstring），教學上也可當段落說明用。</li>
+              <li><strong>語句結束</strong>：多行語句用 `\` 或在容器（括號、方括號）內自動斷行。</li>
+              <li><strong>常用內建函式</strong>：`print()`、`input()`、`len()`、`type()`、`range()`、`sum()` 等。</li>
             </ul>
           </article>
           
@@ -146,7 +146,7 @@ print(f"年齡: {age}, 分數: {score}")
 # === 運行結果範例 ===
 # 請輸入姓名: 張小明
 # 你好, 張小明!
-# 年齡: 25, 分數: 89.5
+# 年齡: 30, 分數: 89.5
 
 # 資料類型轉換
 num_str = "100"
@@ -166,7 +166,7 @@ num_float = 3.14      # 浮點數
 num_complex = 3 + 4j  # 複數
 
 # 2) 字串類型 (String)
-str1 = "單引號字串"
+str1 = '單引號字串'
 str2 = "雙引號字串"
 str3 = """多行
 字串"""
@@ -371,7 +371,7 @@ print(f"原價: {total_amount}, 折扣: {discount*100}%, 價格: {final_amount:.
 
 # === 運行結果範例 ===
 # 可以開車
-# 原價: 150, 折扣: 0%, 價格: 150.00
+# 原價: 150, 折扣: 15.0%, 價格: 127.50
 
 # 檢查密碼強度
 password = "SecurePass123!"
@@ -595,7 +595,8 @@ for i in range(1, 4):
             <h3>4.5 列表解析式 - 快速創建列表</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python"># 基本列表解析式
+          <pre><code class="language-python"># 列表解析式：用一行取代 for 迴圈建立新列表，適合簡單轉換
+# 基本列表解析式
 numbers = [1, 2, 3, 4, 5]
 squared = [x**2 for x in numbers]
 print("平方列表:", squared)
@@ -733,9 +734,14 @@ print(add(3, 4))    # 7</code></pre>
             <h3>5.4 函式修飾器 (Decorators)</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python"># 基本修飾器
+          <pre><code class="language-python"># 修飾器本質：接收函式、回傳包裝後的新函式
+# 實務上建議搭配 functools.wraps 保留原函式名稱與 docstring
+import functools
+
+# 基本修飾器
 def debug_decorator(func):
     """印出函式呼叫和回傳值的修飾器"""
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         print(f"呼叫函式 {func.__name__}，參數: {args}, {kwargs}")
         result = func(*args, **kwargs)
@@ -758,6 +764,7 @@ multiply(5, 6)
 import time
 def timing_decorator(func):
     """測量函式執行時間的修飾器"""
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         start = time.time()
         result = func(*args, **kwargs)
@@ -797,7 +804,7 @@ print(f"聖誕節: {specific_date}")
 specific_time = time(15, 30, 45)
 print(f"特定時間: {specific_time}")
 
-# 使用別名導入
+# 使用別名導入（需先安裝：pip install numpy）
 import numpy as np
 array = np.array([1, 2, 3, 4, 5])
 print(f"陣列平均值: {np.mean(array)}")
@@ -1051,7 +1058,7 @@ duck.swim()        # 輸出: 會游泳
 duck.make_sound()  # 輸出: 呱呱叫
 duck.quack()       # 輸出: 鴨子呱呱叫
 
-# 檢查方法解析順序
+# 檢查方法解析順序（MRO：決定多重繼承時方法呼叫順序）
 print(Duck.mro())  # 輸出: [&lt;class '__main__.Duck'&gt;, &lt;class '__main__.Flyable'&gt;, &lt;class '__main__.Swimmable'&gt;, &lt;class 'object'&gt;]
 
 # 單繼承和多重繼承的比較
@@ -1171,7 +1178,7 @@ print_shape_info(rectangle)
             <h3>6. 封裝和屬性裝飾器</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python"># 使用封裝保護內部狀態
+          <pre><code class="language-python"># 使用封裝保護內部狀態（Python 的 _ / __ 是命名慣例，不是真正的 private）
 class BankAccount:
     def __init__(self, account_number, initial_balance):
         self._account_number = account_number  # 受保護屬性
@@ -1450,6 +1457,9 @@ print(User.how_many_users())</code></pre>
           <p class="section-intro">
             Appium 是一個開源的行動自動化測試框架，支援 Android 與 iOS 平台。本章節會詳細介紹
             環境設定、元素定位、等待策略、跨平台適配、以及當 click() 失敗時的處理方法。
+            <strong>以下範例採用 Appium 2.x 與 Python Client 3.x 寫法</strong>（伺服器位址為
+            <code>http://localhost:4723</code>，使用 <code>AppiumOptions</code> 取代舊版
+            <code>desired_capabilities</code>）。
           </p>
         </div>
 
@@ -1512,7 +1522,8 @@ print(User.how_many_users())</code></pre>
           </div>
           <pre><code class="language-bash"># 1) 創建配置文件結構
 mkdir -p config
-# 創建 capabilities.yaml 文件
+
+# 2) 創建 capabilities.yaml（注意 test_data 是獨立頂層鍵，不要縮排到 common 底下）
 cat > config/capabilities.yaml << 'EOF'
 # Appium 配置文件
 platforms:
@@ -1528,7 +1539,7 @@ platforms:
     unicodeKeyboard: true
     resetKeyboard: true
     app: "/path/to/your/android/app.apk"
-  
+
   ios:
     platformName: "iOS"
     platformVersion: "16"
@@ -1539,13 +1550,14 @@ platforms:
     fullReset: false
     app: "/path/to/your/ios/app.ipa"
 
-# 共用配置
+# 共用 capability（會合併進各平台設定）
 common:
   newCommandTimeout: 60
   language: "zh-CN"
   locale: "zh_CN"
 
-# 測試數據配置
+# 測試數據（ConfigManager.get_test_data() 會讀取這個區塊）
+test_data:
   login:
     valid:
       username: "testuser"
@@ -1553,102 +1565,58 @@ common:
     invalid:
       username: "invalid"
       password: "wrong"
-EOF
-    valid:
-      username: "testuser"
-      password: "password123"
-    invalid:
-      username: "invalid"
-      password: "wrong"
-EOF
-# 使用讀取到的 YAML 配置初始化 Appium Driver
-import yaml
-import os
-from appium import webdriver
+EOF</code></pre>
+        </article>
 
-# 讀取 YAML 配置文件
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>5.1 用 Python 讀取 YAML 並啟動 Driver</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <pre><code class="language-python">import os
+import yaml
+from appium import webdriver
+from appium.options.common import AppiumOptions
+
+# Appium 2.x 預設位址為 http://localhost:4723（不含 /wd/hub）
+APPIUM_SERVER = "http://localhost:4723"
+
+
 def load_capabilities(platform="android"):
-    """
-    從 YAML 文件加載 capabilities 配置
-    """
-    config_file = 'config/capabilities.yaml'
-    
+    """從 YAML 載入並合併平台與共用 capability"""
+    config_file = "config/capabilities.yaml"
+
     if not os.path.exists(config_file):
         raise FileNotFoundError(f"配置文件不存在: {config_file}")
-    
-    try:
-        with open(config_file, 'r', encoding='utf-8') as f:
-            config = yaml.safe_load(f)
-        
-        # 獲取平台特定配置
-        if platform not in config.get('platforms', {}):
-            raise ValueError(f"不支援的平台: {platform}")
-        
-        platform_config = config['platforms'][platform]
-        
-        # 合併共用配置
-        capabilities = platform_config.copy()
-        capabilities.update(config.get('common', {}))
-        
-        return capabilities
-    
-    except Exception as e:
-        raise Exception(f"載入配置時發生錯誤: {e}")
 
-# 初始化 Appium Driver
+    with open(config_file, "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+
+    if platform not in config.get("platforms", {}):
+        raise ValueError(f"不支援的平台: {platform}")
+
+    capabilities = config["platforms"][platform].copy()
+    capabilities.update(config.get("common", {}))
+    return capabilities
+
+
 def initialize_driver(platform="android"):
-    """
-    使用 YAML 配置初始化 Appium Driver
-    """
-    try:
-        capabilities = load_capabilities(platform)
-        print(f"正在初始化 {platform} 平台的 Driver...")
-        
-        driver = webdriver.Remote(
-            command_executor="http://localhost:4723/wd/hub",
-            desired_capabilities=capabilities
-        )
-        
-        return driver
-    
-    except Exception as e:
-        print(f"初始化 Driver 失敗: {e}")
-        return None
+    """使用 YAML 配置初始化 Appium Driver"""
+    capabilities = load_capabilities(platform)
+    print(f"正在初始化 {platform} 平台的 Driver...")
 
-# 使用示例
+    options = AppiumOptions()
+    options.load_capabilities(capabilities)
+
+    return webdriver.Remote(command_executor=APPIUM_SERVER, options=options)
+
+
 if __name__ == "__main__":
-    # 使用 Android 平台
     android_driver = initialize_driver("android")
-    if android_driver:
-        print("Android Driver 初始化成功")
-        print(f"裝置名稱: {android_driver.capabilities['deviceName']}")
-        print(f"平台版本: {android_driver.capabilities['platformVersion']}")
-        android_driver.quit()
-        print("Android Driver 已關閉")
-    
-    print()
-    
-    # 使用 iOS 平台
-    ios_driver = initialize_driver("ios")
-    if ios_driver:
-        print("iOS Driver 初始化成功")
-        print(f"裝置名稱: {ios_driver.capabilities['deviceName']}")
-        print(f"平台版本: {ios_driver.capabilities['platformVersion']}")
-        ios_driver.quit()
-        print("iOS Driver 已關閉")
-
-# === 運行結果範例 ===
-# 正在初始化 android 平台的 Driver...
-# Android Driver 初始化成功
-# 裝置名稱: emulator-5554
-# 平台版本: 13
-# Android Driver 已關閉
-# 
-# 正在初始化 ios 平台的 Driver...
-# iOS Driver 初始化成功
-# 裝置名稱: iPhone 14
-# 平台版本: 16
-# iOS Driver 已關閉</code></pre>
+    print("Android Driver 初始化成功")
+    print(f"裝置名稱: {android_driver.capabilities['deviceName']}")
+    android_driver.quit()
+    print("Android Driver 已關閉")</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
@@ -1656,57 +1624,36 @@ if __name__ == "__main__":
             <h3>6. 直接讀取 YAML 文件示例</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python">import yaml
-import os
+          <pre><code class="language-python">import os
+import yaml
 from appium import webdriver
+from appium.options.common import AppiumOptions
 
-# 直接讀取 YAML 文件的基本方法
+APPIUM_SERVER = "http://localhost:4723"
+
+
 def read_yaml_file():
-    """
-    直接使用 with open() 和 yaml.safe_load() 讀取配置文件
-    """
-    
-    config_file = 'config/capabilities.yaml'
-    
+    """直接使用 with open() 和 yaml.safe_load() 讀取配置文件"""
+    config_file = "config/capabilities.yaml"
     if not os.path.exists(config_file):
         return None
-    
-    try:
-        with open(config_file, 'r', encoding='utf-8') as f:
-            config = yaml.safe_load(f)
-        return config
-    except Exception:
+    with open(config_file, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def initialize_driver(platform="android"):
+    """使用配置文件初始化 Appium Driver"""
+    config = read_yaml_file()
+    if not config or platform not in config.get("platforms", {}):
         return None
 
-# 使用讀取到的配置初始化 Appium Driver
-def initialize_driver(platform="android"):
-    """
-    使用配置文件初始化 Appium Driver
-    """
-    
-    config = read_yaml_file()
-    if not config:
-        return None
-    
-    # 檢查平台是否受支援
-    if platform not in config.get('platforms', {}):
-        return None
-    
-    # 獲取平台特定配置
-    platform_config = config['platforms'][platform]
-    
-    # 合併共用配置
-    capabilities = platform_config.copy()
-    capabilities.update(config.get('common', {}))
-    
+    capabilities = config["platforms"][platform].copy()
+    capabilities.update(config.get("common", {}))
+
     print(f"正在初始化 {platform} 平台的 Driver...")
-    
-    driver = webdriver.Remote(
-        command_executor="http://localhost:4723/wd/hub",
-        desired_capabilities=capabilities
-    )
-    
-    return driver
+    options = AppiumOptions()
+    options.load_capabilities(capabilities)
+    return webdriver.Remote(command_executor=APPIUM_SERVER, options=options)
 
 # 使用示例
 if __name__ == "__main__":
@@ -1798,7 +1745,7 @@ element = driver.find_element(
           
           <article class="code-panel" data-reveal>
             <div class="code-head">
-              <h3>7. 元素操作方法</h3>
+              <h3>7.1 元素操作方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <pre><code class="language-python"># 基本操作
@@ -1842,16 +1789,23 @@ from selenium.webdriver.common.action_chains import ActionChains
 actions = ActionChains(driver)
 actions.tap(element).perform()
 
-# 長按
-from selenium.webdriver.common.touch_actions import TouchActions
-actions = TouchActions(driver)
-actions.long_press(element).perform()</code></pre>
+# 長按（Selenium 4 使用 W3C ActionBuilder，TouchActions 已移除）
+from selenium.webdriver.common.actions.action_builder import ActionBuilder
+from selenium.webdriver.common.actions.pointer_input import PointerInput
+
+finger = PointerInput("touch", "finger")
+actions = ActionBuilder(driver, mouse=finger)
+actions.pointer_action.move_to(element)
+actions.pointer_action.pointer_down()
+actions.pointer_action.pause(1)
+actions.pointer_action.pointer_up()
+actions.perform()</code></pre>
           </article>
         </div>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>6. 頁面滾動操作</h3>
+            <h3>8. 頁面滾動操作</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
@@ -1897,8 +1851,9 @@ def scroll_to_element(driver, locator, direction="down"):
         
         # 執行滑動操作
         driver.swipe(start_x, start_y, end_x, end_y, duration=800)
-        # 等待滑動動畫完成
-        driver.implicitly_wait(1)
+        # 等待滑動動畫完成（不要用 implicitly_wait 當 sleep）
+        import time
+        time.sleep(0.5)
     
     raise Exception(f"無法找到元素: {locator}")
 
@@ -1962,24 +1917,25 @@ def swipe_right(driver, percentage=0.8, duration=500):
 # 測試滑動功能
 print("測試向上滑動...")
 swipe_up(driver)
-driver.implicitly_wait(2)  # 等待 2 秒
+import time
+time.sleep(2)
 
 print("測試向下滑動...")
 swipe_down(driver)
-driver.implicitly_wait(2)  # 等待 2 秒
+time.sleep(2)
 
 print("測試向左滑動...")
 swipe_left(driver)
-driver.implicitly_wait(2)  # 等待 2 秒
+time.sleep(2)
 
 print("測試向右滑動...")
 swipe_right(driver)
-driver.implicitly_wait(2)  # 等待 2 秒</code></pre>
+time.sleep(2)</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>7. 日期選擇器操作</h3>
+            <h3>9. 日期選擇器操作</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
@@ -2078,7 +2034,8 @@ class DatePicker:
             date_picker.send_keys(date_str)
             
             # 等待日期選擇器更新
-            self.driver.implicitly_wait(1)
+            import time
+            time.sleep(1)
         except Exception as e:
             print(f"iOS 日期選擇器操作失敗: {e}")
             # 如果標準方法失敗，嘗試手動滑動
@@ -2107,7 +2064,8 @@ class DatePicker:
                 picker.send_keys("up")
             
             # 等待選擇器更新
-            self.driver.implicitly_wait(0.5)
+            import time
+            time.sleep(0.5)
             current_value = picker.text
     
     def _swipe_wheel_up(self, element):
@@ -2260,7 +2218,8 @@ login_button.click()</code></pre>
           <article class="info-card" data-reveal>
             <h3>wait 的實戰建議</h3>
             <ul>
-              <li>少用固定 `sleep()`，優先用顯式等待。</li>
+              <li>少用固定 <code>sleep()</code>，優先用顯式等待。</li>
+              <li><code>presence</code>：元素在 DOM 中；<code>visibility</code>：可見；<code>clickable</code>：可點擊。</li>
               <li>分清楚要等的是存在、可見，還是可點擊。</li>
               <li>如果畫面有 loading、toast、動畫，也要等它消失。</li>
             </ul>
@@ -2454,9 +2413,9 @@ def test_basic_assertions():
     assert "Hello".upper() == "HELLO"
     assert len([1, 2, 3]) == 3
     
-    # 斷言失敗訊息
+    # 自訂失敗訊息（assert 第二個參數會在失敗時顯示）
     x = 5
-    y = 3
+    y = 5
     assert x == y, f"預期 {x} 等於 {y}"
 
 
@@ -2518,6 +2477,8 @@ def test_user_profile(user_data):
 
 
 # Scope 控制 fixture 生命週期
+# function（預設）：每個測試函式執行一次
+# module：每個檔案執行一次；session：整次 pytest 執行只跑一次
 @pytest.fixture(scope="module")  # 整個模組只執行一次
 def module_setup():
     print("\n[模組設定]")
@@ -2775,13 +2736,27 @@ def driver(request, platform):
             "bundleId": "com.example.app",        # 應用 Bundle ID
             "automationName": "XCUITest"          # 自動化引擎
         })
-    
-    </code></pre>
+
+    from appium.options.common import AppiumOptions
+    options = AppiumOptions()
+    options.load_capabilities(desired_caps)
+
+    driver = webdriver.Remote("http://localhost:4723", options=options)
+    yield driver
+    driver.quit()
+
+
+def test_login_button_visible(driver):
+    """簡單範例：確認登入按鈕存在"""
+    login_button = WebDriverWait(driver, 15).until(
+        EC.presence_of_element_located((AppiumBy.ACCESSIBILITY_ID, "login_button"))
+    )
+    assert login_button.is_displayed()</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>6. 創建配置管理模組</h3>
+            <h3>10. 創建配置管理模組</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-bash"># 2) 創建配置管理文件
@@ -2903,7 +2878,7 @@ EOF
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>7. 在 pytest 中使用配置管理器</h3>
+            <h3>11. 在 pytest 中使用配置管理器</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python">import pytest
@@ -2982,141 +2957,50 @@ def capabilities(config_manager, platform):
 
 # 5. Appium Driver Fixture（session 級別）
 @pytest.fixture(scope="session")
-def driver(capabilities):
+def driver(capabilities, request):
     """
     根據平台參數初始化 Appium Driver
     
     Scope: session（整個測試會話只執行一次）
-    用途: 建立和關閉 Appium Driver 連接
     依賴: capabilities fixture
-    返回: Appium Driver 實例
-    
-    特點: 
-    - 在測試開始時自動初始化 Driver
-    - 在測試結束後自動關閉 Driver
-    - 使用 request.addfinalizer() 保證資源釋放
     """
-    print(f"正在初始化平台的 Driver...")
+    print("正在初始化平台的 Driver...")
     print("使用的 Capabilities 配置:")
     for key, value in capabilities.items():
         print(f"  {key}: {value}")
-    
+
+    from appium.options.common import AppiumOptions
+    options = AppiumOptions()
+    options.load_capabilities(capabilities)
+
     driver = webdriver.Remote(
-        command_executor="http://localhost:4723/wd/hub",
-        desired_capabilities=capabilities
+        command_executor="http://localhost:4723",
+        options=options,
     )
 
-    # 測試結束後的清理函數
     def teardown():
         print("\n正在關閉 Driver 連接...")
         driver.quit()
-    
-    # 註冊清理函數
-    request.addfinalizer(teardown)
-    
-    return driver
 
-        </code></pre>
+    request.addfinalizer(teardown)
+    return driver</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>8. 在測試中使用配置數據</h3>
+            <h3>12. 在測試中使用配置數據</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python">import pytest
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from config.config_manager import get_config_manager
 
 @pytest.fixture(scope="function")
 def test_data(config_manager):
     """獲取測試數據配置"""
     return config_manager.get_test_data
-
-def test_load_config():
-    """測試配置文件載入"""
-    config_manager = get_config_manager()
-    assert config_manager is not None
-    print("配置文件載入成功")
-    
-    # 獲取完整配置
-    full_config = config_manager.get_all_config()
-    assert 'platforms' in full_config
-    assert 'common' in full_config
-    assert 'test_data' in full_config
-    
-    print("配置結構正確")
-
-def test_get_platform_capabilities():
-    """測試獲取平台 capabilities 配置"""
-    config_manager = get_config_manager()
-    
-    # 獲取 Android 平台配置
-    android_caps = config_manager.get_platform_capabilities('android')
-    assert android_caps['platformName'] == 'Android'
-    assert android_caps['platformVersion'] == '13'
-    assert 'appPackage' in android_caps
-    print("Android 平台配置獲取成功")
-    
-    # 獲取 iOS 平台配置
-    ios_caps = config_manager.get_platform_capabilities('ios')
-    assert ios_caps['platformName'] == 'iOS'
-    assert ios_caps['platformVersion'] == '16'
-    assert 'bundleId' in ios_caps
-    print("iOS 平台配置獲取成功")
-
-def test_get_test_data():
-    """測試獲取測試數據配置"""
-    config_manager = get_config_manager()
-    
-    # 獲取登錄數據
-    login_data = config_manager.get_test_data('login')
-    assert 'valid' in login_data
-    assert 'invalid' in login_data
-    print("登錄測試數據獲取成功")
-    
-    # 獲取有效的登錄數據
-    valid_login = config_manager.get_test_data('login.valid')
-    assert valid_login['username'] == 'testuser'
-    assert valid_login['password'] == 'password123'
-    print("有效登錄數據獲取成功")
-    
-    # 獲取無效的登錄數據
-    invalid_login = config_manager.get_test_data('login.invalid')
-    assert invalid_login['username'] == 'invalid'
-    assert invalid_login['password'] == 'wrong'
-    print("無效登錄數據獲取成功")
-
-def test_get_config_value():
-    """測試獲取配置值的方法"""
-    config_manager = get_config_manager()
-    
-    # 獲取存在的配置項
-    language = config_manager.get_config_value('common.language')
-    assert language == 'zh-CN'
-    print(f"語言配置: {language}")
-    
-    # 獲取不存在的配置項
-    not_exists = config_manager.get_config_value('not.exists', 'default')
-    assert not_exists == 'default'
-    print(f"不存在的配置項返回預設值: {not_exists}")
-
-def test_combined_usage(test_data):
-    """測試配置數據在測試中的使用"""
-    # 使用 fixture 獲取測試數據
-    valid_credentials = test_data('login.valid')
-    invalid_credentials = test_data('login.invalid')
-    
-    print("有效的登錄憑證:")
-    print(f"  用戶名: {valid_credentials['username']}")
-    print(f"  密碼: {valid_credentials['password']}")
-    
-    print("\n無效的登錄憑證:")
-    print(f"  用戶名: {invalid_credentials['username']}")
-    print(f"  密碼: {invalid_credentials['password']}")
-    
-    # 模擬登錄測試
-    assert len(valid_credentials['username']) > 0
-    assert len(valid_credentials['password']) >= 8
 
 def test_load_config():
     """測試配置文件載入"""
@@ -3254,31 +3138,31 @@ def login_page(driver, platform):
         def login(self, username, password):
             """登錄方法"""
             # 找到並輸入用戶名（等待最多 10 秒）
-            username_field = WebDriverWait(driver, 10).until(
+            username_field = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(LoginPageLocators.get_locator("username_input", self.platform))
             )
             username_field.clear()            # 清除輸入框
             username_field.send_keys(username)  # 輸入用戶名
             
             # 找到並輸入密碼
-            password_field = driver.find_element(*LoginPageLocators.get_locator("password_input", self.platform))
+            password_field = self.driver.find_element(*LoginPageLocators.get_locator("password_input", self.platform))
             password_field.clear()            # 清除輸入框
             password_field.send_keys(password)  # 輸入密碼
             
             # 點擊登錄按鈕
-            login_button = driver.find_element(*LoginPageLocators.get_locator("login_button", self.platform))
+            login_button = self.driver.find_element(*LoginPageLocators.get_locator("login_button", self.platform))
             login_button.click()              # 點擊登錄按鈕
         
         def get_welcome_text(self):
             """獲取歡迎文字"""
-            welcome_text = WebDriverWait(driver, 10).until(
+            welcome_text = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(LoginPageLocators.get_locator("welcome_text", self.platform))
             )
             return welcome_text.text          # 返回歡迎文字
         
         def get_error_message(self):
             """獲取錯誤訊息"""
-            error_message = WebDriverWait(driver, 10).until(
+            error_message = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(LoginPageLocators.get_locator("error_message", self.platform))
             )
             return error_message.text         # 返回錯誤訊息
@@ -3312,16 +3196,13 @@ def test_login_invalid_credentials(login_page):
 def test_login_empty_fields(login_page, username, password):
     """測試空字段登錄 - 參數化測試"""
     login_page.login(username, password)        # 使用參數化的字段值登錄
-    assert True  # 應顯示字段驗證訊息
-
-
-        </pre>
+    assert True  # 應顯示字段驗證訊息</code></pre>
           </article>
         </div>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>10. 使用命令行參數執行平台專屬測試</h3>
+            <h3>13. 使用命令行參數執行平台專屬測試</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-bash"># 基本執行方式
@@ -3670,22 +3551,23 @@ uv pip install appium-python-client pytest pytest-html
 # 建立測試檔案
 cat > test_calculator.py << 'EOF'
 from appium import webdriver
+from appium.options.android import UiAutomator2Options
 from appium.webdriver.common.appiumby import AppiumBy
 import pytest
 
 
 @pytest.fixture
 def driver():
-    desired_caps = {
-        "platformName": "Android",
-        "platformVersion": "13",
-        "deviceName": "emulator-5554",
-        "appPackage": "com.android.calculator2",
-        "appActivity": ".Calculator",
-        "automationName": "UiAutomator2",
-        "noReset": True,
-    }
-    driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
+    options = UiAutomator2Options()
+    options.platform_name = "Android"
+    options.platform_version = "13"
+    options.device_name = "emulator-5554"
+    options.app_package = "com.android.calculator2"
+    options.app_activity = ".Calculator"
+    options.automation_name = "UiAutomator2"
+    options.no_reset = True
+
+    driver = webdriver.Remote("http://localhost:4723", options=options)
     yield driver
     driver.quit()
 
