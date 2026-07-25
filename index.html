@@ -1816,6 +1816,8 @@ actions.perform()</code></pre>
             <h3>8. 頁面滾動操作</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <!-- Appium 頁面滾動操作教學說明 -->
+          <p style="margin-bottom: 1rem; color: #8892b0;">在移動應用自動化測試中，**滑動（Swipe）是一個非常常用的操作**。我們需要滑動來：<strong>1) 查看或點擊螢幕外的元素；2) 刷新內容（下拉重新整理）；3) 瀏覽列表項目；4) 切換選單選項。</strong>本教學提供完整的滑動方法，包括向特定元素滑動、上下左右四面方向的通用滑動函式。</p>
           <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
