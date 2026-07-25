@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
@@ -695,7 +695,7 @@ print(user2)</code></pre>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python 高階函式說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">高階函式（Higher-Order Functions）是指「接收其他函式作為參數」或「回傳一個新函式」的函式。這是 Python 非常強大的特性，常見應用包括：**將操作作為參數傳遞**、**建立閉包**、以及使用 **Lambda 表達式**寫出簡潔的一行運算。</p>
+          <p style="margin-bottom: 1rem; color: #8892b0;">高階函式（Higher-Order Functions）是指「接收其他函式作為參數」或「回傳一個新函式」的函式。這是 Python 非常強大的特性，常見應用包括：<strong>將操作作為參數傳遞</strong>、<strong>建立閉包</strong>、以及使用 <strong>Lambda 表達式</strong>寫出簡潔的一行運算。</p>
           <pre><code class="language-python"># 函式作為參數 - 將其他函式當做資料一樣傳遞
 def apply_operation(x, y, operation):
     """對兩個數應用指定的操作"""
@@ -740,7 +740,7 @@ print(add(3, 4))    # 7</code></pre>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python Decorators 說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">修飾器（Decorator）是一個接受函式作為參數、並回傳新函式的工具。它讓我們可以在**不修改原函式原始碼**的情況下，增加額外的功能。常見應用包括：**日誌記錄**、**執行時間測量**、**權限檢查**等。使用 `@functools.wraps` 可以保留原函式的名稱和文件。</p>
+          <p style="margin-bottom: 1rem; color: #8892b0;">修飾器（Decorator）是一個接受函式作為參數、並回傳新函式的工具。它讓我們可以在<strong>不修改原函式原始碼</strong>的情況下，增加額外的功能。常見應用包括：<strong>日誌記錄</strong>、<strong>執行時間測量</strong>、<strong>權限檢查</strong>等。使用 `@functools.wraps` 可以保留原函式的名稱和文件。</p>
           <pre><code class="language-python"># 修飾器本質：接收一個函式、包裝它、然後回傳新的包裝後函式
 # 實務上建議搭配 functools.wraps 保留原函式名稱與 docstring
 import functools
@@ -793,7 +793,7 @@ slow_function()             # 會顯示約 0.5 秒
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python 模組說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">模組（Module）是一個包含 Python 代碼的 `.py` 文件，而套件（Package）則是包含多個模組的目錄。使用模組可以**組織代碼、避免命名衝突**，並重用現有的功能。Python 提供了標準庫和第三方套件來滿足各種需求。</p>
+          <p style="margin-bottom: 1rem; color: #8892b0;">模組（Module）是一個包含 Python 代碼的 `.py` 文件，而套件（Package）則是包含多個模組的目錄。使用模組可以<strong>組織代碼、避免命名衝突</strong>，並重用現有的功能。Python 提供了標準庫和第三方套件來滿足各種需求。</p>
           <pre><code class="language-python"># 基本模組使用 - 導入整個模組後需加上前綴
 import math                        # 導入數學運算模組
 print(math.pi)          # 3.141592653589793：圓周率常數
@@ -1523,188 +1523,302 @@ print(User.how_many_users())</code></pre>
 # Appium Inspector (元素定位工具)</code></pre>
         </article>
 
+      <section id="yaml-config" class="section" aria-labelledby="yaml-config-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Appium 進階應用 / 配置管理</p>
+          <h2 id="yaml-config-title">使用 YAML 配置文件管理 Appium Capability</h2>
+          <p class="section-intro">
+            隨著自動化測試專案越來越大，硬編碼 capability 會變得難以維護。<strong>YAML 配置文件</strong>讓我們可以集中管理平台設定、測試數據和環境參數。本章教學：<strong>1) 設計完整的 YAML 配置文件；2) 使用 Python 讀取並合併配置；3) 動態初始化 Appium Driver。</strong>
+          </p>
+        </div>
+
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>5. 使用 YAML 配置文件管理 Capability</h3>
+            <h3>第一步：创建 YAML 配置文件</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-bash"># 1) 創建配置文件結構
+          <!-- YAML 配置教學說明 -->
+          <p style="margin-bottom: 1rem; color: #8892b0;">我們先建立一個結構化的 YAML 配置文件，包含<strong>Android 和 iOS 平台專屬設定</strong>、<strong>共用 capability 參數</strong>、以及<strong>測試數據區塊</strong>。這樣設計的好處是：平台差異集中管理、新增測試數據只需修改檔案、易於團隊協作維護。</p>
+          <pre><code class="language-bash"># 1) 創建配置文件目錄（如果不存在）
 mkdir -p config
 
-# 2) 創建 capabilities.yaml（注意 test_data 是獨立頂層鍵，不要縮排到 common 底下）
+# 2) 創建 capabilities.yaml 配置文件
 cat > config/capabilities.yaml << 'EOF'
-# Appium 配置文件
+# ============================================
+# Appium 自動化測試配置文件
+# 功能：集中管理 Android/iOS 平台設定與測試數據
+# ============================================
+
+# 平台特定配置
 platforms:
+  # Android 平台設定
   android:
-    platformName: "Android"
-    platformVersion: "13"
-    deviceName: "emulator-5554"
-    appPackage: "com.android.calculator2"
-    appActivity: ".Calculator"
-    automationName: "UiAutomator2"
-    noReset: true
-    fullReset: false
-    unicodeKeyboard: true
-    resetKeyboard: true
-    app: "/path/to/your/android/app.apk"
+    platformName: "Android"                     # 作業系統名稱
+    platformVersion: "13"                       # Android 版本號
+    deviceName: "emulator-5554"                 # 模擬器或真機設備名稱
+    appPackage: "com.android.calculator2"       # Android 應用程式包名
+    appActivity: ".Calculator"                  # 啟動的 Activity 名稱
+    automationName: "UiAutomator2"              # Android 自動化引擎（推薦）
+    noReset: true                               # 不重置 App 數據（加速測試）
+    fullReset: false                            # 不完全重新安裝
+    unicodeKeyboard: true                       # 支援 Unicode 輸入（中文等）
+    resetKeyboard: true                         # 測試後重置鍵盤
+    app: "/path/to/your/android/app.apk"        # APK 檔案路徑（可選）
 
+  # iOS 平台設定
   ios:
-    platformName: "iOS"
-    platformVersion: "16"
-    deviceName: "iPhone 14"
-    bundleId: "com.apple.calculator"
-    automationName: "XCUITest"
-    noReset: true
-    fullReset: false
-    app: "/path/to/your/ios/app.ipa"
+    platformName: "iOS"                         # 作業系統名稱
+    platformVersion: "16"                       # iOS 版本號
+    deviceName: "iPhone 14"                     # 模擬器或真機設備名稱
+    bundleId: "com.apple.calculator"            # iOS 應用程式 Bundle ID
+    automationName: "XCUITest"                  # iOS 自動化引擎（推薦）
+    noReset: true                               # 不重置 App 數據
+    fullReset: false                            # 不完全重新安裝
+    app: "/path/to/your/ios/app.ipa"            # IPA 檔案路徑（可選）
 
-# 共用 capability（會合併進各平台設定）
+# 共用 capability（會自動合併到各平台設定中）
 common:
-  newCommandTimeout: 60
-  language: "zh-CN"
-  locale: "zh_CN"
+  newCommandTimeout: 60                         # 命令超時時間（秒）
+  language: "zh-CN"                             # 應用程式語言
+  locale: "zh_CN"                               # 地區格式
 
-# 測試數據（ConfigManager.get_test_data() 會讀取這個區塊）
+# 測試數據配置（供 pytest 測試用例使用）
 test_data:
-  login:
-    valid:
-      username: "testuser"
-      password: "password123"
-    invalid:
-      username: "invalid"
-      password: "wrong"
-EOF</code></pre>
+  login:                                        # 登入測試數據
+    valid:                                      # 有效的憑證
+      username: "testuser"                      # 測試用戶名
+      password: "password123"                   # 測試密碼
+    invalid:                                    # 無效的憑證
+      username: "invalid_user"                  # 錯誤用戶名
+      password: "wrong_password"                # 錯誤密碼
+EOF
+
+echo "✅ 配置文件創建完成"</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>5.1 用 Python 讀取 YAML 並啟動 Driver</h3>
+            <h3>第二步：用 Python 讀取 YAML 並啟動 Driver</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python">import os
-import yaml
-from appium import webdriver
-from appium.options.common import AppiumOptions
+          <!-- Python 讀取 YAML 教學說明 -->
+          <p style="margin-bottom: 1rem; color: #8892b0;">這個 Python 腳本展示<strong>如何讀取 YAML 配置文件並動態初始化 Appium Driver</strong>。核心流程：<strong>1) 檢查文件是否存在；2) 解析 YAML 數據；3) 獲取平台特定配置；4) 合併共用參數；5) 使用 AppiumOptions 建立 Driver。</strong>你可以根據需要切換 android 或 ios 平台。</p>
+          <pre><code class="language-python">"""
+Appium YAML 配置管理器
+功能：從 YAML 文件載入配置並初始化 Appium Driver
+作者：自動化測試開發者
+"""
 
-# Appium 2.x 預設位址為 http://localhost:4723（不含 /wd/hub）
+import os                          # 用於文件路徑操作
+import yaml                        # 用於解析 YAML 文件
+from appium import webdriver       # Appium Python Client
+from appium.options.common import AppiumOptions  # Appium 2.x 推薦的配置方式
+
+# Appium Server 連線地址
+# Appium 2.x 預設為 http://localhost:4723（不再需要 /wd/hub 尾綴）
 APPIUM_SERVER = "http://localhost:4723"
+
+# 配置文件路徑（相對於項目根目錄）
+CONFIG_FILE = "config/capabilities.yaml"
 
 
 def load_capabilities(platform="android"):
-    """從 YAML 載入並合併平台與共用 capability"""
-    config_file = "config/capabilities.yaml"
-
-    if not os.path.exists(config_file):
-        raise FileNotFoundError(f"配置文件不存在: {config_file}")
-
-    with open(config_file, "r", encoding="utf-8") as f:
-        config = yaml.safe_load(f)
-
+    """
+    從 YAML 配置文件載入並合併 capability
+    
+    這個函式負責：
+    1. 檢查配置文件是否存在
+    2. 使用 yaml.safe_load() 解析 YAML 數據
+    3. 獲取指定平台的設定
+    4. 合併共用參數（common）
+    
+    Args:
+        platform (str): 平台名稱，可選 "android" 或 "ios"，預設為 "android"
+    
+    Returns:
+        dict: 合併後的完整 capability 字典
+    
+    Raises:
+        FileNotFoundError: 當配置文件不存在時
+        ValueError: 當指定平台不受支援時
+    """
+    # 步驟 1：檢查配置文件是否存在
+    if not os.path.exists(CONFIG_FILE):
+        raise FileNotFoundError(f"配置文件不存在：請確保 {CONFIG_FILE} 存在")
+    
+    # 步驟 2：讀取並解析 YAML 文件
+    # 使用 with open() 確保文件會正確關閉
+    # encoding="utf-8" 支援中文等特殊字符
+    with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)    # safe_load 比 load 更安全
+    
+    # 步驟 3：驗證平台是否受支援
     if platform not in config.get("platforms", {}):
-        raise ValueError(f"不支援的平台: {platform}")
-
+        supported = list(config.get("platforms", {}).keys())
+        raise ValueError(f"不支援的平台 '{platform}'。可用平台：{supported}")
+    
+    # 步驟 4：獲取平台特定配置
+    # copy() 避免修改原始配置對象
     capabilities = config["platforms"][platform].copy()
+    
+    # 步驟 5：合併共用參數（common）
+    # update() 會將 common 中的鍵值對添加到 capabilities 中
+    # 如果發生鍵衝突，common 的值會覆蓋平台特定的值
     capabilities.update(config.get("common", {}))
+    
     return capabilities
 
 
 def initialize_driver(platform="android"):
-    """使用 YAML 配置初始化 Appium Driver"""
+    """
+    使用 YAML 配置初始化 Appium Driver
+    
+    這個函式示範如何：
+    1. 調用 load_capabilities() 獲取配置
+    2. 使用 AppiumOptions 封裝 capability
+    3. 建立 webdriver.Remote 連線
+    
+    Args:
+        platform (str): 目標平台，預設為 "android"
+    
+    Returns:
+        webdriver.Remote: 已初始化的 Appium Driver 實例
+    
+    Example:
+        driver = initialize_driver("android")
+        driver.quit()  # 測試結束後記得關閉
+    """
+    # 獲取合併後的 capability
     capabilities = load_capabilities(platform)
+    
+    # 列印初始化資訊（方便除錯）
     print(f"正在初始化 {platform} 平台的 Driver...")
-
+    print(f"使用的配置文件：{CONFIG_FILE}")
+    
+    # 使用 AppiumOptions 封裝配置（Appium 2.x 推薦做法）
+    # AppiumOptions 會自動處理capability 的序列化
     options = AppiumOptions()
     options.load_capabilities(capabilities)
+    
+    # 建立 Appium Driver 連線
+    # command_executor: Appium Server 地址
+    # options: 包含所有 capability 的配置對象
+    driver = webdriver.Remote(
+        command_executor=APPIUM_SERVER,
+        options=options
+    )
+    
+    return driver
 
-    return webdriver.Remote(command_executor=APPIUM_SERVER, options=options)
 
-
+# ============================================
+# 程式進入點 - 測試代碼
+# ============================================
 if __name__ == "__main__":
+    """
+    這個區塊演示如何使用上面的函式：
+    1. 初始化 Android Driver
+    2. 顯示設備資訊
+    3. 關閉 Driver
+    4. 同樣流程用於 iOS
+    """
+    print("=" * 50)
+    print("Appium YAML 配置管理器測試")
+    print("=" * 50)
+    
+    # 初始化 Android Driver
+    print("\n--- Android 平台 ---")
     android_driver = initialize_driver("android")
-    print("Android Driver 初始化成功")
-    print(f"裝置名稱: {android_driver.capabilities['deviceName']}")
-    android_driver.quit()
-    print("Android Driver 已關閉")</code></pre>
+    
+    if android_driver:
+        print("✅ Android Driver 初始化成功")
+        
+        # 讀取設備資訊（從連線後的 capabilities）
+        print(f"   裝置名稱：{android_driver.capabilities['deviceName']}")
+        print(f"   平台版本：{android_driver.capabilities['platformVersion']}")
+        print(f"   自動化工具：{android_driver.capabilities.get('automationName', 'N/A')}")
+        
+        # 測試結束後務必關閉 Driver
+        android_driver.quit()
+        print("✅ Android Driver 已關閉")
+    
+    # 初始化 iOS Driver（需要 Mac + Xcode）
+    print("\n--- iOS 平台 ---")
+    ios_driver = initialize_driver("ios")
+    
+    if ios_driver:
+        print("✅ iOS Driver 初始化成功")
+        
+        # 讀取設備資訊
+        print(f"   裝置名稱：{ios_driver.capabilities['deviceName']}")
+        print(f"   平台版本：{ios_driver.capabilities['platformVersion']}")
+        print(f"   自動化工具：{ios_driver.capabilities.get('automationName', 'N/A')}")
+        
+        ios_driver.quit()
+        print("✅ iOS Driver 已關閉")
+    
+    print("\n" + "=" * 50)
+    print("測試完成")
+    print("=" * 50)</code></pre>
         </article>
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
-            <h3>6. 直接讀取 YAML 文件示例</h3>
+            <h3>運行結果範例</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python">import os
-import yaml
-from appium import webdriver
-from appium.options.common import AppiumOptions
+          <p style="margin-bottom: 1rem; color: #8892b0;">當你執行上面的 Python 腳本（確保 Appium Server 正在運行且設備已連接），你會看到以下輸出：</p>
+          <pre><code class="language-bash">$ python init_appium.py
 
-APPIUM_SERVER = "http://localhost:4723"
+==================================================
+Appium YAML 配置管理器測試
+==================================================
 
+--- Android 平台 ---
+正在初始化 android 平台的 Driver...
+使用的配置文件：config/capabilities.yaml
+✅ Android Driver 初始化成功
+   裝置名稱：emulator-5554
+   平台版本：13
+   自動化工具：UiAutomator2
+✅ Android Driver 已關閉
 
-def read_yaml_file():
-    """直接使用 with open() 和 yaml.safe_load() 讀取配置文件"""
-    config_file = "config/capabilities.yaml"
-    if not os.path.exists(config_file):
-        return None
-    with open(config_file, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+--- iOS 平台 ---
+正在初始化 ios 平台的 Driver...
+使用的配置文件：config/capabilities.yaml
+✅ iOS Driver 初始化成功
+   裝置名稱：iPhone 14
+   平台版本：16
+   自動化工具：XCUITest
+✅ iOS Driver 已關閉
 
-
-def initialize_driver(platform="android"):
-    """使用配置文件初始化 Appium Driver"""
-    config = read_yaml_file()
-    if not config or platform not in config.get("platforms", {}):
-        return None
-
-    capabilities = config["platforms"][platform].copy()
-    capabilities.update(config.get("common", {}))
-
-    print(f"正在初始化 {platform} 平台的 Driver...")
-    options = AppiumOptions()
-    options.load_capabilities(capabilities)
-    return webdriver.Remote(command_executor=APPIUM_SERVER, options=options)
-
-# 使用示例
-if __name__ == "__main__":
-    # 使用 Android 平台
-    android_driver = initialize_driver("android")
-    if android_driver:
-        print("Android Driver 初始化成功")
-        
-        # 顯示設備資訊
-        print(f"裝置名稱: {android_driver.capabilities['deviceName']}")
-        print(f"平台版本: {android_driver.capabilities['platformVersion']}")
-        
-        android_driver.quit()
-        print("Android Driver 已關閉")
-    
-    print()
-    
-    # 使用 iOS 平台
-    ios_driver = initialize_driver("ios")
-    if ios_driver:
-        print("iOS Driver 初始化成功")
-        
-        # 顯示設備資訊
-        print(f"裝置名稱: {ios_driver.capabilities['deviceName']}")
-        print(f"平台版本: {ios_driver.capabilities['platformVersion']}")
-        
-        ios_driver.quit()
-        print("iOS Driver 已關閉")
-
-# === 運行結果範例 ===
-# 正在初始化 android 平台的 Driver...
-# Android Driver 初始化成功
-# 裝置名稱: emulator-5554
-# 平台版本: 13
-# Android Driver 已關閉
-# 
-# 正在初始化 ios 平台的 Driver...
-# iOS Driver 初始化成功
-# 裝置名稱: iPhone 14
-# 平台版本: 16
-# iOS Driver 已關閉
-</code></pre>
+==================================================
+測試完成
+==================================================</code></pre>
         </article>
+
+        <div class="two-column">
+          <article class="info-card highlight" data-reveal>
+            <h3>📁 配置文件結構說明</h3>
+            <ul>
+              <li><strong>platforms.android/ios</strong>：每個平台的獨立設定</li>
+              <li><strong>common</strong>：所有平台共用的參數（會被合併進去）</li>
+              <li><strong>test_data</strong>：測試數據區（供 pytest 測試使用）</li>
+              <li>修改配置只需編輯 YAML 檔，不需改程式碼</li>
+            </ul>
+          </article>
+          
+          <article class="info-card deep-dive" data-reveal>
+            <h3>💡 最佳實踐</h3>
+            <ul>
+              <li><strong>集中管理</strong>：所有環境相關設定放進 YAML</li>
+              <li><strong>不要提交敏感數據</strong>：密碼等資訊放入 .env 或使用 CI/CD 變數</li>
+              <li><strong>版本控制</strong>：YAML 檔加入 git，但 .gitignore 排除 .env</li>
+              <li><strong>文件化</strong>：在 YAML 頂部添加用途說明</li>
+            </ul>
+          </article>
+        </div>
+      </section>
 
         <div class="two-column">
           <article class="code-panel" data-reveal>
@@ -1712,42 +1826,51 @@ if __name__ == "__main__":
               <h3>7. 常用元素定位方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <!-- Appium 元素定位教學說明 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，<strong>正確的定位元素是第一步</strong>。Appium 支援多種定位策略，每種都有適用的場景。本節示範：<strong>1) Android/iOS 通用定位；2) 平台專屬的高階定位技巧；3) XPath 的最佳實踐。</strong>建議優先使用 ACCESSIBILITY_ID（最穩定）和 ANDROID_UIAUTOMATOR/iOS_PREDICATE（功能最強）。</p>
             <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
 
-# 1) By.ID (Android)
+# 1) By.ID (Android) - 根據資源 ID 定位（Android 專用）
+# resource-id 是 Android 元件的唯一標識，穩定且快速
 element = driver.find_element(AppiumBy.ID, "com.android.calculator2:id/digit_1")
 
-# 2) By.ACCESSIBILITY_ID (推薦跨平台)
+# 2) By.ACCESSIBILITY_ID (推薦跨平台) - 基於無障礙功能屬性
+# iOS 稱為 Accessibility Identifier，Android 稱為 content-description
+# 這是跨平台最穩定的定位方式，優先使用！
 element = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "digit_1")
 
-# 3) By.XPATH
-# 絕對路徑 (不推薦，維護困難)
+# 3) By.XPATH - 通用的 XML/HTML 路徑語言
+# ⚠️ 絕對路徑不推薦，維護困難且容易因頁面結構變更而失效
 element = driver.find_element(AppiumBy.XPATH, "/hierarchy/android.widget.FrameLayout...")
-# 相對路徑 (推薦)
-element = driver.find_element(AppiumBy.XPATH, "//*[@text='1']")
-element = driver.find_element(AppiumBy.XPATH, "//android.widget.Button[@resource-id='digit_1']")
+# ✅ 相對路徑推薦，更靈活且易維護
+element = driver.find_element(AppiumBy.XPATH, "//*[@text='1']")                                    # 查找顯示文本為 '1' 的任何元素
+element = driver.find_element(AppiumBy.XPATH, "//android.widget.Button[@resource-id='digit_1']")    # 查找特定 class 和 resource-id 的元素
 
-# 4) By.CLASS_NAME (Android)
+# 4) By.CLASS_NAME - 根據 UI 元件類型定位（較少用，因為可能有多個同類元件）
 element = driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Button")
 
-# 5) By.NAME (已棄用)
+# 5) By.NAME (已棄用) - Appium 新版本已不建議使用
 # element = driver.find_element(AppiumBy.NAME, "1")
 
-# 6) By.IOS_PREDICATE (iOS)
+# 6) By.IOS_PREDICATE (iOS 強力定位) - 基於屬性條件的精確查詢
+# 語法類似 SQL，非常強大，可以組合多個條件
 element = driver.find_element(AppiumBy.IOS_PREDICATE, 'name == "1" OR label == "1"')
 element = driver.find_element(AppiumBy.IOS_PREDICATE, 'type == "XCUIElementTypeButton" AND name CONTAINS "1"')
 
-# 7) By.IOS_CLASS_CHAIN (iOS)
+# 7) By.IOS_CLASS_CHAIN (iOS 新一代定位) - iOS 10+ 推薦使用
+# 語法簡潔，執行速度快，比 XPATH 更適合 iOS
 element = driver.find_element(AppiumBy.IOS_CLASS_CHAIN, '**/XCUIElementTypeButton[`name == "1"`]')
+# ** 表示遍歷所有層級，/ 表示下一層
 
-# 8) By.ANDROID_UIAUTOMATOR
+# 8) By.ANDROID_UIAUTOMATOR (Android 強力定位) - 基於 UIAutomator API
+# 功能最強大，可以進行複雜查詢如「父元素為 X 的所有按鈕」
 element = driver.find_element(
     AppiumBy.ANDROID_UIAUTOMATOR, 
-    'new UiSelector().text("1")'
+    'new UiSelector().text("1")'                                    # 根據文本定位
 )
 element = driver.find_element(
     AppiumBy.ANDROID_UIAUTOMATOR,
-    'new UiSelector().resourceId("com.android.calculator2:id/digit_1")'
+    'new UiSelector().resourceId("com.android.calculator2:id/digit_1")'  # 根據 resource-id 定位
 )</code></pre>
           </article>
           
@@ -1756,58 +1879,62 @@ element = driver.find_element(
               <h3>7.1 元素操作方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
-            <pre><code class="language-python"># 基本操作
-element.click()           # 點擊
-element.send_keys("text") # 輸入文字
-element.clear()           # 清除文字
-text = element.text       # 獲取文字
+            <!-- Appium 元素操作教學說明 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">找到元素後，我們可以對它進行各種<strong>互動操作</strong>。本節涵蓋：基礎操作（點擊、輸入）、狀態檢查、位置尺寸獲取、截圖記錄、以及進階手勢（滑動、拖放、長按）。掌握這些方法是完成自動化測試的關鍵技能。</p>
+            <pre><code class="language-python"># 基本操作 - 最常用的互動方式
+element.click()           # 點擊元素
+element.send_keys("text") # 輸入文字（自動觸發鍵盤）
+element.clear()           # 清除輸入框中的文字
+text = element.text       # 獲取元素顯示的文字內容
 
-# 獲取元素屬性
-resource_id = element.get_attribute("resource-id")  # Android
-text_value = element.get_attribute("text")
-name = element.get_attribute("name")
-class_name = element.get_attribute("class")
+# 獲取元素屬性 - 用於驗證或提取數據
+resource_id = element.get_attribute("resource-id")  # Android 專有屬性
+text_value = element.get_attribute("text")          # 元素顯示文本
+name = element.get_attribute("name")                # 元素名稱（accessibility name）
+class_name = element.get_attribute("class")         # CSS 類名或元件類別
 
-# 判斷元素狀態
-is_displayed = element.is_displayed()
-is_enabled = element.is_enabled()
-is_selected = element.is_selected()
+# 判斷元素狀態 - 用於等待邏輯或條件判斷
+is_displayed = element.is_displayed()   # 元素是否可見（不僅是存在，還要可見）
+is_enabled = element.is_enabled()       # 元素是否可啟用（未禁用）
+is_selected = element.is_selected()     # 元素是否被選中（checkbox/radio）
 
-# 獲取元素位置與尺寸
-location = element.location   # {x, y}
-size = element.size           # {width, height}
+# 獲取元素位置與尺寸 - 用於座標計算（如滑動、點擊特定点）
+location = element.location   # 返回字典 {x: 100, y: 200}，左上角坐標
+size = element.size           # 返回字典 {width: 100, height: 50}，寬高尺寸
 
-# 螢幕截圖
-driver.save_screenshot("screenshot.png")
-element_screenshot = element.screenshot_as_base64
+# 螢幕截圖 - 除錯和報告的重要工具
+driver.save_screenshot("screenshot.png")                  # 保存全螢幕截圖到文件
+element_screenshot = element.screenshot_as_base64         # 獲取元素的 base64 編碼截圖
 
-# 模擬操作
-driver.press_keycode(4)      # Android: 按返回鍵
-driver.press_keycode(3)      # Android: 按 Home 鍵
+# 模擬物理按鍵操作
+driver.press_keycode(4)      # Android: 按下返回鍵（Back）
+driver.press_keycode(3)      # Android: 按下 Home 鍵（回到主畫面）
+# 常見 keycode: 4=返回, 3=Home, 26=電源鍵, 66=確認鍵
 
-# 滑動
+# 滑動操作 - 經典的手勢操作
 driver.swipe(start_x, start_y, end_x, end_y, duration=1000)
+# 參數：起始 x, 起始 y, 結束 x, 結束 y, 持續時間（毫秒）
 
-# 拖放
+# 拖放操作 - 將一個元素拖放到另一個位置
 driver.drag_and_drop(element1, element2)
 
-# 多點觸控
-# Python Client 中可使用 ActionChains
+# 多點觸控 - 使用 Selenium 的 ActionChains
 from selenium.webdriver.common.action_chains import ActionChains
 actions = ActionChains(driver)
-actions.tap(element).perform()
+actions.tap(element).perform()  # 輕觸元素
 
-# 長按（Selenium 4 使用 W3C ActionBuilder，TouchActions 已移除）
+# 長按操作（Selenium 4 使用 W3C ActionBuilder）
+# ⚠️ TouchActions 已在 Selenium 4 中移除，請使用新的 ActionBuilder
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 
-finger = PointerInput("touch", "finger")
-actions = ActionBuilder(driver, mouse=finger)
-actions.pointer_action.move_to(element)
-actions.pointer_action.pointer_down()
-actions.pointer_action.pause(1)
-actions.pointer_action.pointer_up()
-actions.perform()</code></pre>
+finger = PointerInput("touch", "finger")                           # 創建觸控指針
+actions = ActionBuilder(driver, mouse=finger)                      # 建立動作構建器
+actions.pointer_action.move_to(element)                            # 移動到元素
+actions.pointer_action.pointer_down()                              # 按下手指
+actions.pointer_action.pause(1)                                    # 暫停 1 秒（保持按下）
+actions.pointer_action.pointer_up()                                # 抬起手指
+actions.perform()                                                  # 執行整個動作序列</code></pre>
           </article>
         </div>
 
@@ -1817,7 +1944,7 @@ actions.perform()</code></pre>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Appium 頁面滾動操作教學說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">在移動應用自動化測試中，**滑動（Swipe）是一個非常常用的操作**。我們需要滑動來：<strong>1) 查看或點擊螢幕外的元素；2) 刷新內容（下拉重新整理）；3) 瀏覽列表項目；4) 切換選單選項。</strong>本教學提供完整的滑動方法，包括向特定元素滑動、上下左右四面方向的通用滑動函式。</p>
+          <p style="margin-bottom: 1rem; color: #8892b0;">在移動應用自動化測試中，<strong>滑動（Swipe）是一個非常常用的操作</strong>。我們需要滑動來：<strong>1) 查看或點擊螢幕外的元素；2) 刷新內容（下拉重新整理）；3) 瀏覽列表項目；4) 切換選單選項。</strong>本教學提供完整的滑動方法，包括向特定元素滑動、上下左右四面方向的通用滑動函式。</p>
           <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -2435,28 +2562,55 @@ if __name__ == "__main__":
               <h3>Appium wait 範例</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <!-- Appium Wait 教學說明 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，<strong>等待策略是穩定性的關鍵</strong>。Appium 操作手機應用時，網路延遲、動畫過渡、數據加載都可能導致元素尚未就緒。<strong>顯式等待（Explicit Wait）</strong>讓我們可以精確控制等待條件，避免使用不穩定的固定 sleep()。本節示範最常用的兩種等待：<strong>等待元素存在</strong>和<strong>等待元素可點擊</strong>。</p>
             <pre><code class="language-python">from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
 def wait_for_element(driver, locator, timeout=15):
+    """
+    等待元素出現在 DOM 中（元素已存在但可能不可見）
+    
+    Args:
+        driver: Appium Driver 實例
+        locator: 元素定位器 (By, value)
+        timeout: 最大等待時間（秒），預設 15 秒
+    
+    Returns:
+        WebElement: 找到的元素
+    """
     return WebDriverWait(driver, timeout).until(
         EC.presence_of_element_located(locator)
     )
 
 
 def wait_until_clickable(driver, locator, timeout=15):
+    """
+    等待元素出現且可點擊（不僅存在，還要可見並啟用）
+    
+    ⚠️ 這是推薦的做法，因為只有可點擊的元素才能真正被操作
+    
+    Args:
+        driver: Appium Driver 實例
+        locator: 元素定位器 (By, value)
+        timeout: 最大等待時間（秒），預設 15 秒
+    
+    Returns:
+        WebElement: 可點擊的元素
+    """
     return WebDriverWait(driver, timeout).until(
         EC.element_to_be_clickable(locator)
     )
 
 
+# 實際使用範例
 login_button = wait_until_clickable(
     driver,
     (AppiumBy.ACCESSIBILITY_ID, "login_button"),
-    timeout=20,
+    timeout=20,                          # 設定較長的超時時間
 )
-login_button.click()</code></pre>
+login_button.click()                     # 確保按鈕可點擊後再執行點擊操作</code></pre>
           </article>
 
           <article class="info-card" data-reveal>
@@ -2476,35 +2630,44 @@ login_button.click()</code></pre>
               <h3>元素定位成功但無法點擊的解決方案</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <!-- 座標點擊教學 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">有時你會遇到<strong>「元素找到了，但 click() 失效」</strong>的情況。這通常是因為元素被覆蓋、透明、或 App 自訂了點擊行為。本節提供<strong>三種解決方案</strong>：<strong>1) 座標點擊（計算中心點）；2) 偏移量點擊（精確控制）；3) 重試機制（先嘗試正常點擊，失敗後改用座標）。</strong>這是自動化測試除錯的必備技能。</p>
             <pre><code class="language-python">from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 
 
 def tap_by_coordinates(driver, x, y):
-    """使用座標點擊元素"""
-    finger = PointerInput("touch", "finger")
-    actions = ActionBuilder(driver, mouse=finger)
-    actions.pointer_action.move_to_location(x, y)
-    actions.pointer_action.pointer_down()
-    actions.pointer_action.pause(0.1)
-    actions.pointer_action.pointer_up()
-    actions.perform()
+    """
+    使用座標點擊元素 - W3C 標準手勢操作
+    
+    Args:
+        driver: Appium Driver 實例
+        x: X 軸座標
+        y: Y 軸座標
+    """
+    finger = PointerInput("touch", "finger")              # 創建觸控指針
+    actions = ActionBuilder(driver, mouse=finger)         # 建立動作構建器
+    actions.pointer_action.move_to_location(x, y)         # 移動到指定座標
+    actions.pointer_action.pointer_down()                 # 按下
+    actions.pointer_action.pause(0.1)                     # 暫停 0.1 秒（模擬真實觸碰時間）
+    actions.pointer_action.pointer_up()                   # 抬起
+    actions.perform()                                     # 執行整個動作序列
 
 
 # 場景：元素定位成功但 click() 方法失敗
-# 步驟1: 先找到元素
+# 步驟1: 先找到元素（確保元素已存在）
 element = wait_for_element(driver, (AppiumBy.ACCESSIBILITY_ID, "login_button"))
 
-# 步驟2: 獲取元素的位置和大小
+# 步驟2: 獲取元素的位置和大小（rect 屬性包含 x, y, width, height）
 rect = element.rect
-x = rect["x"]
-y = rect["y"]
-width = rect["width"]
-height = rect["height"]
+x = rect["x"]                       # 左上角 X 座標
+y = rect["y"]                       # 左上角 Y 座標
+width = rect["width"]               # 元素寬度
+height = rect["height"]             # 元素高度
 
-# 步驟3: 計算元素的中心座標
-center_x = int(x + width / 2)
-center_y = int(y + height / 2)
+# 步驟3: 計算元素的中心座標（通常是最佳點擊位置）
+center_x = int(x + width / 2)       # X + 半個寬度
+center_y = int(y + height / 2)      # Y + 半個高度
 
 # 步驟4: 使用座標點擊
 print(f"元素中心座標: ({center_x}, {center_y})")
@@ -2513,33 +2676,54 @@ tap_by_coordinates(driver, center_x, center_y)
 
 # 進階應用：根據元素區域內的偏移量點擊
 def tap_element_at_offset(element, x_offset, y_offset):
-    """在元素內部指定偏移量的位置點擊"""
+    """
+    在元素內部指定偏移量的位置點擊
+    
+    Args:
+        element: Appium WebElement
+        x_offset: X 軸偏移量（從元素左上角算起）
+        y_offset: Y 軸偏移量（從元素左上角算起）
+    """
     rect = element.rect
-    x = rect["x"] + x_offset
-    y = rect["y"] + y_offset
+    x = rect["x"] + x_offset           # 元素左邊界 + 水平偏移
+    y = rect["y"] + y_offset           # 元素上邊界 + 垂直偏移
     tap_by_coordinates(driver, x, y)
 
 
-# 點擊元素右下角（偏移量從左上角算起）
+# 點擊元素右下角（偏移量從元素左上角算起）
 tap_element_at_offset(element, rect["width"] - 10, rect["height"] - 10)
+# 這裡的 "-10" 是從邊緣向內縮 10 像素，避免點擊到邊緣
 
 
-# 確保點擊操作成功的重試機制
+# 確保點擊操作成功的重試機制 - 先嘗試正常點擊，失敗後改用座標點擊
 def safe_tap_element(element, retries=3):
-    """安全點擊元素，失敗時使用座標點擊作為備援"""
+    """
+    安全點擊元素，失敗時使用座標點擊作為備援
+    
+    ⚠️ 最佳實踐：永遠先嘗試 element.click()，因為它最穩定
+    只有在 click() 確實失敗時，才使用座標點擊作為備援方案
+    
+    Args:
+        element: Appium WebElement
+        retries: 重試次數，預設 3 次
+    
+    Returns:
+        bool: 點擊是否成功
+    """
     for attempt in range(retries):
         try:
-            element.click()
-            return True
+            element.click()               # 首先嘗試標準的 click() 方法
+            return True                   # 成功則返回 True
         except Exception as e:
             print(f"第 {attempt + 1} 次點擊失敗: {e}")
-            if attempt < retries - 1:
+            if attempt < retries - 1:     # 如果不是最後一次嘗試，繼續重試
                 print("嘗試使用座標點擊")
                 rect = element.rect
-                center_x = int(rect["x"] + rect["width"] / 2)
+                center_x = int(rect["x"] + rect["width"] / 2)   # 計算中心座標
                 center_y = int(rect["y"] + rect["height"] / 2)
-                tap_by_coordinates(driver, center_x, center_y)
-                return True
+                tap_by_coordinates(driver, center_x, center_y)   # 使用座標點擊
+                return True             # 座標點擊成功
+    return False                        # 所有嘗試都失敗
     return False
 
 
@@ -3896,4 +4080,3 @@ EOF</code></pre>
     <script src="./script.js"></script>
   </body>
 </html>
-Triggering redeployment
