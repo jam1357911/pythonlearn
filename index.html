@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
@@ -695,7 +695,7 @@ print(user2)</code></pre>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python 高階函式說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">高階函式（Higher-Order Functions）是指「接收其他函式作為參數」或「回傳一個新函式」的函式。這是 Python 非常強大的特性，常見應用包括：**將操作作為參數傳遞**、**建立閉包**、以及使用 **Lambda 表達式**寫出簡潔的一行運算。</p>
+          <p style="margin-bottom: 1rem; color: #8892b0;">高階函式（Higher-Order Functions）是指「接收其他函式作為參數」或「回傳一個新函式」的函式。這是 Python 非常強大的特性，常見應用包括：<strong>將操作作為參數傳遞</strong>、<strong>建立閉包</strong>、以及使用 <strong>Lambda 表達式</strong>寫出簡潔的一行運算。</p>
           <pre><code class="language-python"># 函式作為參數 - 將其他函式當做資料一樣傳遞
 def apply_operation(x, y, operation):
     """對兩個數應用指定的操作"""
@@ -740,7 +740,7 @@ print(add(3, 4))    # 7</code></pre>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python Decorators 說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">修飾器（Decorator）是一個接受函式作為參數、並回傳新函式的工具。它讓我們可以在**不修改原函式原始碼**的情況下，增加額外的功能。常見應用包括：**日誌記錄**、**執行時間測量**、**權限檢查**等。使用 `@functools.wraps` 可以保留原函式的名稱和文件。</p>
+          <p style="margin-bottom: 1rem; color: #8892b0;">修飾器（Decorator）是一個接受函式作為參數、並回傳新函式的工具。它讓我們可以在<strong>不修改原函式原始碼</strong>的情況下，增加額外的功能。常見應用包括：<strong>日誌記錄</strong>、<strong>執行時間測量</strong>、<strong>權限檢查</strong>等。使用 `@functools.wraps` 可以保留原函式的名稱和文件。</p>
           <pre><code class="language-python"># 修飾器本質：接收一個函式、包裝它、然後回傳新的包裝後函式
 # 實務上建議搭配 functools.wraps 保留原函式名稱與 docstring
 import functools
@@ -793,7 +793,7 @@ slow_function()             # 會顯示約 0.5 秒
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python 模組說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">模組（Module）是一個包含 Python 代碼的 `.py` 文件，而套件（Package）則是包含多個模組的目錄。使用模組可以**組織代碼、避免命名衝突**，並重用現有的功能。Python 提供了標準庫和第三方套件來滿足各種需求。</p>
+          <p style="margin-bottom: 1rem; color: #8892b0;">模組（Module）是一個包含 Python 代碼的 `.py` 文件，而套件（Package）則是包含多個模組的目錄。使用模組可以<strong>組織代碼、避免命名衝突</strong>，並重用現有的功能。Python 提供了標準庫和第三方套件來滿足各種需求。</p>
           <pre><code class="language-python"># 基本模組使用 - 導入整個模組後需加上前綴
 import math                        # 導入數學運算模組
 print(math.pi)          # 3.141592653589793：圓周率常數
@@ -1817,7 +1817,7 @@ actions.perform()</code></pre>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Appium 頁面滾動操作教學說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">在移動應用自動化測試中，**滑動（Swipe）是一個非常常用的操作**。我們需要滑動來：<strong>1) 查看或點擊螢幕外的元素；2) 刷新內容（下拉重新整理）；3) 瀏覽列表項目；4) 切換選單選項。</strong>本教學提供完整的滑動方法，包括向特定元素滑動、上下左右四面方向的通用滑動函式。</p>
+          <p style="margin-bottom: 1rem; color: #8892b0;">在移動應用自動化測試中，<strong>滑動（Swipe）是一個非常常用的操作</strong>。我們需要滑動來：<strong>1) 查看或點擊螢幕外的元素；2) 刷新內容（下拉重新整理）；3) 瀏覽列表項目；4) 切換選單選項。</strong>本教學提供完整的滑動方法，包括向特定元素滑動、上下左右四面方向的通用滑動函式。</p>
           <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
