@@ -443,6 +443,57 @@ button {
   margin: 0 auto;
 }
 
+.toc-nav {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.toc-nav h3 {
+  font-size: 18px;
+  margin-bottom: var(--spacing-lg);
+  font-weight: 700;
+  color: var(--color-primary-soft);
+}
+
+.toc-nav ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm) var(--spacing-lg);
+  counter-reset: toc-counter;
+}
+
+.toc-nav > ol > li {
+  counter-increment: toc-counter;
+  padding: var(--spacing-xs) 0;
+}
+
+.toc-nav ol ol {
+  margin-top: var(--spacing-xs);
+  margin-left: var(--spacing-lg);
+  gap: var(--spacing-xs);
+}
+
+.toc-nav ol li {
+  font-size: 14px;
+  padding: 0;
+}
+
+.toc-nav ol li a {
+  color: var(--color-foreground-dim);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: block;
+  padding: 4px 0;
+}
+
+.toc-nav ol li a:hover {
+  color: var(--color-primary-soft);
+}
+
 .info-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -687,6 +738,10 @@ button {
     gap: var(--spacing-md);
   }
 
+  .toc-nav ol {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .oop-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-md);
@@ -802,6 +857,14 @@ button {
   .oop-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
+  }
+
+  .toc-nav {
+    padding: var(--spacing-lg);
+  }
+
+  .toc-nav ol {
+    grid-template-columns: 1fr;
   }
 
   .roadmap-card,

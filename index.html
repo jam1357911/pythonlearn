@@ -1472,6 +1472,25 @@ print(User.how_many_users())</code></pre>
           </p>
         </div>
 
+        <nav class="toc-nav" data-reveal>
+          <h3>📚 章節索引</h3>
+          <ol>
+            <li><a href="#appium-1">1. 環境設定</a></li>
+            <li><a href="#appium-2">2. YAML 配置文件</a></li>
+            <li><a href="#appium-3">3. 讀取 YAML 並啟動 Driver</a></li>
+            <li><a href="#appium-4">4. 常用元素定位方法</a>
+              <ol>
+                <li><a href="#appium-4-1">4.1 元素操作方法</a></li>
+              </ol>
+            </li>
+            <li><a href="#appium-5">5. 頁面滾動操作</a></li>
+            <li><a href="#appium-6">6. 日期選擇器操作</a></li>
+            <li><a href="#appium-7">7. 跨平台 locator 管理</a></li>
+            <li><a href="#appium-8">8. 等待策略 (wait)</a></li>
+            <li><a href="#appium-9">9. 座標點擊解決方案</a></li>
+          </ol>
+        </nav>
+
         <div class="info-grid">
           <article class="info-card highlight" data-reveal>
             <h3>1. 什麼是 Appium</h3>
@@ -1502,9 +1521,9 @@ print(User.how_many_users())</code></pre>
           </article>
         </div>
 
-        <article class="code-panel" data-reveal>
+        <article class="code-panel" data-reveal id="appium-1">
           <div class="code-head">
-            <h3>4. 環境設定</h3>
+            <h3>1. 環境設定</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python"># 1) 安裝 Appium Server
@@ -1534,9 +1553,9 @@ print(User.how_many_users())</code></pre>
           </p>
         </div>
 
-        <article class="code-panel" data-reveal>
+        <article class="code-panel" data-reveal id="appium-2">
           <div class="code-head">
-            <h3>第一步：创建 YAML 配置文件</h3>
+            <h3>2. YAML 配置文件</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- YAML 配置教學說明 -->
@@ -1598,9 +1617,9 @@ EOF
 echo "✅ 配置文件創建完成"</code></pre>
         </article>
 
-        <article class="code-panel" data-reveal>
+        <article class="code-panel" data-reveal id="appium-3">
           <div class="code-head">
-            <h3>第二步：用 Python 讀取 YAML 並啟動 Driver</h3>
+            <h3>3. 讀取 YAML 並啟動 Driver</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python 讀取 YAML 教學說明 -->
@@ -1824,9 +1843,9 @@ Appium YAML 配置管理器測試
 
       <section id="appium" class="section" aria-labelledby="appium-title">
         <div class="two-column">
-          <article class="code-panel" data-reveal>
+          <article class="code-panel" data-reveal id="appium-4">
             <div class="code-head">
-              <h3>7. 常用元素定位方法</h3>
+              <h3>4. 常用元素定位方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- Appium 元素定位教學說明 -->
@@ -1877,9 +1896,9 @@ element = driver.find_element(
 )</code></pre>
           </article>
           
-          <article class="code-panel" data-reveal>
+          <article class="code-panel" data-reveal id="appium-4-1">
             <div class="code-head">
-              <h3>7.1 元素操作方法</h3>
+              <h3>4.1 元素操作方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- Appium 元素操作教學說明 -->
@@ -1941,9 +1960,9 @@ actions.perform()                                                  # 執行整�
           </article>
         </div>
 
-        <article class="code-panel" data-reveal>
+        <article class="code-panel" data-reveal id="appium-5">
           <div class="code-head">
-            <h3>8. 頁面滾動操作</h3>
+            <h3>5. 頁面滾動操作</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Appium 頁面滾動操作教學說明 -->
@@ -2073,213 +2092,475 @@ swipe_right(driver)
 time.sleep(2)</code></pre>
         </article>
 
-        <article class="code-panel" data-reveal>
+        <article class="code-panel" data-reveal id="appium-6">
           <div class="code-head">
-            <h3>9. 日期選擇器操作</h3>
+            <h3>6. 日期選擇器操作</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
+import time
 
-# 1) 日期選擇器類別
+# ============================================================
+# 1) 日期選擇器類別 - 封裝跨平台的日期選擇器操作
+# ============================================================
+# 為什麼要封裝成類別？
+# - Android 和 iOS 的日期選擇器 UI 完全不同
+# - Android 通常使用 NumberPicker（滾輪式）
+# - iOS 通常使用 UIPickerView 或 UIDatePicker
+# - 封裝後，測試代碼只需調用 select_date()，不需關心平台差異
 class DatePicker:
-    """處理日期選擇器操作"""
+    """
+    日期選擇器操作類別
+    
+    功能：
+    - 自動偵測當前平台（Android / iOS）
+    - 根據平台使用不同的操作策略
+    - 提供統一的 API：select_date(year, month, day)
+    
+    使用方式：
+        picker = DatePicker(driver)
+        picker.select_date(2024, 12, 25)  # 選擇 2024年12月25日
+    """
     
     def __init__(self, driver):
+        """
+        初始化日期選擇器
+        
+        Args:
+            driver: Appium WebDriver 實例
+        
+        說明：
+        - driver.capabilities 包含當前測試的裝置資訊
+        - platformName 會回傳 "Android" 或 "iOS"
+        - 轉成小寫方便後續比較（避免大小寫問題）
+        """
         self.driver = driver
+        # 從 driver 的 capabilities 取得平台名稱，轉成小寫
         self.platform = driver.capabilities.get("platformName").lower()
+        print(f"DatePicker 初始化完成 - 當前平台: {self.platform}")
     
     def select_date(self, year, month, day):
-        """選擇日期
+        """
+        選擇日期（公開方法 - 測試代碼調用這個）
+        
         Args:
-            year: 年份
+            year: 年份，例如 2024
             month: 月份 (1-12)
             day: 日期 (1-31)
+        
+        說明：
+        - 這是唯一需要外部調用的方法
+        - 內部會自動根據平台分發到對應的私有方法
+        - 如果平台不支援，會拋出 Exception
         """
+        print(f"準備選擇日期: {year}/{month}/{day}")
+        
         if self.platform == "android":
+            # Android 平台：使用滾輪式選擇器
             self._select_date_android(year, month, day)
         elif self.platform == "ios":
+            # iOS 平台：使用 PickerWheel 或 send_keys
             self._select_date_ios(year, month, day)
         else:
+            # 其他平台（如 Windows）目前不支援
             raise Exception(f"不支援的平台: {self.platform}")
+        
+        print(f"日期選擇完成: {year}/{month}/{day}")
     
+    # ============================================================
+    # Android 專用方法（以下劃線 _ 開頭表示私有方法）
+    # ============================================================
     def _select_date_android(self, year, month, day):
-        """Android 日期選擇器操作"""
-        # 定位到年份選擇器並選擇年份
+        """
+        Android 日期選擇器操作
+        
+        Android 的日期選擇器通常是 3 個獨立的 NumberPicker：
+        - 年份選擇器：顯示 "2024" 等年份
+        - 月份選擇器：顯示 "1" 到 "12" 或 "一月" 到 "十二月"
+        - 日期選擇器：顯示 "1" 到 "31"
+        
+        操作邏輯：
+        1. 找到對應的 NumberPicker 元素
+        2. 讀取當前顯示的值
+        3. 比較目標值，決定向上或向下滑動
+        4. 重複滑動直到值匹配
+        """
+        
+        # ---------- 步驟 1：選擇年份 ----------
+        # 等待年份選擇器出現（最多等 10 秒）
+        # resource-id 格式：包名:id/控件id
         year_picker = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/year_picker"))
+            EC.presence_of_element_located(
+                (AppiumBy.ID, "com.example.app:id/year_picker")
+            )
         )
+        # 點擊選擇器使其獲得焦點（某些 App 需要先點擊才能滑動）
         year_picker.click()
         
-        # 選擇年份（這裡假設是滾輪選擇器）
+        # 將目標年份轉成字串（因為 picker.text 回傳的是字串）
         target_year = str(year)
+        
+        # 無限迴圈：持續滑動直到當前值等於目標值
         while True:
-            current_year = year_picker.text
+            current_year = year_picker.text  # 讀取當前顯示的年份
+            
             if current_year == target_year:
+                # 已經到達目標年份，跳出迴圈
                 break
             elif int(current_year) &lt; year:
-                # 向上滑動
+                # 當前年份 &lt; 目標年份 → 需要向上滑動來增加數值
+                # 例如：當前是 2020，目標是 2024，需要往上滑
                 self._swipe_wheel_up(year_picker)
             else:
-                # 向下滑動
+                # 當前年份 > 目標年份 → 需要向下滑動來減少數值
+                # 例如：當前是 2025，目標是 2024，需要往下滑
                 self._swipe_wheel_down(year_picker)
+            
+            # 等待滑動動畫完成（很重要！否則可能讀到舊值）
+            time.sleep(0.5)
         
-        # 定位到月份選擇器並選擇月份
+        print(f"年份已選擇: {year}")
+        
+        # ---------- 步驟 2：選擇月份 ----------
+        # 同樣的邏輯，只是換了 resource-id
         month_picker = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/month_picker"))
+            EC.presence_of_element_located(
+                (AppiumBy.ID, "com.example.app:id/month_picker")
+            )
         )
         month_picker.click()
         
-        # 選擇月份
         target_month = str(month)
         while True:
             current_month = month_picker.text
+            
             if current_month == target_month:
                 break
             elif int(current_month) &lt; month:
                 self._swipe_wheel_up(month_picker)
             else:
                 self._swipe_wheel_down(month_picker)
+            
+            time.sleep(0.5)
         
-        # 定位到日期選擇器並選擇日期
+        print(f"月份已選擇: {month}")
+        
+        # ---------- 步驟 3：選擇日期 ----------
+        # 同樣的邏輯，選擇日期
         day_picker = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((AppiumBy.ID, "com.example.app:id/day_picker"))
+            EC.presence_of_element_located(
+                (AppiumBy.ID, "com.example.app:id/day_picker")
+            )
         )
         day_picker.click()
         
-        # 選擇日期
         target_day = str(day)
         while True:
             current_day = day_picker.text
+            
             if current_day == target_day:
                 break
             elif int(current_day) &lt; day:
                 self._swipe_wheel_up(day_picker)
             else:
                 self._swipe_wheel_down(day_picker)
+            
+            time.sleep(0.5)
+        
+        print(f"日期已選擇: {day}")
     
+    # ============================================================
+    # iOS 專用方法
+    # ============================================================
     def _select_date_ios(self, year, month, day):
-        """iOS 日期選擇器操作"""
-        # iOS 日期選擇器通常是 PickerWheel 類型
+        """
+        iOS 日期選擇器操作
+        
+        iOS 的日期選擇器有兩種常見類型：
+        1. UIDatePicker：可以直接 send_keys 設置日期
+        2. UIPickerView：需要逐個滾輪滑動
+        
+        策略：
+        - 先嘗試方法 1（send_keys），因為最簡單
+        - 如果失敗，自動降級到方法 2（手動滑動每個滾輪）
+        """
         try:
-            # 定位到日期選擇器
+            # 方法 1：使用 send_keys 直接設置日期
+            # XCUIElementTypePickerWheel 是 iOS 日期選擇器的標準類別名
             date_picker = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((AppiumBy.CLASS_NAME, "XCUIElementTypePickerWheel"))
+                EC.presence_of_element_located(
+                    (AppiumBy.CLASS_NAME, "XCUIElementTypePickerWheel")
+                )
             )
             
-            # 設置日期格式（這取決於實際的日期選擇器格式）
+            # 構造日期字串，格式通常是 "MM/DD/YYYY"
+            # 注意：實際格式取決於 App 的實現和系統語言設置
             date_str = f"{month}/{day}/{year}"
+            
+            # send_keys 會直接將日期設置到選擇器中
+            # 這是最快的方法，不需要逐個滑動
             date_picker.send_keys(date_str)
             
-            # 等待日期選擇器更新
-            import time
+            # 等待選擇器更新 UI
             time.sleep(1)
+            
+            print(f"iOS 日期已設置: {date_str}")
+            
         except Exception as e:
-            print(f"iOS 日期選擇器操作失敗: {e}")
-            # 如果標準方法失敗，嘗試手動滑動
+            # 方法 1 失敗的常見原因：
+            # - 選擇器不支援 send_keys
+            # - 日期格式不正確
+            # - App 自定義了選擇器行為
+            print(f"iOS 日期選擇器 send_keys 失敗: {e}")
+            print("嘗試手動滑動方式...")
+            
+            # 方法 2：手動滑動每個滾輪（降級方案）
             self._manual_date_select_ios(year, month, day)
     
     def _manual_date_select_ios(self, year, month, day):
-        """手動滑動選擇日期（作為後備方法）"""
-        # 定位到年、月、日選擇器
-        pickers = self.driver.find_elements(AppiumBy.CLASS_NAME, "XCUIElementTypePickerWheel")
+        """
+        iOS 手動滑動選擇日期（後備方案）
         
-        if len(pickers) == 3:  # 假設有三個選擇器：年、月、日
-            # 選擇年份
+        當 send_keys 失敗時使用此方法
+        
+        原理：
+        - iOS 日期選擇器通常包含 3 個 PickerWheel（年、月、日）
+        - 使用 find_elements（注意是複數）找到所有滾輪
+        - 按順序設置每個滾輪的值
+        """
+        # 找到所有的 PickerWheel 元素
+        # find_elements 回傳一個列表，如果找不到會回傳空列表（不會拋異常）
+        pickers = self.driver.find_elements(
+            AppiumBy.CLASS_NAME, 
+            "XCUIElementTypePickerWheel"
+        )
+        
+        # 檢查是否找到 3 個滾輪（年、月、日）
+        if len(pickers) == 3:
+            # pickers[0] = 年份滾輪
+            # pickers[1] = 月份滾輪
+            # pickers[2] = 日期滾輪
+            # 注意：實際順序可能因 App 而異，需要用 Appium Inspector 確認
+            
             self._select_value_ios_picker(pickers[0], str(year))
-            # 選擇月份
             self._select_value_ios_picker(pickers[1], str(month))
-            # 選擇日期
             self._select_value_ios_picker(pickers[2], str(day))
+        else:
+            # 如果滾輪數量不對，可能是 App 的 UI 結構不同
+            raise Exception(
+                f"預期找到 3 個 PickerWheel，但實際找到 {len(pickers)} 個"
+            )
     
     def _select_value_ios_picker(self, picker, target_value):
-        """選擇 iOS PickerWheel 的值"""
-        current_value = picker.text
+        """
+        滑動單個 iOS PickerWheel 到目標值
+        
+        Args:
+            picker: XCUIElementTypePickerWheel 元素
+            target_value: 目標值（字串格式）
+        
+        原理：
+        - iOS 的 PickerWheel 可以接收 "up" 和 "down" 按鍵
+        - send_keys("up") = 向上滑動一格（數值增加）
+        - send_keys("down") = 向下滑動一格（數值減少）
+        - 持續滑動直到當前值等於目標值
+        """
+        current_value = picker.text  # 讀取當前顯示的值
+        
+        # 無限迴圈：持續滑動直到匹配
         while current_value != target_value:
             if int(current_value) &lt; int(target_value):
-                picker.send_keys("down")
-            else:
+                # 當前值 &lt; 目標值 → 向上滑動增加數值
                 picker.send_keys("up")
+            else:
+                # 當前值 > 目標值 → 向下滑動減少數值
+                picker.send_keys("down")
             
-            # 等待選擇器更新
-            import time
+            # 等待滾輪動畫完成
             time.sleep(0.5)
-            current_value = picker.text
+            current_value = picker.text  # 重新讀取值
     
+    # ============================================================
+    # 通用輔助方法（Android 和 iOS 都可能用到）
+    # ============================================================
     def _swipe_wheel_up(self, element):
-        """向上滑動選擇器（Android）"""
-        rect = element.rect
+        """
+        向上滑動選擇器（數值增加）
+        
+        Args:
+            element: 要滑動的 WebElement
+        
+        原理：
+        - 使用 element.rect 取得元素的位置和尺寸
+        - rect 回傳字典：{'x': 左上角X, 'y': 左上角Y, 'width': 寬, 'height': 高}
+        - 計算滑動的起點和終點座標
+        - 向上滑動：從底部 80% 位置滑到頂部 20% 位置
+        
+        座標示意圖：
+        ┌─────────────┐ ← element.y
+        │             │
+        │   起點(80%) │ ← start_y = y + height * 0.8
+        │      ↓      │
+        │             │
+        │   終點(20%) │ ← end_y = y + height * 0.2
+        │             │
+        └─────────────┘
+        """
+        rect = element.rect  # 取得元素的位置和尺寸
+        
+        # 計算 X 座標：元素的水平中心
         center_x = rect['x'] + rect['width'] / 2
+        
+        # 計算 Y 座標：從底部 80% 位置開始
         start_y = rect['y'] + rect['height'] * 0.8
+        
+        # 計算 Y 座標：滑到頂部 20% 位置
         end_y = rect['y'] + rect['height'] * 0.2
+        
+        # 執行滑動手勢
+        # duration=500 表示滑動持續 500ms（太快可能觸發不了）
         self.driver.swipe(center_x, start_y, center_x, end_y, duration=500)
     
     def _swipe_wheel_down(self, element):
-        """向下滑動選擇器（Android）"""
+        """
+        向下滑動選擇器（數值減少）
+        
+        邏輯與 _swipe_wheel_up 相反：
+        - 從頂部 20% 位置滑到底部 80% 位置
+        
+        座標示意圖：
+        ┌─────────────┐ ← element.y
+        │             │
+        │   起點(20%) │ ← start_y = y + height * 0.2
+        │      ↓      │
+        │             │
+        │   終點(80%) │ ← end_y = y + height * 0.8
+        │             │
+        └─────────────┘
+        """
         rect = element.rect
+        
         center_x = rect['x'] + rect['width'] / 2
-        start_y = rect['y'] + rect['height'] * 0.2
-        end_y = rect['y'] + rect['height'] * 0.8
+        start_y = rect['y'] + rect['height'] * 0.2  # 從頂部開始
+        end_y = rect['y'] + rect['height'] * 0.8    # 滑到底部
+        
         self.driver.swipe(center_x, start_y, center_x, end_y, duration=500)
 
-# 使用示例
+
+# ============================================================
+# 2) 實際使用範例 - 在測試中調用 DatePicker
+# ============================================================
 try:
-    # 初始化日期選擇器類
+    # 步驟 1：建立 DatePicker 實例
+    # DatePicker 會自動偵測當前平台
     date_picker = DatePicker(driver)
     
-    # 選擇 2024 年 5 月 20 日
-    date_picker.select_date(2024, 5, 20)
+    # 步驟 2：選擇日期
+    # 內部會自動根據平台執行對應的操作邏輯
+    date_picker.select_date(2024, 5, 20)  # 選擇 2024年5月20日
     
-    # 點擊確認按鈕
+    # 步驟 3：點擊確認按鈕
+    # 某些 App 選擇日期後需要點擊「確定」或「完成」按鈕
     confirm_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((AppiumBy.ACCESSIBILITY_ID, "confirm_button"))
+        EC.element_to_be_clickable(
+            (AppiumBy.ACCESSIBILITY_ID, "confirm_button")
+        )
     )
     confirm_button.click()
     
-    print("日期選擇成功")
+    print("✅ 日期選擇成功")
+    
 except Exception as e:
-    print(f"日期選擇失敗: {e}")
+    print(f"❌ 日期選擇失敗: {e}")
 
-# 2) 檢查當前日期
+
+# ============================================================
+# 3) 輔助函式 - 檢查當前選擇的日期
+# ============================================================
 def check_current_date(driver):
-    """獲取當前選擇的日期"""
+    """
+    獲取當前選擇的日期
+    
+    Args:
+        driver: Appium WebDriver 實例
+    
+    Returns:
+        str: 當前顯示的日期文字，失敗時回傳 None
+    
+    用途：
+    - 驗證日期是否選擇成功
+    - 在測試斷言中使用
+    """
     try:
-        # 定位到日期顯示元素
+        # 等待日期顯示元素出現
+        # 這個元素通常是一個 TextView，顯示已選擇的日期
         date_display = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((AppiumBy.ACCESSIBILITY_ID, "date_display"))
+            EC.presence_of_element_located(
+                (AppiumBy.ACCESSIBILITY_ID, "date_display")
+            )
         )
         
+        # 回傳元素顯示的文字
+        # 例如："2024/05/20" 或 "May 20, 2024"
         return date_display.text
+        
     except Exception as e:
         print(f"獲取當前日期失敗: {e}")
         return None
 
-# 3) 重置日期選擇器
+
+# ============================================================
+# 4) 輔助函式 - 重置日期選擇器
+# ============================================================
 def reset_date_picker(driver):
-    """重置日期選擇器"""
+    """
+    重置日期選擇器到初始狀態
+    
+    用途：
+    - 在測試開始前重置狀態
+    - 在測試失敗後恢復環境
+    """
     try:
+        # 等待重置按鈕出現並可點擊
         reset_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((AppiumBy.ACCESSIBILITY_ID, "reset_button"))
+            EC.element_to_be_clickable(
+                (AppiumBy.ACCESSIBILITY_ID, "reset_button")
+            )
         )
         reset_button.click()
-        print("日期選擇器已重置")
+        print("✅ 日期選擇器已重置")
+        
     except Exception as e:
-        print(f"重置日期選擇器失敗: {e}")
+        print(f"❌ 重置日期選擇器失敗: {e}")
 
-# 測試日期選擇器功能
+
+# ============================================================
+# 5) 完整測試流程範例
+# ============================================================
+# 這是一個實際測試場景的完整流程
+
+# 步驟 1：檢查初始日期
 print("檢查當前選擇的日期:", check_current_date(driver))
 
-# 選擇另一個日期
-date_picker.select_date(2025, 12, 31)
+# 步驟 2：選擇新的日期
+date_picker.select_date(2025, 12, 31)  # 選擇 2025年12月31日
 
-print("檢查更新後的日期:", check_current_date(driver))</code></pre>
+# 步驟 3：驗證日期是否正確
+print("檢查更新後的日期:", check_current_date(driver))
+
+# 步驟 4：重置日期選擇器（清理測試環境）
+reset_date_picker(driver)
+
+# 步驟 5：再次驗證重置是否成功
+print("重置後的日期:", check_current_date(driver))</code></pre>
         </article>
 
-          <article class="code-panel" data-reveal>
+          <article class="code-panel" data-reveal id="appium-7">
             <div class="code-head">
-              <h3>同一個元素兼容 Android / iOS locator</h3>
+              <h3>7. 跨平台 locator 管理</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- 跨平台定位器管理教學說明 -->
@@ -2425,9 +2706,9 @@ if __name__ == "__main__":
         </div>
 
         <div class="two-column">
-          <article class="code-panel" data-reveal>
+          <article class="code-panel" data-reveal id="appium-8">
             <div class="code-head">
-              <h3>Appium wait 範例</h3>
+              <h3>8. 等待策略 (wait)</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- Appium Wait 教學說明 -->
@@ -2493,9 +2774,9 @@ login_button.click()                     # 確保按鈕可點擊後再執行點�
         </div>
 
         <div class="two-column">
-          <article class="code-panel" data-reveal>
+          <article class="code-panel" data-reveal id="appium-9">
             <div class="code-head">
-              <h3>元素定位成功但無法點擊的解決方案</h3>
+              <h3>9. 座標點擊解決方案</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- 座標點擊教學 -->
