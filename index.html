@@ -2275,14 +2275,14 @@ date_picker.select_date(2025, 12, 31)
 print("檢查更新後的日期:", check_current_date(driver))</code></pre>
         </article>
 
-        <article class="code-panel wide" data-reveal>
-          <div class="code-head">
-            <h3>跨平台定位器重寫（完整代碼+註釋）</h3>
-            <button class="copy-button" type="button">複製程式碼</button>
-          </div>
-          <!-- 跨平台定位器管理教學說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，我們通常需要<strong>同時支援 Android 和 iOS</strong>兩個平台。但這帶來一個問題：<strong>Android 使用 resource-id，iOS 使用 Accessibility ID 或 Predicate</strong>，兩個平台的定位策略完全不同。本節將展示<strong>Page Object 模式 + 字典映射</strong>的完美解決方案：<strong>1) 在集中位置管理所有定位器；2) 自動偵測當前平台；3) 一行代碼即可找到元素。</strong>這樣可以大幅減少重複代碼，提升可維護性。</p>
-          <pre><code class="language-python">"""
+          <article class="code-panel" data-reveal>
+            <div class="code-head">
+              <h3>同一個元素兼容 Android / iOS locator</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <!-- 跨平台定位器管理教學說明 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，我們通常需要<strong>同時支援 Android 和 iOS</strong>兩個平台。但這帶來一個問題：<strong>Android 使用 resource-id，iOS 使用 Accessibility ID 或 Predicate</strong>，兩個平台的定位策略完全不同。本節將展示<strong>Page Object 模式 + 字典映射</strong>的完美解決方案：<strong>1) 在集中位置管理所有定位器；2) 自動偵測當前平台；3) 一行代碼即可找到元素。</strong>這樣可以大幅減少重複代碼，提升可維護性。</p>
+            <pre><code class="language-python">"""
 跨平台定位器管理器 - Page Object 模式範例
 功能：根據當前運行平台（Android/iOS）自動選擇正確的元素定位器
 作者：自動化測試開發者
@@ -2325,7 +2325,7 @@ class LoginPage:
         
         "username_input": {
             "android": (AppiumBy.ID, "com.demo:id/input_username"),  # Android: 使用 resource-id
-            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input"'), # iOS: 使用 Predicate
+            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input"'), # iOS: 使用 Predicate（更靈活）
         },
         
         "password_input": {
@@ -2399,7 +2399,7 @@ if __name__ == "__main__":
     finally:
         driver.quit()
 </code></pre>
-        </article>
+          </article>
 
         <div class="two-column">
           <article class="info-card deep-dive" data-reveal>
