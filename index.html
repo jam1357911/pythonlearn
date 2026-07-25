@@ -2275,15 +2275,14 @@ date_picker.select_date(2025, 12, 31)
 print("檢查更新後的日期:", check_current_date(driver))</code></pre>
         </article>
 
-        <div class="two-column">
-          <article class="code-panel" data-reveal>
-            <div class="code-head">
-              <h3>同一個元素兼容 Android / iOS locator</h3>
-              <button class="copy-button" type="button">複製程式碼</button>
-            </div>
-            <!-- 跨平台定位器管理教學說明 -->
-            <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，我們通常需要<strong>同時支援 Android 和 iOS</strong>兩個平台。但這帶來一個問題：<strong>Android 使用 resource-id，iOS 使用 Accessibility ID 或 Predicate</strong>，兩個平台的定位策略完全不同。本節將展示<strong>Page Object 模式 + 字典映射</strong>的完美解決方案：<strong>1) 在集中位置管理所有定位器；2) 自動偵測當前平台；3) 一行代碼即可找到元素。</strong>這樣可以大幅減少重複代碼，提升可維護性。</p>
-            <pre><code class="language-python">"""
+        <article class="code-panel wide" data-reveal>
+          <div class="code-head">
+            <h3>跨平台定位器重寫（完整代碼+註釋）</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <!-- 跨平台定位器管理教學說明 -->
+          <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，我們通常需要<strong>同時支援 Android 和 iOS</strong>兩個平台。但這帶來一個問題：<strong>Android 使用 resource-id，iOS 使用 Accessibility ID 或 Predicate</strong>，兩個平台的定位策略完全不同。本節將展示<strong>Page Object 模式 + 字典映射</strong>的完美解決方案：<strong>1) 在集中位置管理所有定位器；2) 自動偵測當前平台；3) 一行代碼即可找到元素。</strong>這樣可以大幅減少重複代碼，提升可維護性。</p>
+          <pre><code class="language-python">"""
 跨平台定位器管理器 - Page Object 模式範例
 功能：根據當前運行平台（Android/iOS）自動選擇正確的元素定位器
 作者：自動化測試開發者
@@ -2318,26 +2317,16 @@ class LoginPage:
     # ============================================
     # 定位器字典：集中管理所有元素的定位方式
     # ============================================
-    # 這個字典的結構是：{"元素名稱": {"平台": (By, value)}}
-    # 
-    # 舉例說明結構：
-    # LOCATORS["login_button"]["android"] = (AppiumBy.ID, "com.demo:id/btn_login")
-    #                      ↑                    ↑           ↑
-    #                  元素名稱               平台       定位方式      定位值
     LOCATORS = {
-        # ┌───────────────────────────────── login_button 的定位配置 ─────────────────────────────────┐
-        "login_button": {                                                                              │
-            "android": (AppiumBy.ID, "com.demo:id/btn_login"),                                      ││ Android: 使用 resource-id
-            "ios": (AppiumBy.ACCESSIBILITY_ID, "login_button"),                                     ││ iOS: 使用 Accessibility ID
-        },                                                                                             │
-        # └───────────────────────────────────────────────────────────────────────────────────────────┘
+        "login_button": {
+            "android": (AppiumBy.ID, "com.demo:id/btn_login"),  # Android: 使用 resource-id
+            "ios": (AppiumBy.ACCESSIBILITY_ID, "login_button"), # iOS: 使用 Accessibility ID
+        },
         
-        # ┌───────────────────────────────── username_input 的定位配置 ────────────────────────────────┐
-        "username_input": {                                                                                │
-            "android": (AppiumBy.ID, "com.demo:id/input_username"),                                  ││ Android: 使用 resource-id
-            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input"'),                             ││ iOS: 使用 Predicate（更靈活）
-        },                                                                                               │
-        # └─────────────────────────────────────────────────────────────────────────────────────────────┘
+        "username_input": {
+            "android": (AppiumBy.ID, "com.demo:id/input_username"),  # Android: 使用 resource-id
+            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input"'), # iOS: 使用 Predicate
+        },
         
         "password_input": {
             "android": (AppiumBy.ID, "com.demo:id/input_password"),
@@ -2351,192 +2340,68 @@ class LoginPage:
     }
 
     def __init__(self, driver):
-        """
-        初始化 LoginPage 類
-        
-        Args:
-            driver: Appium Driver 實例（已連接好設備的那個 driver）
-        
-        Example:
-            driver = webdriver.Remote("http://localhost:4723", options=options)
-            login_page = LoginPage(driver)  # <-- 在這裡傳入 driver
-        """
-        self.driver = driver                                              # 保存 Appium Driver 實例
-        
-        # 獲取當前連接的設備是什麼平台
-        # capabilities 是驅動啟動時傳遞的配置信息，包含 platformName
-        # .lower() 轉為小寫，避免 "Android"/"android" 大小寫問題
+        self.driver = driver
         self.platform = driver.capabilities.get("platformName", "").lower()
-        
-        # 列印資訊（方便除錯）
         print(f"LoginPage 初始化完成 - 當前平台：{self.platform}")
 
     def locator(self, element_name):
         """
         根據元素名稱和當前平台，返回對應的定位器
-        
-        ⚠️ 這個函式是整個設計的精髓！
-        它隱藏了平台差異，讓調用者完全不用關心用的是哪個平台。
-        
-        Args:
-            element_name (str): 元素名稱，必須是 LOCATORS 字典中的一個 key
-                              例如："login_button" 或 "username_input"
-        
-        Returns:
-            tuple: (定位方式 By, 定位值 value)，例如：(AppiumBy.ID, "com.demo:id/btn_login")
-        
-        Raises:
-            KeyError: 如果元素名稱不存在，會拋出錯誤
-        
-        執行過程示範：
-        假設当前 platform = "android"
-        
-        1. 用戶調用：self.locator("login_button")
-        2. 查表：LOCATORS["login_button"] = {"android": ..., "ios": ...}
-        3. 提取：["android"] = (AppiumBy.ID, "com.demo:id/btn_login")
-        4. 返回：(AppiumBy.ID, "com.demo:id/btn_login")
         """
-        # 從 LOCATORS 字典中找到該元素的平台專屬定位器
         return self.LOCATORS[element_name][self.platform]
 
     def find(self, element_name):
         """
         根據元素名稱找到頁面元素
-        
-        這是你最常用的方法！
-        只需要告訴它元素的名稱，它會自動幫你：
-        1. 找出正確的定位方式
-        2. 調用 driver.find_element() 找到元素
-        3. 返回 WebElement 給你操作
-        
-        Args:
-            element_name (str): 元素名稱，例如："login_button"
-        
-        Returns:
-            WebElement: Appium 找到的元素對象，可以直接調用 click()、send_keys() 等方法
-        
-        完整使用流程示範：
-        ```python
-        # Step 1: 創建 LoginPage 實例
-        login_page = LoginPage(driver)
-        
-        # Step 2: 找到 username 輸入框
-        username_field = login_page.find("username_input")
-        
-        # Step 3: 輸入內容
-        username_field.send_keys("testuser")
-        
-        # Step 4: 找到按鈕並點擊
-        button = login_page.find("login_button")
-        button.click()
-        ```
         """
-        # 步驟 1: 調用 locator() 獲取 (By, value) 元組
         by, value = self.locator(element_name)
-        
-        # 步驟 2: 調用 driver.find_element() 找到元素
-        #     by   = 定位方式（例如：AppiumBy.ID）
-        #     value = 定位值  （例如：com.demo:id/btn_login）
         element = self.driver.find_element(by, value)
-        
-        # 步驟 3: 返回找到的元素
         return element
 
 
 # ============================================
-# 實際使用範例 - 完整演示如何操作登入頁面
+# 實際使用範例
 # ============================================
 if __name__ == "__main__":
-    """
-    這個區塊示範如何在真實測試中使用 LoginPage 類
-    
-    ⚠️ 注意：需要先確保：
-    1. Appium Server 正在運行（default: http://localhost:4723）
-    2. 已經連接了模擬器或真機
-    3. 目標 App 已經安裝在設備上
-    """
     from appium import webdriver
     from appium.options.common import AppiumOptions
     
-    # 建立 Appium 選項（這裡以 Android 為例）
     options = AppiumOptions()
     options.platform_name = "Android"
     options.device_name = "emulator-5554"
     options.app_package = "com.demo"
     options.app_activity = ".MainActivity"
     
-    # 建立 Driver
     driver = webdriver.Remote(
         command_executor="http://localhost:4723",
         options=options
     )
     
     try:
-        # ╔══════════════════════════════════════════════════════╗
-        # ║         開始使用 LoginPage 類                        ║
-        # ╚══════════════════════════════════════════════════════╝
-        
-        print("\n" + "="*60)
-        print("Step 1: 創建 LoginPage 實例")
-        print("="*60)
-        
-        # ★ 創建 LoginPage 實例，傳入 driver
         login_page = LoginPage(driver)
-        # 此時會自動偵測並打印當前平台
         
-        print("\n" + "="*60)
-        print("Step 2: 使用 find() 方法找到元素")
-        print("="*60)
-        
-        # ★ 找到 username 輸入框
-        #   背後發生了什麼？
-        #   1. find("username_input") → 調用 locator("username_input")
-        #   2. locator() 查到：如果是 android，就用 (AppiumBy.ID, "com.demo:id/input_username")
-        #   3. driver.find_element(By.ID, "com.demo:id/input_username")
         print("\n正在查找 username_input 元素...")
         username_field = login_page.find("username_input")
         print(f"✅ 成功找到元素：{username_field}")
         
-        # ★ 找到 password 輸入框
         print("\n正在查找 password_input 元素...")
         password_field = login_page.find("password_input")
         print(f"✅ 成功找到元素：{password_field}")
         
-        # ★ 找到 login 按鈕
         print("\n正在查找 login_button 元素...")
         login_button = login_page.find("login_button")
         print(f"✅ 成功找到元素：{login_button}")
         
-        print("\n" + "="*60)
-        print("Step 3: 對元素進行操作")
-        print("="*60)
-        
-        # ★ 輸入使用者名稱
-        print(f"\n輸入使用者名稱到字段：'testuser'")
         username_field.send_keys("testuser")
-        print("✅ 輸入成功")
-        
-        # ★ 輸入密碼
-        print(f"\n輸入密碼到字段：'••••••'")
         password_field.send_keys("password123")
-        print("✅ 輸入成功")
-        
-        # ★ 點擊登入按鈕
-        print("\n點擊登入按鈕...")
         login_button.click()
-        print("✅ 點擊成功")
-        
-        print("\n" + "="*60)
-        print("全部操作完成！")
-        print("="*60)
         
     finally:
-        # 務必關閉 Driver
-        print("\n關閉 Driver...")
         driver.quit()
-        print("✅ Driver 已關閉")</code></pre>
-          </article>
+</code></pre>
+        </article>
 
+        <div class="two-column">
           <article class="info-card deep-dive" data-reveal>
             <h3>🔍 核心概念拆解</h3>
             <ul>
