@@ -694,35 +694,40 @@ print(user2)</code></pre>
             <h3>5.3 高階函式</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python"># 函式作為參數
+          <!-- Python 高階函式說明 -->
+          <p style="margin-bottom: 1rem; color: #8892b0;">高階函式（Higher-Order Functions）是指「接收其他函式作為參數」或「回傳一個新函式」的函式。這是 Python 非常強大的特性，常見應用包括：**將操作作為參數傳遞**、**建立閉包**、以及使用 **Lambda 表達式**寫出簡潔的一行運算。</p>
+          <pre><code class="language-python"># 函式作為參數 - 將其他函式當做資料一樣傳遞
 def apply_operation(x, y, operation):
     """對兩個數應用指定的操作"""
-    return operation(x, y)
+    return operation(x, y)  # operation 是另一個函式的名稱
 
-def add(x, y): return x + y
-def multiply(x, y): return x * y
-def subtract(x, y): return x - y
+# 定義三個基礎數學運算函式
+def add(x, y): return x + y      # 加法
+def multiply(x, y): return x * y # 乘法  
+def subtract(x, y): return x - y # 減法
 
-print(apply_operation(10, 5, add))      # 15
-print(apply_operation(10, 5, multiply)) # 50
-print(apply_operation(10, 5, subtract)) # 5
+# 呼叫 apply_operation 並傳入不同的操作函式
+print(apply_operation(10, 5, add))      # 15：將 add(10, 5) 傳入
+print(apply_operation(10, 5, multiply)) # 50：將 multiply(10, 5) 傳入
+print(apply_operation(10, 5, subtract)) # 5：將 subtract(10, 5) 傳入
 
-# 函式作為回傳值
+# 函式作為回傳值 - 函式可以產生並回傳新的函式
 def create_multiplier(factor):
     """建立一個乘法函式"""
-    def multiplier(x):
+    def multiplier(x):  # 內部函式可以存取外部的 factor 變數（閉包）
         return x * factor
-    return multiplier
+    return multiplier   # 回傳的是函式本身，不是執行結果
 
-double = create_multiplier(2)
-triple = create_multiplier(3)
-print(double(5))  # 10
-print(triple(5))  # 15
+double = create_multiplier(2)  # double 是一個新函式：x * 2
+triple = create_multiplier(3)  # triple 是一個新函式：x * 3
+print(double(5))  # 10：相當於 5 * 2
+print(triple(5))  # 15：相當於 5 * 3
 
-# Lambda 函式
-double = lambda x: x * 2
-square = lambda x: x ** 2
-add = lambda x, y: x + y
+# Lambda 函式 - 用於建立簡單的匿名函式（沒有名稱的函式）
+# 語法：lambda 參數: 運算式
+double = lambda x: x * 2       # 等同於 def double(x): return x * 2
+square = lambda x: x ** 2      # 平方運算
+add = lambda x, y: x + y       # 兩數相加
 
 print(double(5))    # 10
 print(square(4))    # 16
@@ -734,86 +739,89 @@ print(add(3, 4))    # 7</code></pre>
             <h3>5.4 函式修飾器 (Decorators)</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python"># 修飾器本質：接收函式、回傳包裝後的新函式
+          <!-- Python Decorators 說明 -->
+          <p style="margin-bottom: 1rem; color: #8892b0;">修飾器（Decorator）是一個接受函式作為參數、並回傳新函式的工具。它讓我們可以在**不修改原函式原始碼**的情況下，增加額外的功能。常見應用包括：**日誌記錄**、**執行時間測量**、**權限檢查**等。使用 `@functools.wraps` 可以保留原函式的名稱和文件。</p>
+          <pre><code class="language-python"># 修飾器本質：接收一個函式、包裝它、然後回傳新的包裝後函式
 # 實務上建議搭配 functools.wraps 保留原函式名稱與 docstring
 import functools
 
-# 基本修飾器
+# 基本修飾器 - 印出每次函式呼叫的詳細資訊
 def debug_decorator(func):
     """印出函式呼叫和回傳值的修飾器"""
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        print(f"呼叫函式 {func.__name__}，參數: {args}, {kwargs}")
-        result = func(*args, **kwargs)
-        print(f"函式 {func.__name__} 回傳: {result}")
-        return result
-    return wrapper
+    @functools.wraps(func)   # 保留原函式的 __name__ 和 docstring
+    def wrapper(*args, **kwargs):  # wrapper 是一個可以接收任何參數的新函式
+        print(f"呼叫函式 {func.__name__}，參數: {args}, {kwargs}")  # 記錄開始
+        result = func(*args, **kwargs)                # 呼叫原函式
+        print(f"函式 {func.__name__} 回傳: {result}")  # 記錄結束
+        return result                                   # 回傳結果
+    return wrapper                                       # 回傳包装後的函式
 
-@debug_decorator
+@debug_decorator      # 這裡等同於 add = debug_decorator(add)
 def add(x, y):
-    return x + y
+    return x + y      # 原函式內容完全沒改
 
-@debug_decorator
+@debug_decorator      
 def multiply(x, y):
     return x * y
 
-add(3, 4)
-multiply(5, 6)
+add(3, 4)             # 會自動輸出呼叫過程
+multiply(5, 6)        # 同上
 
-# 計時修飾器
+# 計時修飾器 - 測量函式執行需要多久時間
 import time
 def timing_decorator(func):
     """測量函式執行時間的修飾器"""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        start = time.time()
-        result = func(*args, **kwargs)
-        end = time.time()
-        print(f"{func.__name__} 執行時間: {end - start:.4f} 秒")
+        start = time.time()              # 記錄開始時間
+        result = func(*args, **kwargs)   # 呼叫原函式
+        end = time.time()                # 記錄結束時間
+        print(f"{func.__name__} 執行時間: {end - start:.4f} 秒")  # 輸出耗時
         return result
     return wrapper
 
 @timing_decorator
 def slow_function():
-    time.sleep(0.5)
+    time.sleep(0.5)         # 模擬慢速操作
     return "Done"
 
-slow_function()</code></pre>
-        </article>
+slow_function()             # 會顯示約 0.5 秒
 
         <article class="code-panel wide" data-reveal>
           <div class="code-head">
             <h3>5.5 模組與套件</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <pre><code class="language-python"># 基本模組使用
-import math
-print(math.pi)          # 3.141592653589793
-print(math.sqrt(16))    # 4.0
-print(math.pow(2, 3))   # 8.0
+          <!-- Python 模組說明 -->
+          <p style="margin-bottom: 1rem; color: #8892b0;">模組（Module）是一個包含 Python 代碼的 `.py` 文件，而套件（Package）則是包含多個模組的目錄。使用模組可以**組織代碼、避免命名衝突**，並重用現有的功能。Python 提供了標準庫和第三方套件來滿足各種需求。</p>
+          <pre><code class="language-python"># 基本模組使用 - 導入整個模組後需加上前綴
+import math                        # 導入數學運算模組
+print(math.pi)          # 3.141592653589793：圓周率常數
+print(math.sqrt(16))    # 4.0：平方根
+print(math.pow(2, 3))   # 8.0：2 的 3 次方
 
-# 從模組匯入特定函式
-from datetime import datetime, date, time
+# 從模組匯入特定函式 - 可以直接使用而不需要加前綴
+from datetime import datetime, date, time  # 只導入需要的類別
 
-current_datetime = datetime.now()
+current_datetime = datetime.now()   # 獲取當前日期時間
 print(f"現在時間: {current_datetime}")
 
-specific_date = date(2023, 12, 25)
-print(f"聖誕節: {specific_date}")
+specific_date = date(2023, 12, 25)  # 創建特定日期
+print(f"聖誕節: {specific_date}")    # 2023-12-25
 
-specific_time = time(15, 30, 45)
-print(f"特定時間: {specific_time}")
+specific_time = time(15, 30, 45)    # 創建特定時間
+print(f"特定時間: {specific_time}")  # 15:30:45
 
 # 使用別名導入（需先安裝：pip install numpy）
-import numpy as np
-array = np.array([1, 2, 3, 4, 5])
-print(f"陣列平均值: {np.mean(array)}")
-print(f"陣列總和: {np.sum(array)}")
+import numpy as np             # numpy 是處理陣列的強大工具庫
+array = np.array([1, 2, 3, 4, 5])  # 創建陣列
+print(f"陣列平均值: {np.mean(array)}")   # 3.0
+print(f"陣列總和: {np.sum(array)}")      # 15
 
-# 匯入整個模組內容
-from math import *
-print(sin(pi/2))  # 1.0
-print(cos(pi))    # -1.0</code></pre>
+# 匯入整個模組內容（通常不建議這樣做，因為可能引起命名衝突）
+from math import *           # 將 math 的所有名稱直接引入
+print(sin(pi/2))  # 1.0：sin(π/2)
+print(cos(pi))    # -1.0：cos(π)</code></pre>
         </article>
       </section>
 
