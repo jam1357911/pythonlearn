@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
     <!-- 版本號：20260725v2 -->
@@ -1523,6 +1523,7 @@ print(User.how_many_users())</code></pre>
 # Xcode (Mac 用於 iOS 測試)
 # Appium Inspector (元素定位工具)</code></pre>
         </article>
+      </section>
 
       <section id="yaml-config" class="section" aria-labelledby="yaml-config-title">
         <div class="section-heading" data-reveal>
@@ -1821,6 +1822,7 @@ Appium YAML 配置管理器測試
         </div>
       </section>
 
+      <section id="appium" class="section" aria-labelledby="appium-title">
         <div class="two-column">
           <article class="code-panel" data-reveal>
             <div class="code-head">
@@ -2117,7 +2119,7 @@ class DatePicker:
             current_year = year_picker.text
             if current_year == target_year:
                 break
-            elif int(current_year) < year:
+            elif int(current_year) &lt; year:
                 # 向上滑動
                 self._swipe_wheel_up(year_picker)
             else:
@@ -2136,7 +2138,7 @@ class DatePicker:
             current_month = month_picker.text
             if current_month == target_month:
                 break
-            elif int(current_month) < month:
+            elif int(current_month) &lt; month:
                 self._swipe_wheel_up(month_picker)
             else:
                 self._swipe_wheel_down(month_picker)
@@ -2153,7 +2155,7 @@ class DatePicker:
             current_day = day_picker.text
             if current_day == target_day:
                 break
-            elif int(current_day) < day:
+            elif int(current_day) &lt; day:
                 self._swipe_wheel_up(day_picker)
             else:
                 self._swipe_wheel_down(day_picker)
@@ -2196,7 +2198,7 @@ class DatePicker:
         """選擇 iOS PickerWheel 的值"""
         current_value = picker.text
         while current_value != target_value:
-            if int(current_value) < int(target_value):
+            if int(current_value) &lt; int(target_value):
                 picker.send_keys("down")
             else:
                 picker.send_keys("up")

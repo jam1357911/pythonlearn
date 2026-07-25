@@ -69,11 +69,12 @@ const revealObserver = new IntersectionObserver((entries) => {
     if (entry.isIntersecting) {
       entry.target.style.opacity = '1';
       entry.target.style.transform = 'translateY(0)';
+      revealObserver.unobserve(entry.target);
     }
   });
 }, {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
+  threshold: 0,
+  rootMargin: '100px 0px 100px 0px'
 });
 
 document.querySelectorAll('[data-reveal]').forEach(el => {
@@ -82,3 +83,12 @@ document.querySelectorAll('[data-reveal]').forEach(el => {
   el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
   revealObserver.observe(el);
 });
+
+setTimeout(() => {
+  document.querySelectorAll('[data-reveal]').forEach(el => {
+    if (el.style.opacity === '0') {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }
+  });
+}, 3000);
