@@ -1712,42 +1712,51 @@ if __name__ == "__main__":
               <h3>7. 常用元素定位方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <!-- Appium 元素定位教學說明 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，<strong>正確的定位元素是第一步</strong>。Appium 支援多種定位策略，每種都有適用的場景。本節示範：<strong>1) Android/iOS 通用定位；2) 平台專屬的高階定位技巧；3) XPath 的最佳實踐。</strong>建議優先使用 ACCESSIBILITY_ID（最穩定）和 ANDROID_UIAUTOMATOR/iOS_PREDICATE（功能最強）。</p>
             <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
 
-# 1) By.ID (Android)
+# 1) By.ID (Android) - 根據資源 ID 定位（Android 專用）
+# resource-id 是 Android 元件的唯一標識，穩定且快速
 element = driver.find_element(AppiumBy.ID, "com.android.calculator2:id/digit_1")
 
-# 2) By.ACCESSIBILITY_ID (推薦跨平台)
+# 2) By.ACCESSIBILITY_ID (推薦跨平台) - 基於無障礙功能屬性
+# iOS 稱為 Accessibility Identifier，Android 稱為 content-description
+# 這是跨平台最穩定的定位方式，優先使用！
 element = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "digit_1")
 
-# 3) By.XPATH
-# 絕對路徑 (不推薦，維護困難)
+# 3) By.XPATH - 通用的 XML/HTML 路徑語言
+# ⚠️ 絕對路徑不推薦，維護困難且容易因頁面結構變更而失效
 element = driver.find_element(AppiumBy.XPATH, "/hierarchy/android.widget.FrameLayout...")
-# 相對路徑 (推薦)
-element = driver.find_element(AppiumBy.XPATH, "//*[@text='1']")
-element = driver.find_element(AppiumBy.XPATH, "//android.widget.Button[@resource-id='digit_1']")
+# ✅ 相對路徑推薦，更靈活且易維護
+element = driver.find_element(AppiumBy.XPATH, "//*[@text='1']")                                    # 查找顯示文本為 '1' 的任何元素
+element = driver.find_element(AppiumBy.XPATH, "//android.widget.Button[@resource-id='digit_1']")    # 查找特定 class 和 resource-id 的元素
 
-# 4) By.CLASS_NAME (Android)
+# 4) By.CLASS_NAME - 根據 UI 元件類型定位（較少用，因為可能有多個同類元件）
 element = driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Button")
 
-# 5) By.NAME (已棄用)
+# 5) By.NAME (已棄用) - Appium 新版本已不建議使用
 # element = driver.find_element(AppiumBy.NAME, "1")
 
-# 6) By.IOS_PREDICATE (iOS)
+# 6) By.IOS_PREDICATE (iOS 強力定位) - 基於屬性條件的精確查詢
+# 語法類似 SQL，非常強大，可以組合多個條件
 element = driver.find_element(AppiumBy.IOS_PREDICATE, 'name == "1" OR label == "1"')
 element = driver.find_element(AppiumBy.IOS_PREDICATE, 'type == "XCUIElementTypeButton" AND name CONTAINS "1"')
 
-# 7) By.IOS_CLASS_CHAIN (iOS)
+# 7) By.IOS_CLASS_CHAIN (iOS 新一代定位) - iOS 10+ 推薦使用
+# 語法簡潔，執行速度快，比 XPATH 更適合 iOS
 element = driver.find_element(AppiumBy.IOS_CLASS_CHAIN, '**/XCUIElementTypeButton[`name == "1"`]')
+# ** 表示遍歷所有層級，/ 表示下一層
 
-# 8) By.ANDROID_UIAUTOMATOR
+# 8) By.ANDROID_UIAUTOMATOR (Android 強力定位) - 基於 UIAutomator API
+# 功能最強大，可以進行複雜查詢如「父元素為 X 的所有按鈕」
 element = driver.find_element(
     AppiumBy.ANDROID_UIAUTOMATOR, 
-    'new UiSelector().text("1")'
+    'new UiSelector().text("1")'                                    # 根據文本定位
 )
 element = driver.find_element(
     AppiumBy.ANDROID_UIAUTOMATOR,
-    'new UiSelector().resourceId("com.android.calculator2:id/digit_1")'
+    'new UiSelector().resourceId("com.android.calculator2:id/digit_1")'  # 根據 resource-id 定位
 )</code></pre>
           </article>
           
@@ -1756,58 +1765,62 @@ element = driver.find_element(
               <h3>7.1 元素操作方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
-            <pre><code class="language-python"># 基本操作
-element.click()           # 點擊
-element.send_keys("text") # 輸入文字
-element.clear()           # 清除文字
-text = element.text       # 獲取文字
+            <!-- Appium 元素操作教學說明 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">找到元素後，我們可以對它進行各種<strong>互動操作</strong>。本節涵蓋：基礎操作（點擊、輸入）、狀態檢查、位置尺寸獲取、截圖記錄、以及進階手勢（滑動、拖放、長按）。掌握這些方法是完成自動化測試的關鍵技能。</p>
+            <pre><code class="language-python"># 基本操作 - 最常用的互動方式
+element.click()           # 點擊元素
+element.send_keys("text") # 輸入文字（自動觸發鍵盤）
+element.clear()           # 清除輸入框中的文字
+text = element.text       # 獲取元素顯示的文字內容
 
-# 獲取元素屬性
-resource_id = element.get_attribute("resource-id")  # Android
-text_value = element.get_attribute("text")
-name = element.get_attribute("name")
-class_name = element.get_attribute("class")
+# 獲取元素屬性 - 用於驗證或提取數據
+resource_id = element.get_attribute("resource-id")  # Android 專有屬性
+text_value = element.get_attribute("text")          # 元素顯示文本
+name = element.get_attribute("name")                # 元素名稱（accessibility name）
+class_name = element.get_attribute("class")         # CSS 類名或元件類別
 
-# 判斷元素狀態
-is_displayed = element.is_displayed()
-is_enabled = element.is_enabled()
-is_selected = element.is_selected()
+# 判斷元素狀態 - 用於等待邏輯或條件判斷
+is_displayed = element.is_displayed()   # 元素是否可見（不僅是存在，還要可見）
+is_enabled = element.is_enabled()       # 元素是否可啟用（未禁用）
+is_selected = element.is_selected()     # 元素是否被選中（checkbox/radio）
 
-# 獲取元素位置與尺寸
-location = element.location   # {x, y}
-size = element.size           # {width, height}
+# 獲取元素位置與尺寸 - 用於座標計算（如滑動、點擊特定点）
+location = element.location   # 返回字典 {x: 100, y: 200}，左上角坐標
+size = element.size           # 返回字典 {width: 100, height: 50}，寬高尺寸
 
-# 螢幕截圖
-driver.save_screenshot("screenshot.png")
-element_screenshot = element.screenshot_as_base64
+# 螢幕截圖 - 除錯和報告的重要工具
+driver.save_screenshot("screenshot.png")                  # 保存全螢幕截圖到文件
+element_screenshot = element.screenshot_as_base64         # 獲取元素的 base64 編碼截圖
 
-# 模擬操作
-driver.press_keycode(4)      # Android: 按返回鍵
-driver.press_keycode(3)      # Android: 按 Home 鍵
+# 模擬物理按鍵操作
+driver.press_keycode(4)      # Android: 按下返回鍵（Back）
+driver.press_keycode(3)      # Android: 按下 Home 鍵（回到主畫面）
+# 常見 keycode: 4=返回, 3=Home, 26=電源鍵, 66=確認鍵
 
-# 滑動
+# 滑動操作 - 經典的手勢操作
 driver.swipe(start_x, start_y, end_x, end_y, duration=1000)
+# 參數：起始 x, 起始 y, 結束 x, 結束 y, 持續時間（毫秒）
 
-# 拖放
+# 拖放操作 - 將一個元素拖放到另一個位置
 driver.drag_and_drop(element1, element2)
 
-# 多點觸控
-# Python Client 中可使用 ActionChains
+# 多點觸控 - 使用 Selenium 的 ActionChains
 from selenium.webdriver.common.action_chains import ActionChains
 actions = ActionChains(driver)
-actions.tap(element).perform()
+actions.tap(element).perform()  # 輕觸元素
 
-# 長按（Selenium 4 使用 W3C ActionBuilder，TouchActions 已移除）
+# 長按操作（Selenium 4 使用 W3C ActionBuilder）
+# ⚠️ TouchActions 已在 Selenium 4 中移除，請使用新的 ActionBuilder
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 
-finger = PointerInput("touch", "finger")
-actions = ActionBuilder(driver, mouse=finger)
-actions.pointer_action.move_to(element)
-actions.pointer_action.pointer_down()
-actions.pointer_action.pause(1)
-actions.pointer_action.pointer_up()
-actions.perform()</code></pre>
+finger = PointerInput("touch", "finger")                           # 創建觸控指針
+actions = ActionBuilder(driver, mouse=finger)                      # 建立動作構建器
+actions.pointer_action.move_to(element)                            # 移動到元素
+actions.pointer_action.pointer_down()                              # 按下手指
+actions.pointer_action.pause(1)                                    # 暫停 1 秒（保持按下）
+actions.pointer_action.pointer_up()                                # 抬起手指
+actions.perform()                                                  # 執行整個動作序列</code></pre>
           </article>
         </div>
 
@@ -2153,31 +2166,35 @@ print("檢查更新後的日期:", check_current_date(driver))</code></pre>
               <h3>同一個元素兼容 Android / iOS locator</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <!-- 跨平台定位器管理教學 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">當你在同一套測試代碼中同時支援 <strong>Android 和 iOS</strong> 時，最大的挑戰是兩個平台使用不同的定位策略。這個範例展示如何使用<strong>Page Object 模式 + 字典映射</strong>來集中管理平台差異：<strong>1) 定義 LOCATORS 字典；2) 自動偵測當前平台；3) 統一介面查找元素。</strong>這樣可以大幅減少重複代碼，提升可維護性。</p>
             <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy  # 導入 Appium 的定位器類
 
 
 class LoginPage:
+    """登入頁面 Page Object - 封裝登入頁面的所有操作"""
     # 定位器字典：根據平台返回對應的定位器
+    # ✅ 優點：修改定位邏輯只需改這裡，測試代碼不需變動
     LOCATORS = {
         "login_button": {
-            "android": (AppiumBy.ID, "com.demo:id/btn_login"),      # Android 平台使用 ID 定位
+            "android": (AppiumBy.ID, "com.demo:id/btn_login"),      # Android 平台使用 ID 定位（resource-id）
             "ios": (AppiumBy.ACCESSIBILITY_ID, "login_button"),    # iOS 平台使用 Accessibility ID 定位
         },
         "username_input": {
             "android": (AppiumBy.ID, "com.demo:id/input_username"), # Android 平台使用 ID 定位
-            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input"'),  # iOS 平台使用 Predicate 定位
+            "ios": (AppiumBy.IOS_PREDICATE, 'name == "username_input"'),  # iOS 平台使用 Predicate 定位（功能更強大）
         },
     }
 
     def __init__(self, driver):
         """初始化 LoginPage 類"""
         self.driver = driver                                      # 保存 Appium Driver 實例
-        # 獲取當前平台名稱，並轉為小寫
+        # 獲取當前平台名稱（Android 或 iOS），並轉為小寫統一格式
         self.platform = driver.capabilities.get("platformName", "").lower()
 
     def locator(self, name):
         """根據元素名稱和當前平台返回定位器"""
-        return self.LOCATORS[name][self.platform]
+        return self.LOCATORS[name][self.platform]                 # 從字典中取得對應平台的定位器
 
     def find(self, name):
         """根據元素名稱找到元素"""
@@ -2201,28 +2218,55 @@ class LoginPage:
               <h3>Appium wait 範例</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <!-- Appium Wait 教學說明 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，<strong>等待策略是穩定性的關鍵</strong>。Appium 操作手機應用時，網路延遲、動畫過渡、數據加載都可能導致元素尚未就緒。<strong>顯式等待（Explicit Wait）</strong>讓我們可以精確控制等待條件，避免使用不穩定的固定 sleep()。本節示範最常用的兩種等待：<strong>等待元素存在</strong>和<strong>等待元素可點擊</strong>。</p>
             <pre><code class="language-python">from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
 def wait_for_element(driver, locator, timeout=15):
+    """
+    等待元素出現在 DOM 中（元素已存在但可能不可見）
+    
+    Args:
+        driver: Appium Driver 實例
+        locator: 元素定位器 (By, value)
+        timeout: 最大等待時間（秒），預設 15 秒
+    
+    Returns:
+        WebElement: 找到的元素
+    """
     return WebDriverWait(driver, timeout).until(
         EC.presence_of_element_located(locator)
     )
 
 
 def wait_until_clickable(driver, locator, timeout=15):
+    """
+    等待元素出現且可點擊（不僅存在，還要可見並啟用）
+    
+    ⚠️ 這是推薦的做法，因為只有可點擊的元素才能真正被操作
+    
+    Args:
+        driver: Appium Driver 實例
+        locator: 元素定位器 (By, value)
+        timeout: 最大等待時間（秒），預設 15 秒
+    
+    Returns:
+        WebElement: 可點擊的元素
+    """
     return WebDriverWait(driver, timeout).until(
         EC.element_to_be_clickable(locator)
     )
 
 
+# 實際使用範例
 login_button = wait_until_clickable(
     driver,
     (AppiumBy.ACCESSIBILITY_ID, "login_button"),
-    timeout=20,
+    timeout=20,                          # 設定較長的超時時間
 )
-login_button.click()</code></pre>
+login_button.click()                     # 確保按鈕可點擊後再執行點擊操作</code></pre>
           </article>
 
           <article class="info-card" data-reveal>
@@ -2242,35 +2286,44 @@ login_button.click()</code></pre>
               <h3>元素定位成功但無法點擊的解決方案</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <!-- 座標點擊教學 -->
+            <p style="margin-bottom: 1rem; color: #8892b0;">有時你會遇到<strong>「元素找到了，但 click() 失效」</strong>的情況。這通常是因為元素被覆蓋、透明、或 App 自訂了點擊行為。本節提供<strong>三種解決方案</strong>：<strong>1) 座標點擊（計算中心點）；2) 偏移量點擊（精確控制）；3) 重試機制（先嘗試正常點擊，失敗後改用座標）。</strong>這是自動化測試除錯的必備技能。</p>
             <pre><code class="language-python">from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 
 
 def tap_by_coordinates(driver, x, y):
-    """使用座標點擊元素"""
-    finger = PointerInput("touch", "finger")
-    actions = ActionBuilder(driver, mouse=finger)
-    actions.pointer_action.move_to_location(x, y)
-    actions.pointer_action.pointer_down()
-    actions.pointer_action.pause(0.1)
-    actions.pointer_action.pointer_up()
-    actions.perform()
+    """
+    使用座標點擊元素 - W3C 標準手勢操作
+    
+    Args:
+        driver: Appium Driver 實例
+        x: X 軸座標
+        y: Y 軸座標
+    """
+    finger = PointerInput("touch", "finger")              # 創建觸控指針
+    actions = ActionBuilder(driver, mouse=finger)         # 建立動作構建器
+    actions.pointer_action.move_to_location(x, y)         # 移動到指定座標
+    actions.pointer_action.pointer_down()                 # 按下
+    actions.pointer_action.pause(0.1)                     # 暫停 0.1 秒（模擬真實觸碰時間）
+    actions.pointer_action.pointer_up()                   # 抬起
+    actions.perform()                                     # 執行整個動作序列
 
 
 # 場景：元素定位成功但 click() 方法失敗
-# 步驟1: 先找到元素
+# 步驟1: 先找到元素（確保元素已存在）
 element = wait_for_element(driver, (AppiumBy.ACCESSIBILITY_ID, "login_button"))
 
-# 步驟2: 獲取元素的位置和大小
+# 步驟2: 獲取元素的位置和大小（rect 屬性包含 x, y, width, height）
 rect = element.rect
-x = rect["x"]
-y = rect["y"]
-width = rect["width"]
-height = rect["height"]
+x = rect["x"]                       # 左上角 X 座標
+y = rect["y"]                       # 左上角 Y 座標
+width = rect["width"]               # 元素寬度
+height = rect["height"]             # 元素高度
 
-# 步驟3: 計算元素的中心座標
-center_x = int(x + width / 2)
-center_y = int(y + height / 2)
+# 步驟3: 計算元素的中心座標（通常是最佳點擊位置）
+center_x = int(x + width / 2)       # X + 半個寬度
+center_y = int(y + height / 2)      # Y + 半個高度
 
 # 步驟4: 使用座標點擊
 print(f"元素中心座標: ({center_x}, {center_y})")
@@ -2279,33 +2332,54 @@ tap_by_coordinates(driver, center_x, center_y)
 
 # 進階應用：根據元素區域內的偏移量點擊
 def tap_element_at_offset(element, x_offset, y_offset):
-    """在元素內部指定偏移量的位置點擊"""
+    """
+    在元素內部指定偏移量的位置點擊
+    
+    Args:
+        element: Appium WebElement
+        x_offset: X 軸偏移量（從元素左上角算起）
+        y_offset: Y 軸偏移量（從元素左上角算起）
+    """
     rect = element.rect
-    x = rect["x"] + x_offset
-    y = rect["y"] + y_offset
+    x = rect["x"] + x_offset           # 元素左邊界 + 水平偏移
+    y = rect["y"] + y_offset           # 元素上邊界 + 垂直偏移
     tap_by_coordinates(driver, x, y)
 
 
-# 點擊元素右下角（偏移量從左上角算起）
+# 點擊元素右下角（偏移量從元素左上角算起）
 tap_element_at_offset(element, rect["width"] - 10, rect["height"] - 10)
+# 這裡的 "-10" 是從邊緣向內縮 10 像素，避免點擊到邊緣
 
 
-# 確保點擊操作成功的重試機制
+# 確保點擊操作成功的重試機制 - 先嘗試正常點擊，失敗後改用座標點擊
 def safe_tap_element(element, retries=3):
-    """安全點擊元素，失敗時使用座標點擊作為備援"""
+    """
+    安全點擊元素，失敗時使用座標點擊作為備援
+    
+    ⚠️ 最佳實踐：永遠先嘗試 element.click()，因為它最穩定
+    只有在 click() 確實失敗時，才使用座標點擊作為備援方案
+    
+    Args:
+        element: Appium WebElement
+        retries: 重試次數，預設 3 次
+    
+    Returns:
+        bool: 點擊是否成功
+    """
     for attempt in range(retries):
         try:
-            element.click()
-            return True
+            element.click()               # 首先嘗試標準的 click() 方法
+            return True                   # 成功則返回 True
         except Exception as e:
             print(f"第 {attempt + 1} 次點擊失敗: {e}")
-            if attempt < retries - 1:
+            if attempt < retries - 1:     # 如果不是最後一次嘗試，繼續重試
                 print("嘗試使用座標點擊")
                 rect = element.rect
-                center_x = int(rect["x"] + rect["width"] / 2)
+                center_x = int(rect["x"] + rect["width"] / 2)   # 計算中心座標
                 center_y = int(rect["y"] + rect["height"] / 2)
-                tap_by_coordinates(driver, center_x, center_y)
-                return True
+                tap_by_coordinates(driver, center_x, center_y)   # 使用座標點擊
+                return True             # 座標點擊成功
+    return False                        # 所有嘗試都失敗
     return False
 
 
