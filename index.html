@@ -1478,16 +1478,18 @@ print(User.how_many_users())</code></pre>
             <li><a href="#appium-1">1. 環境設定</a></li>
             <li><a href="#appium-2">2. YAML 配置文件</a></li>
             <li><a href="#appium-3">3. 讀取 YAML 並啟動 Driver</a></li>
-            <li><a href="#appium-4">4. 常用元素定位方法</a>
+            <li><a href="#appium-4">4. 讀取平台特定的測試數據</a></li>
+            <li><a href="#appium-5">5. 測試數據讀取結果範例</a></li>
+            <li><a href="#appium-6">6. 常用元素定位方法</a>
               <ol>
-                <li><a href="#appium-4-1">4.1 元素操作方法</a></li>
+                <li><a href="#appium-6-1">6.1 元素操作方法</a></li>
               </ol>
             </li>
-            <li><a href="#appium-5">5. 頁面滾動操作</a></li>
-            <li><a href="#appium-6">6. 日期選擇器操作</a></li>
-            <li><a href="#appium-7">7. 跨平台 locator 管理</a></li>
-            <li><a href="#appium-8">8. 等待策略 (wait)</a></li>
-            <li><a href="#appium-9">9. 座標點擊解決方案</a></li>
+            <li><a href="#appium-7">7. 頁面滾動操作</a></li>
+            <li><a href="#appium-8">8. 日期選擇器操作</a></li>
+            <li><a href="#appium-9">9. 跨平台 locator 管理</a></li>
+            <li><a href="#appium-10">10. 等待策略 (wait)</a></li>
+            <li><a href="#appium-11">11. 座標點擊解決方案</a></li>
           </ol>
         </nav>
 
@@ -1605,13 +1607,28 @@ common:
 
 # 測試數據配置（供 pytest 測試用例使用）
 test_data:
-  login:                                        # 登入測試數據
-    valid:                                      # 有效的憑證
-      username: "testuser"                      # 測試用戶名
-      password: "password123"                   # 測試密碼
-    invalid:                                    # 無效的憑證
-      username: "invalid_user"                  # 錯誤用戶名
-      password: "wrong_password"                # 錯誤密碼
+  # 平台特定的登入憑證
+  login:
+    android:                                    # Android 平台專用帳號
+      valid:
+        username: "android_test_user"           # Android 測試用戶名
+        password: "android_pass_123"            # Android 測試密碼
+      invalid:
+        username: "android_invalid"             # Android 錯誤用戶名
+        password: "wrong_android_pass"          # Android 錯誤密碼
+    
+    ios:                                        # iOS 平台專用帳號
+      valid:
+        username: "ios_test_user"               # iOS 測試用戶名
+        password: "ios_pass_456"                # iOS 測試密碼
+      invalid:
+        username: "ios_invalid"                 # iOS 錯誤用戶名
+        password: "wrong_ios_pass"              # iOS 錯誤密碼
+    
+    # 共用測試數據（兩個平台都可以用）
+    shared:
+      admin_username: "admin"                   # 管理員帳號
+      admin_password: "admin_secret"            # 管理員密碼
 EOF
 
 echo "✅ 配置文件創建完成"</code></pre>
@@ -1818,6 +1835,299 @@ Appium YAML 配置管理器測試
 ==================================================</code></pre>
         </article>
 
+        <article class="code-panel" data-reveal id="appium-4">
+          <div class="code-head">
+            <h3>4. 讀取平台特定的測試數據</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">在實際測試中，Android 和 iOS 可能需要使用<strong>不同的帳號密碼</strong>進行登入。這個函式展示如何<strong>根據當前平台自動選擇對應的測試數據</strong>。當你在 Android 上執行測試時，會使用 android_test_user；在 iOS 上則使用 ios_test_user。</p>
+          <pre><code class="language-python">"""
+測試數據管理器
+功能：根據平台讀取對應的測試數據
+"""
+
+import yaml
+import os
+
+CONFIG_FILE = "config/capabilities.yaml"
+
+
+def load_test_data(test_type="login", platform="android", data_type="valid"):
+    """
+    從 YAML 配置文件讀取平台特定的測試數據
+    
+    這個函式會根據指定的平台（android/ios）讀取對應的測試數據，
+    讓你可以用同一套測試代碼在不同平台上執行，但使用不同的帳號密碼。
+    
+    Args:
+        test_type (str): 測試類型，例如 "login"、"register"，預設 "login"
+        platform (str): 平台名稱，"android" 或 "ios"，預設 "android"
+        data_type (str): 數據類型，"valid"（有效）或 "invalid"（無效），預設 "valid"
+    
+    Returns:
+        dict: 包含測試數據的字典，例如 {"username": "...", "password": "..."}
+    
+    Example:
+        # Android 平台會讀取 android_test_user
+        android_data = load_test_data("login", "android", "valid")
+        print(android_data)  # {'username': 'android_test_user', 'password': 'android_pass_123'}
+        
+        # iOS 平台會讀取 ios_test_user
+        ios_data = load_test_data("login", "ios", "valid")
+        print(ios_data)  # {'username': 'ios_test_user', 'password': 'ios_pass_456'}
+    """
+    # 檢查配置文件是否存在
+    if not os.path.exists(CONFIG_FILE):
+        raise FileNotFoundError(f"配置文件不存在：{CONFIG_FILE}")
+    
+    # 讀取 YAML 文件
+    with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+    
+    # 導航到 test_data 區塊
+    test_data = config.get("test_data", {})
+    
+    # 檢查測試類型是否存在
+    if test_type not in test_data:
+        raise ValueError(f"測試類型 '{test_type}' 不存在於配置文件中")
+    
+    test_config = test_data[test_type]
+    
+    # 檢查平台是否存在
+    if platform not in test_config:
+        available_platforms = list(test_config.keys())
+        raise ValueError(
+            f"平台 '{platform}' 不存在。可用平台：{available_platforms}"
+        )
+    
+    platform_data = test_config[platform]
+    
+    # 檢查數據類型是否存在（valid/invalid）
+    if data_type not in platform_data:
+        available_types = list(platform_data.keys())
+        raise ValueError(
+            f"數據類型 '{data_type}' 不存在。可用類型：{available_types}"
+        )
+    
+    # 返回對應的測試數據
+    return platform_data[data_type]
+
+
+def get_shared_test_data(test_type="login", key="admin_username"):
+    """
+    讀取共用的測試數據（兩個平台都可以使用）
+    
+    Args:
+        test_type (str): 測試類型，預設 "login"
+        key (str): 要讀取的數據鍵名，例如 "admin_username"
+    
+    Returns:
+        str: 共用的測試數據值
+    
+    Example:
+        admin_user = get_shared_test_data("login", "admin_username")
+        print(admin_user)  # 'admin'
+    """
+    with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+    
+    shared_data = config.get("test_data", {}).get(test_type, {}).get("shared", {})
+    
+    if key not in shared_data:
+        raise ValueError(f"共用數據 '{key}' 不存在")
+    
+    return shared_data[key]
+
+
+# ============================================
+# 實際使用範例：根據平台自動選擇帳號登入
+# ============================================
+def login_with_platform_data(driver, platform="android"):
+    """
+    使用平台特定的測試數據進行登入
+    
+    這個函式展示如何在實際測試中：
+    1. 根據當前平台讀取對應的帳號密碼
+    2. 執行登入操作
+    3. 驗證登入結果
+    
+    Args:
+        driver: Appium Driver 實例
+        platform (str): 當前平台，"android" 或 "ios"
+    """
+    print(f"\n{'='*50}")
+    print(f"使用 {platform.upper()} 平台的測試數據進行登入")
+    print(f"{'='*50}")
+    
+    # 步驟 1：讀取平台特定的測試數據
+    # Android 會讀取 android_test_user
+    # iOS 會讀取 ios_test_user
+    try:
+        test_data = load_test_data(
+            test_type="login",
+            platform=platform,
+            data_type="valid"
+        )
+        
+        username = test_data["username"]
+        password = test_data["password"]
+        
+        print(f"✅ 成功讀取測試數據")
+        print(f"   用戶名：{username}")
+        print(f"   密碼：{'*' * len(password)}")  # 密碼不直接顯示
+        
+    except Exception as e:
+        print(f"❌ 讀取測試數據失敗：{e}")
+        return False
+    
+    # 步驟 2：執行登入操作
+    try:
+        from appium.webdriver.common.appiumby import AppiumBy
+        from selenium.webdriver.support.ui import WebDriverWait
+        from selenium.webdriver.support import expected_conditions as EC
+        
+        # 等待用戶名輸入框出現並輸入
+        username_field = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(
+                (AppiumBy.ACCESSIBILITY_ID, "username_input")
+            )
+        )
+        username_field.clear()
+        username_field.send_keys(username)
+        print(f"✅ 已輸入用戶名")
+        
+        # 等待密碼輸入框出現並輸入
+        password_field = driver.find_element(
+            AppiumBy.ACCESSIBILITY_ID, "password_input"
+        )
+        password_field.clear()
+        password_field.send_keys(password)
+        print(f"✅ 已輸入密碼")
+        
+        # 點擊登入按鈕
+        login_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable(
+                (AppiumBy.ACCESSIBILITY_ID, "login_button")
+            )
+        )
+        login_button.click()
+        print(f"✅ 已點擊登入按鈕")
+        
+        # 步驟 3：驗證登入成功
+        # 等待首頁元素出現（表示登入成功）
+        home_element = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located(
+                (AppiumBy.ACCESSIBILITY_ID, "home_page")
+            )
+        )
+        
+        if home_element.is_displayed():
+            print(f"✅ {platform.upper()} 平台登入成功！")
+            return True
+        else:
+            print(f"❌ {platform.upper()} 平台登入失敗：首頁未顯示")
+            return False
+            
+    except Exception as e:
+        print(f"❌ 登入過程發生錯誤：{e}")
+        return False
+
+
+# ============================================
+# 測試不同平台的登入
+# ============================================
+if __name__ == "__main__":
+    from appium import webdriver
+    from appium.options.common import AppiumOptions
+    
+    APPIUM_SERVER = "http://localhost:4723"
+    
+    # 測試 Android 平台
+    print("\n" + "="*60)
+    print("測試 Android 平台登入")
+    print("="*60)
+    
+    # 載入 Android 配置
+    android_config = load_capabilities("android")
+    android_options = AppiumOptions()
+    android_options.load_capabilities(android_config)
+    
+    android_driver = webdriver.Remote(
+        command_executor=APPIUM_SERVER,
+        options=android_options
+    )
+    
+    # 使用 Android 專屬帳號登入
+    login_with_platform_data(android_driver, platform="android")
+    android_driver.quit()
+    
+    # 測試 iOS 平台
+    print("\n" + "="*60)
+    print("測試 iOS 平台登入")
+    print("="*60)
+    
+    # 載入 iOS 配置
+    ios_config = load_capabilities("ios")
+    ios_options = AppiumOptions()
+    ios_options.load_capabilities(ios_config)
+    
+    ios_driver = webdriver.Remote(
+        command_executor=APPIUM_SERVER,
+        options=ios_options
+    )
+    
+    # 使用 iOS 專屬帳號登入
+    login_with_platform_data(ios_driver, platform="ios")
+    ios_driver.quit()
+    
+    print("\n" + "="*60)
+    print("所有平台測試完成！")
+    print("="*60)</code></pre>
+        </article>
+
+        <article class="code-panel" data-reveal id="appium-5">
+          <div class="code-head">
+            <h3>5. 測試數據讀取結果範例</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">執行上面的測試代碼後，你會看到以下輸出。注意 Android 和 iOS 使用了不同的帳號：</p>
+          <pre><code class="language-bash">$ python test_login.py
+
+============================================================
+測試 Android 平台登入
+============================================================
+
+==================================================
+使用 ANDROID 平台的測試數據進行登入
+==================================================
+✅ 成功讀取測試數據
+   用戶名：android_test_user
+   密碼：***************
+✅ 已輸入用戶名
+✅ 已輸入密碼
+✅ 已點擊登入按鈕
+✅ ANDROID 平台登入成功！
+
+============================================================
+測試 iOS 平台登入
+============================================================
+
+==================================================
+使用 IOS 平台的測試數據進行登入
+==================================================
+✅ 成功讀取測試數據
+   用戶名：ios_test_user
+   密碼：*************
+✅ 已輸入用戶名
+✅ 已輸入密碼
+✅ 已點擊登入按鈕
+✅ IOS 平台登入成功！
+
+============================================================
+所有平台測試完成！
+============================================================</code></pre>
+        </article>
+
         <div class="two-column">
           <article class="info-card highlight" data-reveal>
             <h3>📁 配置文件結構說明</h3>
@@ -1843,9 +2153,9 @@ Appium YAML 配置管理器測試
 
       <section id="appium" class="section" aria-labelledby="appium-title">
         <div class="two-column">
-          <article class="code-panel" data-reveal id="appium-4">
+          <article class="code-panel" data-reveal id="appium-6">
             <div class="code-head">
-              <h3>4. 常用元素定位方法</h3>
+              <h3>6. 常用元素定位方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- Appium 元素定位教學說明 -->
@@ -1896,9 +2206,9 @@ element = driver.find_element(
 )</code></pre>
           </article>
           
-          <article class="code-panel" data-reveal id="appium-4-1">
+          <article class="code-panel" data-reveal id="appium-6-1">
             <div class="code-head">
-              <h3>4.1 元素操作方法</h3>
+              <h3>6.1 元素操作方法</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- Appium 元素操作教學說明 -->
@@ -1960,9 +2270,9 @@ actions.perform()                                                  # 執行整�
           </article>
         </div>
 
-        <article class="code-panel" data-reveal id="appium-5">
+        <article class="code-panel" data-reveal id="appium-7">
           <div class="code-head">
-            <h3>5. 頁面滾動操作</h3>
+            <h3>7. 頁面滾動操作</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Appium 頁面滾動操作教學說明 -->
@@ -2092,9 +2402,9 @@ swipe_right(driver)
 time.sleep(2)</code></pre>
         </article>
 
-        <article class="code-panel" data-reveal id="appium-6">
+        <article class="code-panel" data-reveal id="appium-8">
           <div class="code-head">
-            <h3>6. 日期選擇器操作</h3>
+            <h3>8. 日期選擇器操作</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
@@ -2558,9 +2868,9 @@ reset_date_picker(driver)
 print("重置後的日期:", check_current_date(driver))</code></pre>
         </article>
 
-          <article class="code-panel" data-reveal id="appium-7">
+          <article class="code-panel" data-reveal id="appium-9">
             <div class="code-head">
-              <h3>7. 跨平台 locator 管理</h3>
+              <h3>9. 跨平台 locator 管理</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- 跨平台定位器管理教學說明 -->
@@ -2706,9 +3016,9 @@ if __name__ == "__main__":
         </div>
 
         <div class="two-column">
-          <article class="code-panel" data-reveal id="appium-8">
+          <article class="code-panel" data-reveal id="appium-10">
             <div class="code-head">
-              <h3>8. 等待策略 (wait)</h3>
+              <h3>10. 等待策略 (wait)</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- Appium Wait 教學說明 -->
@@ -2753,13 +3063,110 @@ def wait_until_clickable(driver, locator, timeout=15):
     )
 
 
-# 實際使用範例
+def is_element_present(driver, locator, timeout=5):
+    """
+    檢查元素在等待後是否出現（不會拋出異常）
+    
+    💡 使用場景：
+    - 不確定元素是否會出現（例如：彈出視窗、廣告、錯誤提示）
+    - 需要根據元素是否存在來決定下一步操作
+    - 避免因為元素不存在而導致測試失敗
+    
+    Args:
+        driver: Appium Driver 實例
+        locator: 元素定位器 (By, value)
+        timeout: 最大等待時間（秒），預設 5 秒
+    
+    Returns:
+        bool: 元素存在返回 True，超時返回 False
+    
+    範例：
+        if is_element_present(driver, (AppiumBy.ID, "popup_close")):
+            # 彈出視窗出現了，點擊關閉
+            driver.find_element(*locator).click()
+        else:
+            # 沒有彈出視窗，繼續其他操作
+            pass
+    """
+    try:
+        # 使用 WebDriverWait 等待元素出現
+        # 如果在 timeout 內找到元素，會返回元素物件
+        WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located(locator)
+        )
+        return True  # 找到元素，返回 True
+        
+    except Exception:
+        # 如果超時還沒找到，WebDriverWait 會拋出 TimeoutException
+        # 我們捕獲異常並返回 False，而不是讓測試失敗
+        return False
+
+
+# ============================================================
+# 實際使用範例 1：基本等待
+# ============================================================
 login_button = wait_until_clickable(
     driver,
     (AppiumBy.ACCESSIBILITY_ID, "login_button"),
     timeout=20,                          # 設定較長的超時時間
 )
-login_button.click()                     # 確保按鈕可點擊後再執行點擊操作</code></pre>
+login_button.click()                     # 確保按鈕可點擊後再執行點擊操作
+
+
+# ============================================================
+# 實際使用範例 2：先檢查再點擊（推薦做法）
+# ============================================================
+# 場景：處理可能出現的彈出視窗或廣告
+popup_locator = (AppiumBy.ACCESSIBILITY_ID, "popup_close_button")
+
+# 先檢查彈出視窗是否出現（等待 3 秒）
+if is_element_present(driver, popup_locator, timeout=3):
+    print("✅ 偵測到彈出視窗，正在關閉...")
+    # 元素存在，安全地找到並點擊
+    close_button = driver.find_element(*popup_locator)
+    close_button.click()
+    print("✅ 彈出視窗已關閉")
+else:
+    print("ℹ️ 沒有偵測到彈出視窗，繼續執行")
+    # 元素不存在，跳過這個步驟
+
+
+# ============================================================
+# 實際使用範例 3：在測試中使用
+# ============================================================
+def test_login_with_optional_popup(driver):
+    """
+    測試登入功能，同時處理可能出現的歡迎彈窗
+    """
+    # 步驟 1：輸入帳號密碼
+    username_field = driver.find_element(AppiumBy.ID, "username")
+    username_field.send_keys("testuser")
+    
+    password_field = driver.find_element(AppiumBy.ID, "password")
+    password_field.send_keys("password123")
+    
+    # 步驟 2：檢查是否有「首次使用」的教學彈窗
+    tutorial_locator = (AppiumBy.ID, "tutorial_skip_button")
+    if is_element_present(driver, tutorial_locator, timeout=2):
+        print("跳過教學彈窗...")
+        driver.find_element(*tutorial_locator).click()
+    
+    # 步驟 3：點擊登入按鈕
+    login_btn = wait_until_clickable(
+        driver,
+        (AppiumBy.ACCESSIBILITY_ID, "login_button")
+    )
+    login_btn.click()
+    
+    # 步驟 4：檢查是否有「更新提示」彈窗
+    update_locator = (AppiumBy.ID, "update_later_button")
+    if is_element_present(driver, update_locator, timeout=2):
+        print("跳過更新提示...")
+        driver.find_element(*update_locator).click()
+    
+    # 步驟 5：驗證登入成功
+    assert is_element_present(driver, (AppiumBy.ID, "home_page"), timeout=10)
+    print("✅ 登入成功")</code></pre>
           </article>
 
           <article class="info-card" data-reveal>
@@ -2769,14 +3176,16 @@ login_button.click()                     # 確保按鈕可點擊後再執行點�
               <li><code>presence</code>：元素在 DOM 中；<code>visibility</code>：可見；<code>clickable</code>：可點擊。</li>
               <li>分清楚要等的是存在、可見，還是可點擊。</li>
               <li>如果畫面有 loading、toast、動畫，也要等它消失。</li>
+              <li><strong>不確定元素是否出現？</strong>用 <code>is_element_present()</code> 先檢查再操作，避免測試失敗。</li>
+              <li><strong>處理彈出視窗？</strong>先檢查是否存在，存在才關閉，不存在就跳過。</li>
             </ul>
           </article>
         </div>
 
         <div class="two-column">
-          <article class="code-panel" data-reveal id="appium-9">
+          <article class="code-panel" data-reveal id="appium-11">
             <div class="code-head">
-              <h3>9. 座標點擊解決方案</h3>
+              <h3>11. 座標點擊解決方案</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- 座標點擊教學 -->
