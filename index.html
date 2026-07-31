@@ -161,6 +161,7 @@ num_float = float(num_int)  # 100.0</code></pre>
             <h3>2. 完整資料類型介紹</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">Python 是動態型別語言，變數不需要宣告型別，直譯器會根據賦值自動判斷。這個範例展示了 Python 的<strong>完整資料類型</strong>，包括數字、字串、列表、元組、字典、集合、布林值等。你可以用 <code>type()</code> 函式檢查變數的型別，也可以用 <code>isinstance()</code> 判斷變數是否屬於某個型別。</p>
           <pre><code class="language-python"># 1) 數字類型 (Numbers)
 num_int = 100         # 整數
 num_float = 3.14      # 浮點數
@@ -225,7 +226,10 @@ union = {1, 2} | {3, 4}             # {1, 2, 3, 4}
 # 8) 空值 (None)
 data = None
 if data is None:
-    print("資料不存在")</code></pre>
+    print("資料不存在")
+
+# === 運行結果範例 ===
+# 資料不存在</code></pre>
         </article>
 
 
@@ -235,6 +239,7 @@ if data is None:
             <h3>3.1 if 語句 - 基本條件判斷</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">if 語句是程式中最基本的<strong>流程控制</strong>工具。它會根據條件的成立與否，決定要執行哪一段程式碼。條件必須是布林值（True 或 False），常用的比較運算子包括 <code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code>，邏輯運算子包括 <code>and</code>、<code>or</code>、<code>not</code>。</p>
           <pre><code class="language-python"># 基本 if 語句
 age = 18                          # 定義變數 age，值為 18
 if age >= 18:                     # 條件判斷：如果 age 大於等於 18
@@ -261,6 +266,7 @@ if score < 70:                    # 如果分數小於 70
             <h3>3.2 if-else 語句 - 二元判斷</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">if-else 語句提供<strong>兩種選擇</strong>：條件成立時執行 if 區塊，條件不成立時執行 else 區塊。這是最常用的條件判斷結構，適用於「非黑即白」的情境，例如判斷奇偶數、檢查密碼長度、驗證用戶登入狀態等。</p>
           <pre><code class="language-python"># 判斷奇偶數
 num = 7                          # 定義變數 num，值為 7
 if num % 2 == 0:                 # 條件判斷：如果 num 除以 2 的餘數為 0
@@ -293,6 +299,7 @@ else:                            # 未登錄時執行
             <h3>3.3 if-elif-else 語句 - 多條件判斷</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">當需要判斷<strong>多個條件</strong>時，使用 if-elif-else 結構。elif 是 "else if" 的縮寫，可以串接多個條件。Python 會由上往下依序檢查每個條件，一旦找到成立的條件就執行對應區塊，並跳過後續的 elif 和 else。適用於成績等級評定、季節判斷、狀態分類等多種情境。</p>
           <pre><code class="language-python"># 成績等級評定
 score = 87                    # 定義變數 score，值為 87
 if score >= 90:               # 如果分數大於等於 90
@@ -344,6 +351,7 @@ else:                         # 如果是晚上（大於等於 18 點）
             <h3>3.4 嵌套條件判斷</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">嵌套條件判斷是指在 if 語句內部再使用 if 語句，形成<strong>多層次的條件結構</strong>。這適用於需要同時滿足多個條件的情境，例如判斷是否可以開車（需要同時滿足年齡和駕照條件）、計算複雜的折扣規則等。但要注意不要嵌套太深，否則會影響程式碼可讀性。</p>
           <pre><code class="language-python"># 判斷是否可以開車
 age = 25
 has_license = True
@@ -436,9 +444,10 @@ for i in range(1, 10):
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
-            <h3>4.2 for 迴圈 - 遍歷容器</h3>
+            <h3>4.1 for 迴圈 - 遍歷容器</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">for 迴圈用於<strong>遍歷可迭代物件</strong>（如列表、元組、字典、字串等）。它會依序取出每個元素並執行指定的程式碼。常用搭配 <code>range()</code> 產生數字序列，或用 <code>enumerate()</code> 同時取得索引和值。for 迴圈是 Python 中最常用的迴圈結構。</p>
           <pre><code class="language-python"># 遍歷列表
 fruits = ["apple", "banana", "cherry", "orange"]
 print("水果列表:")
@@ -488,6 +497,7 @@ for key, value in person.items():
             <h3>4.3 while 迴圈 - 條件滿足時重複</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">while 迴圈會在<strong>條件成立時重複執行</strong>指定的程式碼，直到條件變為 False 為止。它適用於不知道需要執行多少次，但知道何時停止的情境，例如猜數字遊戲、等待用戶輸入、處理不確定數量的資料等。使用 while 迴圈時要特別小心，確保條件最終會變為 False，否則會造成無窮迴圈。</p>
           <pre><code class="language-python"># 基本 while 迴圈
 count = 1
 while count <= 5:
@@ -536,6 +546,7 @@ print(f"恭喜你，猜對了！用了 {attempts} 次")
             <h3>4.4 迴圈控制 - break 和 continue</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;"><code>break</code> 用於<strong>立即終止整個迴圈</strong>，跳出迴圈後繼續執行迴圈後的程式碼；<code>continue</code> 用於<strong>跳過本次迴圈的剩餘部分</strong>，直接進入下一次迴圈迭代。這兩個關鍵字讓你可以在迴圈執行過程中根據條件靈活控制流程，例如找到目標後立即停止、跳過不符合條件的元素等。</p>
           <pre><code class="language-python"># 使用 break 終止迴圈
 for num in range(1, 10):
     if num == 6:
@@ -596,6 +607,7 @@ for i in range(1, 4):
             <h3>4.5 列表解析式 - 快速創建列表</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">列表解析式（List Comprehension）是 Python 獨特的語法，可以用<strong>一行程式碼</strong>從現有資料結構建立新列表。語法為 <code>[運算式 for 變數 in 可迭代物件 if 條件]</code>。它比傳統的 for 迴圈更簡潔、更具可讀性，特別適合用於資料轉換和過濾。同樣的語法也可以用於建立字典（字典解析式）。</p>
           <pre><code class="language-python"># 列表解析式：用一行取代 for 迴圈建立新列表，適合簡單轉換
 # 基本列表解析式
 numbers = [1, 2, 3, 4, 5]
@@ -622,7 +634,14 @@ print("能被2和3整除的數:", filtered)
 # 字典解析式
 names = ["Alice", "Bob", "Charlie"]
 name_lengths = {name: len(name) for name in names}
-print("名字長度字典:", name_lengths)</code></pre>
+print("名字長度字典:", name_lengths)
+
+# === 運行結果範例 ===
+# 平方列表: [1, 4, 9, 16, 25]
+# 偶數平方列表: [4, 16]
+# 扁平化矩陣: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# 能被2和3整除的數: [6, 12, 18]
+# 名字長度字典: {'Alice': 5, 'Bob': 3, 'Charlie': 7}</code></pre>
         </article>
 
         <article class="code-panel" data-reveal>
@@ -630,6 +649,7 @@ print("名字長度字典:", name_lengths)</code></pre>
             <h3>5.1 基本函式定義</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">函式是<strong>可重複使用的程式碼區塊</strong>，用 <code>def</code> 關鍵字定義。函式可以接收參數、執行特定任務、並回傳結果。使用函式可以讓程式碼更模組化、更易於維護和測試。函式名稱應該具有描述性，遵循 snake_case 命名慣例。</p>
           <pre><code class="language-python"># 基本函式定義
 def greet(name):
     """這是一個問候函式"""
@@ -650,7 +670,12 @@ def add_numbers(x, y):
     return x + y
 
 result = add_numbers(3, 4)
-print(result)  # 7</code></pre>
+print(result)  # 7
+
+# === 運行結果範例 ===
+# 你好, Ken!
+# 你好！歡迎來到 Python 世界
+# 7</code></pre>
         </article>
 
         <article class="code-panel" data-reveal>
@@ -658,6 +683,7 @@ print(result)  # 7</code></pre>
             <h3>5.2 函式參數類型</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">Python 函式支援<strong>多種參數類型</strong>，讓函式呼叫更靈活：<strong>預設參數</strong>（<code>def func(x, y=10)</code>）提供預設值；<strong>可變長度參數</strong>（<code>*args</code>）接收任意數量的位置參數；<strong>關鍵字參數</strong>（<code>**kwargs</code>）接收任意數量的命名參數。這些特性讓你可以寫出更通用、更易用的函式。</p>
           <pre><code class="language-python"># 預設參數
 def calculate_total(price, tax_rate=0.05):
     total = price * (1 + tax_rate)
@@ -687,7 +713,15 @@ def create_user(name, email, **kwargs):
 user1 = create_user("Ken", "ken@example.com", age=30, city="Taipei")
 user2 = create_user("Jane", "jane@example.com", role="admin")
 print(user1)
-print(user2)</code></pre>
+print(user2)
+
+# === 運行結果範例 ===
+# 105.0
+# 108.0
+# 6
+# 100
+# {'name': 'Ken', 'email': 'ken@example.com', 'age': 30, 'city': 'Taipei'}
+# {'name': 'Jane', 'email': 'jane@example.com', 'role': 'admin'}</code></pre>
         </article>
 
         <article class="code-panel" data-reveal>
@@ -788,6 +822,13 @@ def slow_function():
 
 slow_function()             # 會顯示約 0.5 秒
 
+# === 運行結果範例 ===
+# 呼叫函式 add，參數: (3, 4), {}
+# 函式 add 回傳: 7
+# 呼叫函式 multiply，參數: (5, 6), {}
+# 函式 multiply 回傳: 30
+# slow_function 執行時間: 0.5012 秒</code></pre>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>5.5 模組與套件</h3>
@@ -822,7 +863,19 @@ print(f"陣列總和: {np.sum(array)}")      # 15
 # 匯入整個模組內容（通常不建議這樣做，因為可能引起命名衝突）
 from math import *           # 將 math 的所有名稱直接引入
 print(sin(pi/2))  # 1.0：sin(π/2)
-print(cos(pi))    # -1.0：cos(π)</code></pre>
+print(cos(pi))    # -1.0：cos(π)
+
+# === 運行結果範例 ===
+# 3.141592653589793
+# 4.0
+# 8.0
+# 現在時間: 2024-01-15 10:30:45.123456
+# 聖誕節: 2023-12-25
+# 特定時間: 15:30:45
+# 陣列平均值: 3.0
+# 陣列總和: 15
+# 1.0
+# -1.0</code></pre>
         </article>
       </section>
 
@@ -860,6 +913,7 @@ print(cos(pi))    # -1.0：cos(π)</code></pre>
             <h3>1. 類別與物件的基本概念</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">類別（Class）是建立物件的<strong>藍圖或模板</strong>，定義了物件應有的屬性和方法。物件（Object）是根據類別建立出來的<strong>實際實例</strong>。使用 <code>class</code> 關鍵字定義類別，<code>__init__</code> 方法是建構函式，在建立物件時自動呼叫。<code>self</code> 參數代表物件實例本身，用來存取物件的屬性和方法。</p>
           <pre><code class="language-python"># 定義類別
 class Person:
     """代表人類的類別"""
@@ -917,6 +971,7 @@ print(isinstance(person1, Person))      # 檢查物件是否為 Person 類型，
             <h3>2. 屬性和方法的詳細說明</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">屬性分為<strong>類別屬性</strong>（所有實例共享）和<strong>實例屬性</strong>（每個實例獨有）。類別屬性定義在類別內部但在方法外部，實例屬性定義在 <code>__init__</code> 方法中。修改類別屬性會影響所有實例，但修改實例屬性只會影響該實例。方法則是定義在類別中的函式，用來操作物件的資料或執行特定任務。</p>
           <pre><code class="language-python"># 類別屬性和實例屬性的區別
 class MyClass:
     # 類別屬性（所有實例共享）
@@ -967,6 +1022,7 @@ print(obj2.instance_attr)            # 輸出: second，其他實例不受影響
             <h3>3. 繼承的基本應用</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">繼承讓<strong>子類別可以重用父類別的屬性和方法</strong>，同時可以新增自己的功能或覆寫父類別的方法。使用 <code>super()</code> 可以呼叫父類別的方法，常用於在子類別的 <code>__init__</code> 中初始化父類別的屬性。繼承可以建立類別之間的層級關係，促進程式碼重用。</p>
           <pre><code class="language-python"># 基類（父類）
 class Animal:
     def __init__(self, name):
@@ -1036,6 +1092,7 @@ print(issubclass(Cat, Animal))  # True
             <h3>4. 多重繼承和方法解析順序</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">Python 支援<strong>多重繼承</strong>，一個子類別可以同時繼承多個父類別。當多個父類別有同名方法時，Python 使用 <strong>MRO（Method Resolution Order）</strong>演算法決定方法呼叫順序。可以使用 <code>類名.mro()</code> 查看方法解析順序。雖然多重繼承很強大，但過度使用會導致程式碼複雜難懂，建議謹慎使用。</p>
           <pre><code class="language-python"># 定義多個基類
 class Flyable:
     def fly(self):
@@ -1096,6 +1153,7 @@ fish.make_sound()   # 輸出: 魚冒泡
             <h3>5. 多型和方法重寫</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;"><strong>多型</strong>是指不同類別的物件可以對同一訊息做出不同的回應。子類別可以<strong>重寫（override）</strong>父類別的方法，提供自己的實作。當呼叫方法時，Python 會根據物件的實際類型決定執行哪個版本的方法。多型讓你可以編寫更通用、更易於擴充的程式碼，例如處理不同形狀的計算。</p>
           <pre><code class="language-python"># 定義基類
 class Shape:
     def area(self):
@@ -1187,6 +1245,7 @@ print_shape_info(rectangle)
             <h3>6. 封裝和屬性裝飾器</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;"><strong>封裝</strong>是將資料和方法包裝在類別內部，限制外部直接存取內部狀態。Python 使用 <code>_</code> 表示受保護屬性，<code>__</code> 表示私有屬性（實際上會進行名稱改寫）。使用 <code>@property</code> 裝飾器可以將方法轉換為屬性來存取，同時在 getter 和 setter 中加入驗證邏輯，保護資料的完整性。</p>
           <pre><code class="language-python"># 使用封裝保護內部狀態（Python 的 _ / __ 是命名慣例，不是真正的 private）
 class BankAccount:
     def __init__(self, account_number, initial_balance):
@@ -1256,6 +1315,7 @@ account.deposit(-50)    # 存款金額無效
             <h3>7. 類別方法和靜態方法</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #8892b0;">除了實例外，Python 還支援<strong>類別方法</strong>（<code>@classmethod</code>）和<strong>靜態方法</strong>（<code>@staticmethod</code>）。類別方法的第一個參數是 <code>cls</code>（代表類別本身），可以存取和修改類別屬性；靜態方法不需要 <code>self</code> 或 <code>cls</code> 參數，通常用於與類別相關但不依賴物件狀態的工具函式。</p>
           <pre><code class="language-python">class MyClass:
     class_variable = 0
     
@@ -1369,6 +1429,7 @@ print(f"靜態方法計算結果: {result}")
               <h3>OOP 完整範例</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <p style="margin-bottom: 1rem; color: #8892b0;">這是一個<strong>綜合運用所有 OOP 概念</strong>的完整範例，展示了如何建立 <code>User</code> 類別和 <code>AdminUser</code> 子類別。範例中包含實例屬性、類別屬性、實例方法、類別方法、靜態方法、繼承和方法重寫等所有重要概念。這個範例展示了 OOP 在實際專案中的應用方式。</p>
             <pre><code class="language-python">class User:
     total_users = 0
 
@@ -1412,7 +1473,12 @@ class AdminUser(User):
 admin = AdminUser("Ken", "ken@example.com", "super_admin")
 print(admin.login())
 print(admin.profile())
-print(User.how_many_users())</code></pre>
+print(User.how_many_users())
+
+# === 運行結果範例 ===
+# Ken logged in
+# {'name': 'Ken', 'email': 'ken@example.com', 'login_count': 1, 'role': 'super_admin'}
+# 1</code></pre>
           </article>
 
           <article class="info-card deep-dive" data-reveal>
@@ -2399,7 +2465,13 @@ time.sleep(2)
 
 print("測試向右滑動...")
 swipe_right(driver)
-time.sleep(2)</code></pre>
+time.sleep(2)
+
+# === 運行結果範例 ===
+# 測試向上滑動...
+# 測試向下滑動...
+# 測試向左滑動...
+# 測試向右滑動...</code></pre>
         </article>
 
         <article class="code-panel" data-reveal id="appium-8">
@@ -2865,7 +2937,20 @@ print("檢查更新後的日期:", check_current_date(driver))
 reset_date_picker(driver)
 
 # 步驟 5：再次驗證重置是否成功
-print("重置後的日期:", check_current_date(driver))</code></pre>
+print("重置後的日期:", check_current_date(driver))
+
+# === 運行結果範例（Android 平台） ===
+# DatePicker 初始化完成 - 當前平台: android
+# 檢查當前選擇的日期: 2024/01/01
+# 準備選擇日期: 2025/12/31
+# 年份已選擇: 2025
+# 月份已選擇: 12
+# 日期已選擇: 31
+# 日期選擇完成: 2025/12/31
+# ✅ 日期選擇成功
+# 檢查更新後的日期: 2025/12/31
+# ✅ 日期選擇器已重置
+# 重置後的日期: 2024/01/01</code></pre>
         </article>
 
           <article class="code-panel" data-reveal id="appium-9">
@@ -2991,7 +3076,18 @@ if __name__ == "__main__":
         
     finally:
         driver.quit()
-</code></pre>
+
+# === 運行結果範例（Android 平台） ===
+# LoginPage 初始化完成 - 當前平台：android
+# 
+# 正在查找 username_input 元素...
+# ✅ 成功找到元素：<selenium.webdriver.remote.webelement.WebElement (session="xxx", element="yyy")>
+# 
+# 正在查找 password_input 元素...
+# ✅ 成功找到元素：<selenium.webdriver.remote.webelement.WebElement (session="xxx", element="zzz")>
+# 
+# 正在查找 login_button 元素...
+# ✅ 成功找到元素：<selenium.webdriver.remote.webelement.WebElement (session="xxx", element="www")></code></pre>
           </article>
 
         <div class="two-column">
@@ -3166,7 +3262,18 @@ def test_login_with_optional_popup(driver):
     
     # 步驟 5：驗證登入成功
     assert is_element_present(driver, (AppiumBy.ID, "home_page"), timeout=10)
-    print("✅ 登入成功")</code></pre>
+    print("✅ 登入成功")
+
+# === 運行結果範例（情境 A：有彈窗出現） ===
+# ✅ 偵測到彈出視窗，正在關閉...
+# ✅ 彈出視窗已關閉
+# 跳過教學彈窗...
+# 跳過更新提示...
+# ✅ 登入成功
+
+# === 運行結果範例（情境 B：沒有彈窗） ===
+# ℹ️ 沒有偵測到彈出視窗，繼續執行
+# ✅ 登入成功</code></pre>
           </article>
 
           <article class="info-card" data-reveal>
@@ -3289,7 +3396,23 @@ def safe_tap_element(element, retries=3):
 if safe_tap_element(element):
     print("點擊成功")
 else:
-    print("所有點擊方法都失敗")</code></pre>
+    print("所有點擊方法都失敗")
+
+# === 運行結果範例（情境 A：click() 成功） ===
+# 點擊成功
+
+# === 運行結果範例（情境 B：click() 失敗，座標點擊成功） ===
+# 第 1 次點擊失敗: Message: element click intercepted
+# 嘗試使用座標點擊
+# 點擊成功
+
+# === 運行結果範例（情境 C：所有方法都失敗） ===
+# 第 1 次點擊失敗: Message: element click intercepted
+# 嘗試使用座標點擊
+# 第 2 次點擊失敗: Message: element click intercepted
+# 嘗試使用座標點擊
+# 第 3 次點擊失敗: Message: element click intercepted
+# 所有點擊方法都失敗</code></pre>
           </article>
 
           <article class="info-card" data-reveal>
@@ -3495,7 +3618,26 @@ def session_setup():
     """會話級別的自動 fixture，不需要在參數中指定"""
     print("\n[會話設定]")
     yield
-    print("\n[會話清除]")</code></pre>
+    print("\n[會話清除]")
+
+# === 運行結果範例（使用 pytest -s 執行時） ===
+# [會話設定]
+# 
+# [模組設定]
+# 
+# [函式設定]
+# 執行測試函式 1
+# 
+# [函式清除]
+# 
+# [函式設定]
+# 執行測試函式 2
+# 
+# [函式清除]
+# 
+# [模組清除]
+# 
+# [會話清除]</code></pre>
           </article>
           
           <article class="code-panel" data-reveal>
@@ -3549,7 +3691,23 @@ def browser(request):
 
 
 def test_browser_support(browser):
-    assert browser in ["chrome", "firefox", "safari"]</code></pre>
+    assert browser in ["chrome", "firefox", "safari"]
+
+# === 運行結果範例（使用 pytest -s 執行時） ===
+# test_browser_support[chrome]
+# 正在使用瀏覽器: chrome
+# PASSED
+# 關閉瀏覽器: chrome
+# 
+# test_browser_support[firefox]
+# 正在使用瀏覽器: firefox
+# PASSED
+# 關閉瀏覽器: firefox
+# 
+# test_browser_support[safari]
+# 正在使用瀏覽器: safari
+# PASSED
+# 關閉瀏覽器: safari</code></pre>
           </article>
         </div>
 
@@ -3969,7 +4127,21 @@ def driver(capabilities, request):
         driver.quit()
 
     request.addfinalizer(teardown)
-    return driver</code></pre>
+    return driver
+
+# === 運行結果範例（使用 pytest -s --platform android 執行時） ===
+# 正在初始化平台的 Driver...
+# 使用的 Capabilities 配置:
+#   platformName: Android
+#   platformVersion: 13
+#   deviceName: emulator-5554
+#   appPackage: com.example.app
+#   appActivity: .MainActivity
+#   automationName: UiAutomator2
+# 
+# ... 測試執行中 ...
+# 
+# 正在關閉 Driver 連接...</code></pre>
         </article>
 
         <article class="code-panel" data-reveal>
@@ -4073,6 +4245,38 @@ def test_combined_usage(test_data):
     # 模擬登錄測試
     assert len(valid_credentials['username']) > 0
     assert len(valid_credentials['password']) >= 8
+
+# === 運行結果範例（使用 pytest -s 執行時） ===
+# test_load_config
+# 配置文件載入成功
+# 配置結構正確
+# PASSED
+# 
+# test_get_platform_capabilities
+# Android 平台配置獲取成功
+# iOS 平台配置獲取成功
+# PASSED
+# 
+# test_get_test_data
+# 登錄測試數據獲取成功
+# 有效登錄數據獲取成功
+# 無效登錄數據獲取成功
+# PASSED
+# 
+# test_get_config_value
+# 語言配置: zh-CN
+# 不存在的配置項返回預設值: default
+# PASSED
+# 
+# test_combined_usage
+# 有效的登錄憑證:
+#   用戶名: testuser
+#   密碼: password123
+# 
+# 無效的登錄憑證:
+#   用戶名: invalid
+#   密碼: wrong
+# PASSED
 
 
 # 定位器管理
