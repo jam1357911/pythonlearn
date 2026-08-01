@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
     <!-- 版本號：20260725v2 -->
@@ -112,13 +112,13 @@ uv / poetry</code></pre>
         
         <div class="two-column">
           <article class="info-card deep-dive" data-reveal>
-            <h3>1. 基本語法介紹</h3>
+            <h3 style="color: #BCF7F2;">1. 基本語法介紹</h3>
             <ul>
-              <li><strong>縮排原則</strong>：用 4 個空格縮排表示程式區塊，不要混合 tab 與空格。</li>
-              <li><strong>變數宣告</strong>：直接指定值，不需要宣告型別，但 Python 依然有強型別特性。</li>
-              <li><strong>註解</strong>：單行註解用 `#`；`"""` 或 `'''` 是字串（常作 docstring），教學上也可當段落說明用。</li>
-              <li><strong>語句結束</strong>：多行語句用 `\` 或在容器（括號、方括號）內自動斷行。</li>
-              <li><strong>常用內建函式</strong>：`print()`、`input()`、`len()`、`type()`、`range()`、`sum()` 等。</li>
+              <li style="color: #BCF7F2;"><strong>縮排原則</strong>：用 4 個空格縮排表示程式區塊，不要混合 tab 與空格。</li>
+              <li style="color: #BCF7F2;"><strong>變數宣告</strong>：直接指定值，不需要宣告型別，但 Python 依然有強型別特性。</li>
+              <li style="color: #BCF7F2;"><strong>註解</strong>：單行註解用 `#`；`"""` 或 `'''` 是字串（常作 docstring），教學上也可當段落說明用。</li>
+              <li style="color: #BCF7F2;"><strong>語句結束</strong>：多行語句用 `\` 或在容器（括號、方括號）內自動斷行。</li>
+              <li style="color: #BCF7F2;"><strong>常用內建函式</strong>：`print()`、`input()`、`len()`、`type()`、`range()`、`sum()` 等。</li>
             </ul>
           </article>
           
@@ -161,7 +161,7 @@ num_float = float(num_int)  # 100.0</code></pre>
             <h3>2. 完整資料類型介紹</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">Python 是動態型別語言，變數不需要宣告型別，直譯器會根據賦值自動判斷。這個範例展示了 Python 的<strong>完整資料類型</strong>，包括數字、字串、列表、元組、字典、集合、布林值等。你可以用 <code>type()</code> 函式檢查變數的型別，也可以用 <code>isinstance()</code> 判斷變數是否屬於某個型別。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">Python 是動態型別語言，變數不需要宣告型別，直譯器會根據賦值自動判斷。這個範例展示了 Python 的<strong>完整資料類型</strong>，包括數字、字串、列表、元組、字典、集合、布林值等。你可以用 <code>type()</code> 函式檢查變數的型別，也可以用 <code>isinstance()</code> 判斷變數是否屬於某個型別。</p>
           <pre><code class="language-python"># 1) 數字類型 (Numbers)
 num_int = 100         # 整數
 num_float = 3.14      # 浮點數
@@ -239,7 +239,7 @@ if data is None:
             <h3>3.1 if 語句 - 基本條件判斷</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">if 語句是程式中最基本的<strong>流程控制</strong>工具。它會根據條件的成立與否，決定要執行哪一段程式碼。條件必須是布林值（True 或 False），常用的比較運算子包括 <code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code>，邏輯運算子包括 <code>and</code>、<code>or</code>、<code>not</code>。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">if 語句是程式中最基本的<strong>流程控制</strong>工具。它會根據條件的成立與否，決定要執行哪一段程式碼。條件必須是布林值（True 或 False），常用的比較運算子包括 <code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code>，邏輯運算子包括 <code>and</code>、<code>or</code>、<code>not</code>。</p>
           <pre><code class="language-python"># 基本 if 語句
 age = 18                          # 定義變數 age，值為 18
 if age >= 18:                     # 條件判斷：如果 age 大於等於 18
@@ -266,7 +266,7 @@ if score < 70:                    # 如果分數小於 70
             <h3>3.2 if-else 語句 - 二元判斷</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">if-else 語句提供<strong>兩種選擇</strong>：條件成立時執行 if 區塊，條件不成立時執行 else 區塊。這是最常用的條件判斷結構，適用於「非黑即白」的情境，例如判斷奇偶數、檢查密碼長度、驗證用戶登入狀態等。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">if-else 語句提供<strong>兩種選擇</strong>：條件成立時執行 if 區塊，條件不成立時執行 else 區塊。這是最常用的條件判斷結構，適用於「非黑即白」的情境，例如判斷奇偶數、檢查密碼長度、驗證用戶登入狀態等。</p>
           <pre><code class="language-python"># 判斷奇偶數
 num = 7                          # 定義變數 num，值為 7
 if num % 2 == 0:                 # 條件判斷：如果 num 除以 2 的餘數為 0
@@ -299,7 +299,7 @@ else:                            # 未登錄時執行
             <h3>3.3 if-elif-else 語句 - 多條件判斷</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">當需要判斷<strong>多個條件</strong>時，使用 if-elif-else 結構。elif 是 "else if" 的縮寫，可以串接多個條件。Python 會由上往下依序檢查每個條件，一旦找到成立的條件就執行對應區塊，並跳過後續的 elif 和 else。適用於成績等級評定、季節判斷、狀態分類等多種情境。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">當需要判斷<strong>多個條件</strong>時，使用 if-elif-else 結構。elif 是 "else if" 的縮寫，可以串接多個條件。Python 會由上往下依序檢查每個條件，一旦找到成立的條件就執行對應區塊，並跳過後續的 elif 和 else。適用於成績等級評定、季節判斷、狀態分類等多種情境。</p>
           <pre><code class="language-python"># 成績等級評定
 score = 87                    # 定義變數 score，值為 87
 if score >= 90:               # 如果分數大於等於 90
@@ -351,7 +351,7 @@ else:                         # 如果是晚上（大於等於 18 點）
             <h3>3.4 嵌套條件判斷</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">嵌套條件判斷是指在 if 語句內部再使用 if 語句，形成<strong>多層次的條件結構</strong>。這適用於需要同時滿足多個條件的情境，例如判斷是否可以開車（需要同時滿足年齡和駕照條件）、計算複雜的折扣規則等。但要注意不要嵌套太深，否則會影響程式碼可讀性。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">嵌套條件判斷是指在 if 語句內部再使用 if 語句，形成<strong>多層次的條件結構</strong>。這適用於需要同時滿足多個條件的情境，例如判斷是否可以開車（需要同時滿足年齡和駕照條件）、計算複雜的折扣規則等。但要注意不要嵌套太深，否則會影響程式碼可讀性。</p>
           <pre><code class="language-python"># 判斷是否可以開車
 age = 25
 has_license = True
@@ -404,11 +404,12 @@ else:
         </article>
 
         <article class="code-panel" data-reveal>
-          <div class="code-head">
-            <h3>4.1 for 迴圈 - 固定次數重複</h3>
-            <button class="copy-button" type="button">複製程式碼</button>
-          </div>
-          <pre><code class="language-python"># 基本 for 迴圈
+            <div class="code-head">
+              <h3>4.1 for 迴圈 - 固定次數重複</h3>
+              <button class="copy-button" type="button">複製程式碼</button>
+            </div>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">for 迴圈搭配 range() 是最常用的重複執行方式。range(stop) 產生 0 到 stop-1；range(start, stop) 從 start 到 stop-1；range(start, stop, step) 可指定步長。range() 回傳的是惰性序列，不會一次佔用大量記憶體。</p>
+            <pre><code class="language-python"># 基本 for 迴圈
 for i in range(1, 6):
     print(f"第 {i} 次迭代")
 
@@ -447,7 +448,7 @@ for i in range(1, 10):
             <h3>4.1 for 迴圈 - 遍歷容器</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">for 迴圈用於<strong>遍歷可迭代物件</strong>（如列表、元組、字典、字串等）。它會依序取出每個元素並執行指定的程式碼。常用搭配 <code>range()</code> 產生數字序列，或用 <code>enumerate()</code> 同時取得索引和值。for 迴圈是 Python 中最常用的迴圈結構。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">for 迴圈用於<strong>遍歷可迭代物件</strong>（如列表、元組、字典、字串等）。它會依序取出每個元素並執行指定的程式碼。常用搭配 <code>range()</code> 產生數字序列，或用 <code>enumerate()</code> 同時取得索引和值。for 迴圈是 Python 中最常用的迴圈結構。</p>
           <pre><code class="language-python"># 遍歷列表
 fruits = ["apple", "banana", "cherry", "orange"]
 print("水果列表:")
@@ -497,7 +498,7 @@ for key, value in person.items():
             <h3>4.3 while 迴圈 - 條件滿足時重複</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">while 迴圈會在<strong>條件成立時重複執行</strong>指定的程式碼，直到條件變為 False 為止。它適用於不知道需要執行多少次，但知道何時停止的情境，例如猜數字遊戲、等待用戶輸入、處理不確定數量的資料等。使用 while 迴圈時要特別小心，確保條件最終會變為 False，否則會造成無窮迴圈。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">while 迴圈會在<strong>條件成立時重複執行</strong>指定的程式碼，直到條件變為 False 為止。它適用於不知道需要執行多少次，但知道何時停止的情境，例如猜數字遊戲、等待用戶輸入、處理不確定數量的資料等。使用 while 迴圈時要特別小心，確保條件最終會變為 False，否則會造成無窮迴圈。</p>
           <pre><code class="language-python"># 基本 while 迴圈
 count = 1
 while count <= 5:
@@ -546,7 +547,7 @@ print(f"恭喜你，猜對了！用了 {attempts} 次")
             <h3>4.4 迴圈控制 - break 和 continue</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;"><code>break</code> 用於<strong>立即終止整個迴圈</strong>，跳出迴圈後繼續執行迴圈後的程式碼；<code>continue</code> 用於<strong>跳過本次迴圈的剩餘部分</strong>，直接進入下一次迴圈迭代。這兩個關鍵字讓你可以在迴圈執行過程中根據條件靈活控制流程，例如找到目標後立即停止、跳過不符合條件的元素等。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;"><code>break</code> 用於<strong>立即終止整個迴圈</strong>，跳出迴圈後繼續執行迴圈後的程式碼；<code>continue</code> 用於<strong>跳過本次迴圈的剩餘部分</strong>，直接進入下一次迴圈迭代。這兩個關鍵字讓你可以在迴圈執行過程中根據條件靈活控制流程，例如找到目標後立即停止、跳過不符合條件的元素等。</p>
           <pre><code class="language-python"># 使用 break 終止迴圈
 for num in range(1, 10):
     if num == 6:
@@ -607,7 +608,7 @@ for i in range(1, 4):
             <h3>4.5 列表解析式 - 快速創建列表</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">列表解析式（List Comprehension）是 Python 獨特的語法，可以用<strong>一行程式碼</strong>從現有資料結構建立新列表。語法為 <code>[運算式 for 變數 in 可迭代物件 if 條件]</code>。它比傳統的 for 迴圈更簡潔、更具可讀性，特別適合用於資料轉換和過濾。同樣的語法也可以用於建立字典（字典解析式）。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">列表解析式（List Comprehension）是 Python 獨特的語法，可以用<strong>一行程式碼</strong>從現有資料結構建立新列表。語法為 <code>[運算式 for 變數 in 可迭代物件 if 條件]</code>。它比傳統的 for 迴圈更簡潔、更具可讀性，特別適合用於資料轉換和過濾。同樣的語法也可以用於建立字典（字典解析式）。</p>
           <pre><code class="language-python"># 列表解析式：用一行取代 for 迴圈建立新列表，適合簡單轉換
 # 基本列表解析式
 numbers = [1, 2, 3, 4, 5]
@@ -649,7 +650,7 @@ print("名字長度字典:", name_lengths)
             <h3>5.1 基本函式定義</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">函式是<strong>可重複使用的程式碼區塊</strong>，用 <code>def</code> 關鍵字定義。函式可以接收參數、執行特定任務、並回傳結果。使用函式可以讓程式碼更模組化、更易於維護和測試。函式名稱應該具有描述性，遵循 snake_case 命名慣例。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">函式是<strong>可重複使用的程式碼區塊</strong>，用 <code>def</code> 關鍵字定義。函式可以接收參數、執行特定任務、並回傳結果。使用函式可以讓程式碼更模組化、更易於維護和測試。函式名稱應該具有描述性，遵循 snake_case 命名慣例。</p>
           <pre><code class="language-python"># 基本函式定義
 def greet(name):
     """這是一個問候函式"""
@@ -683,7 +684,7 @@ print(result)  # 7
             <h3>5.2 函式參數類型</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">Python 函式支援<strong>多種參數類型</strong>，讓函式呼叫更靈活：<strong>預設參數</strong>（<code>def func(x, y=10)</code>）提供預設值；<strong>可變長度參數</strong>（<code>*args</code>）接收任意數量的位置參數；<strong>關鍵字參數</strong>（<code>**kwargs</code>）接收任意數量的命名參數。這些特性讓你可以寫出更通用、更易用的函式。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">Python 函式支援<strong>多種參數類型</strong>，讓函式呼叫更靈活：<strong>預設參數</strong>（<code>def func(x, y=10)</code>）提供預設值；<strong>可變長度參數</strong>（<code>*args</code>）接收任意數量的位置參數；<strong>關鍵字參數</strong>（<code>**kwargs</code>）接收任意數量的命名參數。這些特性讓你可以寫出更通用、更易用的函式。</p>
           <pre><code class="language-python"># 預設參數
 def calculate_total(price, tax_rate=0.05):
     total = price * (1 + tax_rate)
@@ -730,7 +731,7 @@ print(user2)
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python 高階函式說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">高階函式（Higher-Order Functions）是指「接收其他函式作為參數」或「回傳一個新函式」的函式。這是 Python 非常強大的特性，常見應用包括：<strong>將操作作為參數傳遞</strong>、<strong>建立閉包</strong>、以及使用 <strong>Lambda 表達式</strong>寫出簡潔的一行運算。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">高階函式（Higher-Order Functions）是指「接收其他函式作為參數」或「回傳一個新函式」的函式。這是 Python 非常強大的特性，常見應用包括：<strong>將操作作為參數傳遞</strong>、<strong>建立閉包</strong>、以及使用 <strong>Lambda 表達式</strong>寫出簡潔的一行運算。</p>
           <pre><code class="language-python"># 函式作為參數 - 將其他函式當做資料一樣傳遞
 def apply_operation(x, y, operation):
     """對兩個數應用指定的操作"""
@@ -775,7 +776,7 @@ print(add(3, 4))    # 7</code></pre>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python Decorators 說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">修飾器（Decorator）是一個接受函式作為參數、並回傳新函式的工具。它讓我們可以在<strong>不修改原函式原始碼</strong>的情況下，增加額外的功能。常見應用包括：<strong>日誌記錄</strong>、<strong>執行時間測量</strong>、<strong>權限檢查</strong>等。使用 `@functools.wraps` 可以保留原函式的名稱和文件。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">修飾器（Decorator）是一個接受函式作為參數、並回傳新函式的工具。它讓我們可以在<strong>不修改原函式原始碼</strong>的情況下，增加額外的功能。常見應用包括：<strong>日誌記錄</strong>、<strong>執行時間測量</strong>、<strong>權限檢查</strong>等。使用 `@functools.wraps` 可以保留原函式的名稱和文件。</p>
           <pre><code class="language-python"># 修飾器本質：接收一個函式、包裝它、然後回傳新的包裝後函式
 # 實務上建議搭配 functools.wraps 保留原函式名稱與 docstring
 import functools
@@ -835,7 +836,7 @@ slow_function()             # 會顯示約 0.5 秒
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python 模組說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">模組（Module）是一個包含 Python 代碼的 `.py` 文件，而套件（Package）則是包含多個模組的目錄。使用模組可以<strong>組織代碼、避免命名衝突</strong>，並重用現有的功能。Python 提供了標準庫和第三方套件來滿足各種需求。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">模組（Module）是一個包含 Python 代碼的 `.py` 文件，而套件（Package）則是包含多個模組的目錄。使用模組可以<strong>組織代碼、避免命名衝突</strong>，並重用現有的功能。Python 提供了標準庫和第三方套件來滿足各種需求。</p>
           <pre><code class="language-python"># 基本模組使用 - 導入整個模組後需加上前綴
 import math                        # 導入數學運算模組
 print(math.pi)          # 3.141592653589793：圓周率常數
@@ -913,7 +914,7 @@ print(cos(pi))    # -1.0：cos(π)
             <h3>1. 類別與物件的基本概念</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">類別（Class）是建立物件的<strong>藍圖或模板</strong>，定義了物件應有的屬性和方法。物件（Object）是根據類別建立出來的<strong>實際實例</strong>。使用 <code>class</code> 關鍵字定義類別，<code>__init__</code> 方法是建構函式，在建立物件時自動呼叫。<code>self</code> 參數代表物件實例本身，用來存取物件的屬性和方法。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">類別（Class）是建立物件的<strong>藍圖或模板</strong>，定義了物件應有的屬性和方法。物件（Object）是根據類別建立出來的<strong>實際實例</strong>。使用 <code>class</code> 關鍵字定義類別，<code>__init__</code> 方法是建構函式，在建立物件時自動呼叫。<code>self</code> 參數代表物件實例本身，用來存取物件的屬性和方法。</p>
           <pre><code class="language-python"># 定義類別
 class Person:
     """代表人類的類別"""
@@ -971,7 +972,7 @@ print(isinstance(person1, Person))      # 檢查物件是否為 Person 類型，
             <h3>2. 屬性和方法的詳細說明</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">屬性分為<strong>類別屬性</strong>（所有實例共享）和<strong>實例屬性</strong>（每個實例獨有）。類別屬性定義在類別內部但在方法外部，實例屬性定義在 <code>__init__</code> 方法中。修改類別屬性會影響所有實例，但修改實例屬性只會影響該實例。方法則是定義在類別中的函式，用來操作物件的資料或執行特定任務。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">屬性分為<strong>類別屬性</strong>（所有實例共享）和<strong>實例屬性</strong>（每個實例獨有）。類別屬性定義在類別內部但在方法外部，實例屬性定義在 <code>__init__</code> 方法中。修改類別屬性會影響所有實例，但修改實例屬性只會影響該實例。方法則是定義在類別中的函式，用來操作物件的資料或執行特定任務。</p>
           <pre><code class="language-python"># 類別屬性和實例屬性的區別
 class MyClass:
     # 類別屬性（所有實例共享）
@@ -1022,7 +1023,7 @@ print(obj2.instance_attr)            # 輸出: second，其他實例不受影響
             <h3>3. 繼承的基本應用</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">繼承讓<strong>子類別可以重用父類別的屬性和方法</strong>，同時可以新增自己的功能或覆寫父類別的方法。使用 <code>super()</code> 可以呼叫父類別的方法，常用於在子類別的 <code>__init__</code> 中初始化父類別的屬性。繼承可以建立類別之間的層級關係，促進程式碼重用。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">繼承讓<strong>子類別可以重用父類別的屬性和方法</strong>，同時可以新增自己的功能或覆寫父類別的方法。使用 <code>super()</code> 可以呼叫父類別的方法，常用於在子類別的 <code>__init__</code> 中初始化父類別的屬性。繼承可以建立類別之間的層級關係，促進程式碼重用。</p>
           <pre><code class="language-python"># 基類（父類）
 class Animal:
     def __init__(self, name):
@@ -1092,7 +1093,7 @@ print(issubclass(Cat, Animal))  # True
             <h3>4. 多重繼承和方法解析順序</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">Python 支援<strong>多重繼承</strong>，一個子類別可以同時繼承多個父類別。當多個父類別有同名方法時，Python 使用 <strong>MRO（Method Resolution Order）</strong>演算法決定方法呼叫順序。可以使用 <code>類名.mro()</code> 查看方法解析順序。雖然多重繼承很強大，但過度使用會導致程式碼複雜難懂，建議謹慎使用。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">Python 支援<strong>多重繼承</strong>，一個子類別可以同時繼承多個父類別。當多個父類別有同名方法時，Python 使用 <strong>MRO（Method Resolution Order）</strong>演算法決定方法呼叫順序。可以使用 <code>類名.mro()</code> 查看方法解析順序。雖然多重繼承很強大，但過度使用會導致程式碼複雜難懂，建議謹慎使用。</p>
           <pre><code class="language-python"># 定義多個基類
 class Flyable:
     def fly(self):
@@ -1153,7 +1154,7 @@ fish.make_sound()   # 輸出: 魚冒泡
             <h3>5. 多型和方法重寫</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;"><strong>多型</strong>是指不同類別的物件可以對同一訊息做出不同的回應。子類別可以<strong>重寫（override）</strong>父類別的方法，提供自己的實作。當呼叫方法時，Python 會根據物件的實際類型決定執行哪個版本的方法。多型讓你可以編寫更通用、更易於擴充的程式碼，例如處理不同形狀的計算。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;"><strong>多型</strong>是指不同類別的物件可以對同一訊息做出不同的回應。子類別可以<strong>重寫（override）</strong>父類別的方法，提供自己的實作。當呼叫方法時，Python 會根據物件的實際類型決定執行哪個版本的方法。多型讓你可以編寫更通用、更易於擴充的程式碼，例如處理不同形狀的計算。</p>
           <pre><code class="language-python"># 定義基類
 class Shape:
     def area(self):
@@ -1245,7 +1246,7 @@ print_shape_info(rectangle)
             <h3>6. 封裝和屬性裝飾器</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;"><strong>封裝</strong>是將資料和方法包裝在類別內部，限制外部直接存取內部狀態。Python 使用 <code>_</code> 表示受保護屬性，<code>__</code> 表示私有屬性（實際上會進行名稱改寫）。使用 <code>@property</code> 裝飾器可以將方法轉換為屬性來存取，同時在 getter 和 setter 中加入驗證邏輯，保護資料的完整性。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;"><strong>封裝</strong>是將資料和方法包裝在類別內部，限制外部直接存取內部狀態。Python 使用 <code>_</code> 表示受保護屬性，<code>__</code> 表示私有屬性（實際上會進行名稱改寫）。使用 <code>@property</code> 裝飾器可以將方法轉換為屬性來存取，同時在 getter 和 setter 中加入驗證邏輯，保護資料的完整性。</p>
           <pre><code class="language-python"># 使用封裝保護內部狀態（Python 的 _ / __ 是命名慣例，不是真正的 private）
 class BankAccount:
     def __init__(self, account_number, initial_balance):
@@ -1315,7 +1316,7 @@ account.deposit(-50)    # 存款金額無效
             <h3>7. 類別方法和靜態方法</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">除了實例外，Python 還支援<strong>類別方法</strong>（<code>@classmethod</code>）和<strong>靜態方法</strong>（<code>@staticmethod</code>）。類別方法的第一個參數是 <code>cls</code>（代表類別本身），可以存取和修改類別屬性；靜態方法不需要 <code>self</code> 或 <code>cls</code> 參數，通常用於與類別相關但不依賴物件狀態的工具函式。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">除了實例外，Python 還支援<strong>類別方法</strong>（<code>@classmethod</code>）和<strong>靜態方法</strong>（<code>@staticmethod</code>）。類別方法的第一個參數是 <code>cls</code>（代表類別本身），可以存取和修改類別屬性；靜態方法不需要 <code>self</code> 或 <code>cls</code> 參數，通常用於與類別相關但不依賴物件狀態的工具函式。</p>
           <pre><code class="language-python">class MyClass:
     class_variable = 0
     
@@ -1429,7 +1430,7 @@ print(f"靜態方法計算結果: {result}")
               <h3>OOP 完整範例</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
-            <p style="margin-bottom: 1rem; color: #8892b0;">這是一個<strong>綜合運用所有 OOP 概念</strong>的完整範例，展示了如何建立 <code>User</code> 類別和 <code>AdminUser</code> 子類別。範例中包含實例屬性、類別屬性、實例方法、類別方法、靜態方法、繼承和方法重寫等所有重要概念。這個範例展示了 OOP 在實際專案中的應用方式。</p>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">這是一個<strong>綜合運用所有 OOP 概念</strong>的完整範例，展示了如何建立 <code>User</code> 類別和 <code>AdminUser</code> 子類別。範例中包含實例屬性、類別屬性、實例方法、類別方法、靜態方法、繼承和方法重寫等所有重要概念。這個範例展示了 OOP 在實際專案中的應用方式。</p>
             <pre><code class="language-python">class User:
     total_users = 0
 
@@ -1594,6 +1595,7 @@ print(User.how_many_users())
             <h3>1. 環境設定</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">在開始撰寫 Appium 測試之前，需要先安裝 Appium Server（透過 Node.js）、對應平台的驅動程式（Android 用 uiautomator2、iOS 用 xcuitest），以及 Python 客戶端套件。建議使用虛擬環境隔離專案依賴，避免版本衝突。</p>
           <pre><code class="language-python"># 1) 安裝 Appium Server
 # 使用 Node.js 安裝
 # npm install -g appium
@@ -1627,7 +1629,7 @@ print(User.how_many_users())
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- YAML 配置教學說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">我們先建立一個結構化的 YAML 配置文件，包含<strong>Android 和 iOS 平台專屬設定</strong>、<strong>共用 capability 參數</strong>、以及<strong>測試數據區塊</strong>。這樣設計的好處是：平台差異集中管理、新增測試數據只需修改檔案、易於團隊協作維護。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">我們先建立一個結構化的 YAML 配置文件，包含<strong>Android 和 iOS 平台專屬設定</strong>、<strong>共用 capability 參數</strong>、以及<strong>測試數據區塊</strong>。這樣設計的好處是：平台差異集中管理、新增測試數據只需修改檔案、易於團隊協作維護。</p>
           <pre><code class="language-bash"># 1) 創建配置文件目錄（如果不存在）
 mkdir -p config
 
@@ -1706,7 +1708,7 @@ echo "✅ 配置文件創建完成"</code></pre>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Python 讀取 YAML 教學說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">這個 Python 腳本展示<strong>如何讀取 YAML 配置文件並動態初始化 Appium Driver</strong>。核心流程：<strong>1) 檢查文件是否存在；2) 解析 YAML 數據；3) 獲取平台特定配置；4) 合併共用參數；5) 使用 AppiumOptions 建立 Driver。</strong>你可以根據需要切換 android 或 ios 平台。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">這個 Python 腳本展示<strong>如何讀取 YAML 配置文件並動態初始化 Appium Driver</strong>。核心流程：<strong>1) 檢查文件是否存在；2) 解析 YAML 數據；3) 獲取平台特定配置；4) 合併共用參數；5) 使用 AppiumOptions 建立 Driver。</strong>你可以根據需要切換 android 或 ios 平台。</p>
           <pre><code class="language-python">"""
 Appium YAML 配置管理器
 功能：從 YAML 文件載入配置並初始化 Appium Driver
@@ -1871,7 +1873,7 @@ if __name__ == "__main__":
             <h3>運行結果範例</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">當你執行上面的 Python 腳本（確保 Appium Server 正在運行且設備已連接），你會看到以下輸出：</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">當你執行上面的 Python 腳本（確保 Appium Server 正在運行且設備已連接），你會看到以下輸出：</p>
           <pre><code class="language-bash">$ python init_appium.py
 
 ==================================================
@@ -1906,7 +1908,7 @@ Appium YAML 配置管理器測試
             <h3>4. 讀取平台特定的測試數據</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">在實際測試中，Android 和 iOS 可能需要使用<strong>不同的帳號密碼</strong>進行登入。這個函式展示如何<strong>根據當前平台自動選擇對應的測試數據</strong>。當你在 Android 上執行測試時，會使用 android_test_user；在 iOS 上則使用 ios_test_user。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">在實際測試中，Android 和 iOS 可能需要使用<strong>不同的帳號密碼</strong>進行登入。這個函式展示如何<strong>根據當前平台自動選擇對應的測試數據</strong>。當你在 Android 上執行測試時，會使用 android_test_user；在 iOS 上則使用 ios_test_user。</p>
           <pre><code class="language-python">"""
 測試數據管理器
 功能：根據平台讀取對應的測試數據
@@ -2156,7 +2158,7 @@ if __name__ == "__main__":
             <h3>5. 測試數據讀取結果範例</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
-          <p style="margin-bottom: 1rem; color: #8892b0;">執行上面的測試代碼後，你會看到以下輸出。注意 Android 和 iOS 使用了不同的帳號：</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">執行上面的測試代碼後，你會看到以下輸出。注意 Android 和 iOS 使用了不同的帳號：</p>
           <pre><code class="language-bash">$ python test_login.py
 
 ============================================================
@@ -2225,7 +2227,7 @@ if __name__ == "__main__":
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- Appium 元素定位教學說明 -->
-            <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，<strong>正確的定位元素是第一步</strong>。Appium 支援多種定位策略，每種都有適用的場景。本節示範：<strong>1) Android/iOS 通用定位；2) 平台專屬的高階定位技巧；3) XPath 的最佳實踐。</strong>建議優先使用 ACCESSIBILITY_ID（最穩定）和 ANDROID_UIAUTOMATOR/iOS_PREDICATE（功能最強）。</p>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">在自動化測試中，<strong>正確的定位元素是第一步</strong>。Appium 支援多種定位策略，每種都有適用的場景。本節示範：<strong>1) Android/iOS 通用定位；2) 平台專屬的高階定位技巧；3) XPath 的最佳實踐。</strong>建議優先使用 ACCESSIBILITY_ID（最穩定）和 ANDROID_UIAUTOMATOR/iOS_PREDICATE（功能最強）。</p>
             <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
 
 # 1) By.ID (Android) - 根據資源 ID 定位（Android 專用）
@@ -2278,7 +2280,7 @@ element = driver.find_element(
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- Appium 元素操作教學說明 -->
-            <p style="margin-bottom: 1rem; color: #8892b0;">找到元素後，我們可以對它進行各種<strong>互動操作</strong>。本節涵蓋：基礎操作（點擊、輸入）、狀態檢查、位置尺寸獲取、截圖記錄、以及進階手勢（滑動、拖放、長按）。掌握這些方法是完成自動化測試的關鍵技能。</p>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">找到元素後，我們可以對它進行各種<strong>互動操作</strong>。本節涵蓋：基礎操作（點擊、輸入）、狀態檢查、位置尺寸獲取、截圖記錄、以及進階手勢（滑動、拖放、長按）。掌握這些方法是完成自動化測試的關鍵技能。</p>
             <pre><code class="language-python"># 基本操作 - 最常用的互動方式
 element.click()           # 點擊元素
 element.send_keys("text") # 輸入文字（自動觸發鍵盤）
@@ -2316,10 +2318,15 @@ driver.swipe(start_x, start_y, end_x, end_y, duration=1000)
 # 拖放操作 - 將一個元素拖放到另一個位置
 driver.drag_and_drop(element1, element2)
 
-# 多點觸控 - 使用 Selenium 的 ActionChains
-from selenium.webdriver.common.action_chains import ActionChains
-actions = ActionChains(driver)
-actions.tap(element).perform()  # 輕觸元素
+# 多點觸控 - 使用 W3C ActionBuilder（Selenium 4 正確寫法）
+# ⚠️ ActionChains.tap() 在 Selenium 4 中不存在，請使用 ActionBuilder
+from selenium.webdriver.common.actions.action_builder import ActionBuilder
+from selenium.webdriver.common.actions.pointer_input import PointerInput
+
+finger = PointerInput("touch", "finger")
+actions = ActionBuilder(driver, mouse=finger)
+actions.pointer_action.move_to(element).pointer_down().pause(0.1).pointer_up()
+actions.perform()  # 輕觸元素
 
 # 長按操作（Selenium 4 使用 W3C ActionBuilder）
 # ⚠️ TouchActions 已在 Selenium 4 中移除，請使用新的 ActionBuilder
@@ -2342,7 +2349,7 @@ actions.perform()                                                  # 執行整�
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <!-- Appium 頁面滾動操作教學說明 -->
-          <p style="margin-bottom: 1rem; color: #8892b0;">在移動應用自動化測試中，<strong>滑動（Swipe）是一個非常常用的操作</strong>。我們需要滑動來：<strong>1) 查看或點擊螢幕外的元素；2) 刷新內容（下拉重新整理）；3) 瀏覽列表項目；4) 切換選單選項。</strong>本教學提供完整的滑動方法，包括向特定元素滑動、上下左右四面方向的通用滑動函式。</p>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">在移動應用自動化測試中，<strong>滑動（Swipe）是一個非常常用的操作</strong>。我們需要滑動來：<strong>1) 查看或點擊螢幕外的元素；2) 刷新內容（下拉重新整理）；3) 瀏覽列表項目；4) 切換選單選項。</strong>本教學提供完整的滑動方法，包括向特定元素滑動、上下左右四面方向的通用滑動函式。</p>
           <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -2385,6 +2392,9 @@ def scroll_to_element(driver, locator, direction="down"):
             pass
         
         # 執行滑動操作
+        # 注意：driver.swipe() 是 Appium-Python-Client 提供的便利方法，
+        # 內部自動使用 W3C ActionBuilder 實現，在 3.x 版本中仍可使用。
+        # 若需更精細控制，可直接使用 ActionBuilder + PointerInput。
         driver.swipe(start_x, start_y, end_x, end_y, duration=800)
         # 等待滑動動畫完成（不要用 implicitly_wait 當 sleep）
         import time
@@ -2479,6 +2489,7 @@ time.sleep(2)
             <h3>8. 日期選擇器操作</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">日期選擇器是行動應用中常見的 UI 元件。本範例展示如何透過 XPath 定位日期選擇器的各個部分（年、月、日），並使用 WebDriverWait 確保元素可見後再操作。同時示範了如何根據平台（Android/iOS）使用不同的定位策略，以及如何在操作後驗證結果。</p>
           <pre><code class="language-python">from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -2959,7 +2970,7 @@ print("重置後的日期:", check_current_date(driver))
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- 跨平台定位器管理教學說明 -->
-            <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，我們通常需要<strong>同時支援 Android 和 iOS</strong>兩個平台。但這帶來一個問題：<strong>Android 使用 resource-id，iOS 使用 Accessibility ID 或 Predicate</strong>，兩個平台的定位策略完全不同。本節將展示<strong>Page Object 模式 + 字典映射</strong>的完美解決方案：<strong>1) 在集中位置管理所有定位器；2) 自動偵測當前平台；3) 一行代碼即可找到元素。</strong>這樣可以大幅減少重複代碼，提升可維護性。</p>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">在自動化測試中，我們通常需要<strong>同時支援 Android 和 iOS</strong>兩個平台。但這帶來一個問題：<strong>Android 使用 resource-id，iOS 使用 Accessibility ID 或 Predicate</strong>，兩個平台的定位策略完全不同。本節將展示<strong>Page Object 模式 + 字典映射</strong>的完美解決方案：<strong>1) 在集中位置管理所有定位器；2) 自動偵測當前平台；3) 一行代碼即可找到元素。</strong>這樣可以大幅減少重複代碼，提升可維護性。</p>
             <pre><code class="language-python">"""
 跨平台定位器管理器 - Page Object 模式範例
 功能：根據當前運行平台（Android/iOS）自動選擇正確的元素定位器
@@ -3118,7 +3129,7 @@ if __name__ == "__main__":
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- Appium Wait 教學說明 -->
-            <p style="margin-bottom: 1rem; color: #8892b0;">在自動化測試中，<strong>等待策略是穩定性的關鍵</strong>。Appium 操作手機應用時，網路延遲、動畫過渡、數據加載都可能導致元素尚未就緒。<strong>顯式等待（Explicit Wait）</strong>讓我們可以精確控制等待條件，避免使用不穩定的固定 sleep()。本節示範最常用的兩種等待：<strong>等待元素存在</strong>和<strong>等待元素可點擊</strong>。</p>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">在自動化測試中，<strong>等待策略是穩定性的關鍵</strong>。Appium 操作手機應用時，網路延遲、動畫過渡、數據加載都可能導致元素尚未就緒。<strong>顯式等待（Explicit Wait）</strong>讓我們可以精確控制等待條件，避免使用不穩定的固定 sleep()。本節示範最常用的兩種等待：<strong>等待元素存在</strong>和<strong>等待元素可點擊</strong>。</p>
             <pre><code class="language-python">from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -3296,7 +3307,7 @@ def test_login_with_optional_popup(driver):
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <!-- 座標點擊教學 -->
-            <p style="margin-bottom: 1rem; color: #8892b0;">有時你會遇到<strong>「元素找到了，但 click() 失效」</strong>的情況。這通常是因為元素被覆蓋、透明、或 App 自訂了點擊行為。本節提供<strong>三種解決方案</strong>：<strong>1) 座標點擊（計算中心點）；2) 偏移量點擊（精確控制）；3) 重試機制（先嘗試正常點擊，失敗後改用座標）。</strong>這是自動化測試除錯的必備技能。</p>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">有時你會遇到<strong>「元素找到了，但 click() 失效」</strong>的情況。這通常是因為元素被覆蓋、透明、或 App 自訂了點擊行為。本節提供<strong>三種解決方案</strong>：<strong>1) 座標點擊（計算中心點）；2) 偏移量點擊（精確控制）；3) 重試機制（先嘗試正常點擊，失敗後改用座標）。</strong>這是自動化測試除錯的必備技能。</p>
             <pre><code class="language-python">from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 
@@ -3389,7 +3400,6 @@ def safe_tap_element(element, retries=3):
                 tap_by_coordinates(driver, center_x, center_y)   # 使用座標點擊
                 return True             # 座標點擊成功
     return False                        # 所有嘗試都失敗
-    return False
 
 
 # 使用安全點擊
@@ -3513,6 +3523,7 @@ else:
             <h3>4. 基本用法與斷言</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">pytest 使用 Python 原生的 assert 語句進行斷言，不需要像 unittest 那樣記憶 assertEqual、assertTrue 等方法。pytest 會在斷言失敗時自動提供詳細的差異比較資訊。本範例涵蓋了相等比較、容器成員檢查、例外處理（pytest.raises）、浮點數近似比較（pytest.approx）以及自定義失敗訊息等常見斷言模式。</p>
           <pre><code class="language-python">import pytest
 
 
@@ -3566,148 +3577,434 @@ class TestMathOperations:
         <div class="two-column">
           <article class="code-panel" data-reveal>
             <div class="code-head">
-              <h3>5. Fixture 基礎</h3>
+              <h3>5. Fixture 基礎（Appium 實戰）</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">Fixture 是 pytest 的核心機制，用於提供測試所需的資料、物件或環境設定。在 Appium 自動化測試中，fixture 最重要的用途是<strong>管理 WebDriver 的生命週期</strong>：在測試開始前啟動 driver，測試結束後自動關閉。此外，fixture 也能在測試過程中<strong>擷取 UI 元素的內容（如文字、屬性）並儲存</strong>，讓後續的測試函式可以直接使用，實現跨測試的資料共享。yield 語句之前是 setup，之後是 teardown；scope 參數控制生命週期：function（每個測試）、module（每個模組）、session（整次執行）。</p>
             <pre><code class="language-python">import pytest
+from appium import webdriver
+from appium.options.android import UiAutomator2Options
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
-# 基本 fixture
-@pytest.fixture
-def user_data():
-    """提供測試用的使用者資料"""
-    return {"name": "Ken", "email": "ken@example.com", "age": 30}
+# ============================================================
+# 範例 1：將 Appium WebDriver 放入 Fixture（最核心用法）
+# ============================================================
+# 使用 session scope：整次 pytest 執行只建立一次 driver，
+# 所有測試共用同一個 driver，避免反覆啟動/關閉 App 的開銷。
+@pytest.fixture(scope="session")
+def driver():
+    """建立並管理 Appium WebDriver 的生命週期"""
+    options = UiAutomator2Options()
+    options.platform_name = "Android"
+    options.platform_version = "14"
+    options.device_name = "emulator-5554"
+    options.app_package = "com.example.shop"
+    options.app_activity = ".MainActivity"
+    options.automation_name = "UiAutomator2"
+    options.no_reset = True
+    options.new_command_timeout = 300
+
+    print("\n[Setup] 正在啟動 Appium Driver...")
+    drv = webdriver.Remote("http://localhost:4723", options=options)
+    drv.implicitly_wait(10)
+
+    yield drv  # 將 driver 提供給所有請求它的測試
+
+    print("\n[Teardown] 正在關閉 Appium Driver...")
+    drv.quit()
 
 
-def test_user_profile(user_data):
-    assert user_data["name"] == "Ken"
-    assert user_data["email"] == "ken@example.com"
-    assert user_data["age"] > 20
+# 每個測試函式透過參數名稱 "driver" 自動取得 fixture
+def test_app_launches(driver):
+    """驗證 App 成功啟動"""
+    wait = WebDriverWait(driver, 15)
+    home_title = wait.until(
+        EC.presence_of_element_located((AppiumBy.ID, "com.example.shop:id/home_title"))
+    )
+    assert home_title.is_displayed()
+    assert home_title.text == "首頁"
 
 
-# Scope 控制 fixture 生命週期
-# function（預設）：每個測試函式執行一次
-# module：每個檔案執行一次；session：整次 pytest 執行只跑一次
-@pytest.fixture(scope="module")  # 整個模組只執行一次
-def module_setup():
-    print("\n[模組設定]")
+def test_navigate_to_cart(driver):
+    """驗證可以導航到購物車頁面"""
+    cart_btn = driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_cart")
+    cart_btn.click()
+    cart_title = driver.find_element(AppiumBy.ID, "com.example.shop:id/cart_title")
+    assert cart_title.text == "購物車"
+
+
+# ============================================================
+# 範例 2：在測試中擷取元素內容，存入 Fixture 供其他測試使用
+# ============================================================
+# 使用 dict 作為「共享容器」，在測試間傳遞 UI 元素的資料。
+# 這是 Appium 測試中非常實用的模式：
+# 例如「建立訂單」測試產生訂單編號，「查詢訂單」測試需要用到它。
+@pytest.fixture(scope="session")
+def shared_data():
+    """跨測試的共享資料容器"""
+    return {}
+
+
+def test_create_order(driver, shared_data):
+    """建立訂單，並將訂單資訊存入 shared_data"""
+    # 模擬建立訂單流程
+    driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_checkout").click()
+
+    wait = WebDriverWait(driver, 15)
+    order_id_elem = wait.until(
+        EC.presence_of_element_located((AppiumBy.ID, "com.example.shop:id/order_id"))
+    )
+    total_elem = driver.find_element(AppiumBy.ID, "com.example.shop:id/order_total")
+
+    # 將 UI 上顯示的訂單編號和金額存入 shared_data
+    shared_data["order_id"] = order_id_elem.text       # 例如 "ORD-20260801-0042"
+    shared_data["order_total"] = total_elem.text       # 例如 "$1,280"
+    shared_data["order_status"] = "已建立"
+
+    assert shared_data["order_id"].startswith("ORD-")
+    print(f"\n訂單已建立：{shared_data['order_id']}，金額：{shared_data['order_total']}")
+
+
+def test_verify_order_in_history(driver, shared_data):
+    """在訂單歷史中驗證剛才建立的訂單（使用 shared_data 中的資料）"""
+    # 導航到訂單歷史頁面
+    driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_orders").click()
+
+    wait = WebDriverWait(driver, 15)
+    # 使用 shared_data 中儲存的訂單編號來定位元素
+    order_xpath = f'//*[@text="{shared_data["order_id"]}"]'
+    order_elem = wait.until(
+        EC.presence_of_element_located((AppiumBy.XPATH, order_xpath))
+    )
+    assert order_elem.is_displayed()
+
+    # 驗證金額與之前記錄的一致
+    amount_elem = driver.find_element(
+        AppiumBy.XPATH,
+        f'//*[@text="{shared_data["order_id"]}"]/following-sibling::*[@resource-id="com.example.shop:id/amount"]'
+    )
+    assert amount_elem.text == shared_data["order_total"]
+
+
+# ============================================================
+# 範例 3：Scope 控制與 Autouse
+# ============================================================
+@pytest.fixture(scope="function", autouse=True)
+def reset_app_state(driver):
+    """每個測試前自動回到首頁（autouse=True 不需要在參數中指定）"""
+    print("\n[Auto] 重置 App 狀態：回到首頁")
+    driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_home").click()
     yield
-    print("\n[模組清除]")
+    print("[Auto] 測試結束，清理彈窗")
+    # teardown：關閉可能殘留的彈窗
+    try:
+        close_btn = driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_close_dialog")
+        close_btn.click()
+    except Exception:
+        pass  # 沒有彈窗就跳過
 
 
-@pytest.fixture(scope="function")  # 每個函式執行一次 (預設)
-def function_setup():
-    print("\n[函式設定]")
-    yield
-    print("\n[函式清除]")
-
-
-def test_function1(function_setup, module_setup):
-    print("執行測試函式 1")
-    assert True
-
-
-def test_function2(function_setup, module_setup):
-    print("執行測試函式 2")
-    assert True
-
-
-# Autouse fixture
-@pytest.fixture(autouse=True, scope="session")
-def session_setup():
-    """會話級別的自動 fixture，不需要在參數中指定"""
-    print("\n[會話設定]")
-    yield
-    print("\n[會話清除]")
-
-# === 運行結果範例（使用 pytest -s 執行時） ===
-# [會話設定]
-# 
-# [模組設定]
-# 
-# [函式設定]
-# 執行測試函式 1
-# 
-# [函式清除]
-# 
-# [函式設定]
-# 執行測試函式 2
-# 
-# [函式清除]
-# 
-# [模組清除]
-# 
-# [會話清除]</code></pre>
+# === conftest.py 的用法 ===
+# 將 driver 和 shared_data fixture 放到專案根目錄的 conftest.py 中，
+# 所有測試檔案都能自動使用，不需要 import：
+#
+# conftest.py:
+#   import pytest
+#   from appium import webdriver
+#   ...
+#   @pytest.fixture(scope="session")
+#   def driver():
+#       ...
+#
+# tests/test_login.py:
+#   def test_login(driver):  # 直接使用，無需 import
+#       ...
+#
+# tests/test_cart.py:
+#   def test_add_to_cart(driver, shared_data):  # 同樣直接使用
+#       ...</code></pre>
           </article>
           
           <article class="code-panel" data-reveal>
             <div class="code-head">
-              <h3>6. Fixture 進階用法</h3>
+              <h3>6. Fixture 進階用法（Appium 實戰）</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">進階 fixture 技巧在 Appium 測試中特別實用：<strong>fixture 依賴鏈</strong>讓 capabilities → driver → page object 層層構建；<strong>fixture 工廠</strong>可以動態建立不同登入狀態的測試場景；<strong>參數化 fixture</strong>讓同一組測試在 Android 和 iOS 上各跑一次；<strong>失敗時自動截圖</strong>的 autouse fixture 是除錯利器。這些模式能大幅減少重複程式碼，讓測試架構更靈活、更易維護。</p>
             <pre><code class="language-python">import pytest
+import os
+from datetime import datetime
+from appium import webdriver
+from appium.options.android import UiAutomator2Options
+from appium.options.ios import XCUITestOptions
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
-# Fixture 依賴
+# ============================================================
+# 範例 1：Fixture 依賴鏈（Capabilities → Driver → Page）
+# ============================================================
+# 將設定、驅動、頁面對象分層管理，每層只負責一件事
+
+@pytest.fixture(scope="session")
+def platform(request):
+    """從命令列取得平台：pytest --platform=ios"""
+    return request.config.getoption("--platform", default="android")
+
+
+@pytest.fixture(scope="session")
+def capabilities(platform):
+    """根據平台產生對應的 capabilities"""
+    if platform == "android":
+        return {
+            "platform_name": "Android",
+            "platform_version": "14",
+            "device_name": "emulator-5554",
+            "app_package": "com.example.shop",
+            "app_activity": ".MainActivity",
+            "automation_name": "UiAutomator2",
+            "no_reset": True,
+        }
+    else:
+        return {
+            "platform_name": "iOS",
+            "platform_version": "17.0",
+            "device_name": "iPhone 15",
+            "bundle_id": "com.example.shop",
+            "automation_name": "XCUITest",
+            "no_reset": True,
+        }
+
+
+@pytest.fixture(scope="session")
+def driver(capabilities, platform):
+    """根據 capabilities 建立對應平台的 driver"""
+    if platform == "android":
+        options = UiAutomator2Options().load_capabilities(capabilities)
+    else:
+        options = XCUITestOptions().load_capabilities(capabilities)
+
+    drv = webdriver.Remote("http://localhost:4723", options=options)
+    drv.implicitly_wait(10)
+    yield drv
+    drv.quit()
+
+
+# ============================================================
+# 範例 2：Fixture 工廠（動態建立不同登入狀態）
+# ============================================================
+# 不同測試需要不同的登入狀態：訪客、一般用戶、VIP 用戶
+# 使用工廠模式，在測試中按需建立
+
 @pytest.fixture
-def user_profile():
-    return {"name": "Ken", "email": "ken@example.com"}
+def login_factory(driver):
+    """登入工廠：回傳一個函式，呼叫時執行登入流程"""
+    def do_login(username, password):
+        # 導航到登入頁
+        driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_profile").click()
+        wait = WebDriverWait(driver, 10)
+
+        # 輸入帳號密碼
+        user_input = wait.until(
+            EC.presence_of_element_located((AppiumBy.ID, "com.example.shop:id/input_username"))
+        )
+        user_input.clear()
+        user_input.send_keys(username)
+
+        pass_input = driver.find_element(AppiumBy.ID, "com.example.shop:id/input_password")
+        pass_input.clear()
+        pass_input.send_keys(password)
+
+        # 點擊登入
+        driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_login").click()
+
+        # 等待登入成功，回傳用戶資訊
+        welcome_elem = wait.until(
+            EC.presence_of_element_located((AppiumBy.ID, "com.example.shop:id/welcome_text"))
+        )
+        return {"username": username, "welcome_text": welcome_elem.text}
+
+    return do_login
 
 
-@pytest.fixture
-def user_with_address(user_profile):
-    user_profile["address"] = "123 Main St"
-    return user_profile
+def test_guest_browsing(driver):
+    """訪客可以瀏覽商品但不能購買"""
+    product = driver.find_element(AppiumBy.ID, "com.example.shop:id/product_001")
+    product.click()
+    buy_btn = driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_buy")
+    buy_btn.click()
+    # 應該跳出登入提示
+    login_prompt = driver.find_element(AppiumBy.ID, "com.example.shop:id/login_prompt")
+    assert login_prompt.is_displayed()
 
 
-def test_user_address(user_with_address):
-    assert "address" in user_with_address
-    assert user_with_address["address"] == "123 Main St"
+def test_normal_user_purchase(driver, login_factory):
+    """一般用戶可以購買商品"""
+    user_info = login_factory("ken@example.com", "password123")
+    assert "ken" in user_info["welcome_text"].lower()
+
+    # 執行購買流程...
+    driver.find_element(AppiumBy.ID, "com.example.shop:id/product_001").click()
+    driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_buy").click()
+    success_msg = driver.find_element(AppiumBy.ID, "com.example.shop:id/purchase_success")
+    assert success_msg.is_displayed()
 
 
-# Fixture 工廠
-@pytest.fixture
-def user_factory():
-    def create_user(name, email, age=30):
-        return {"name": name, "email": email, "age": age}
-    return create_user
+def test_vip_user_discount(driver, login_factory):
+    """VIP 用戶享有折扣"""
+    user_info = login_factory("vip_jane@example.com", "vip_pass")
+
+    driver.find_element(AppiumBy.ID, "com.example.shop:id/product_001").click()
+    price_elem = driver.find_element(AppiumBy.ID, "com.example.shop:id/price_display")
+    # VIP 價格應該有折扣標記
+    assert "VIP" in price_elem.text or "折" in price_elem.text
 
 
-def test_create_user(user_factory):
-    user1 = user_factory("Ken", "ken@example.com")
-    user2 = user_factory("Jane", "jane@example.com", 25)
-    
-    assert user1["name"] == "Ken"
-    assert user2["age"] == 25
+# ============================================================
+# 範例 3：跨測試傳遞元素內容（進階共享資料）
+# ============================================================
+# 場景：搜索商品 → 記錄商品名稱和價格 → 加入購物車 → 驗證購物車內容
+
+@pytest.fixture(scope="module")
+def test_context():
+    """模組級別的測試上下文，在同一檔案的測試間共享"""
+    return {
+        "searched_products": [],   # 搜索結果
+        "cart_items": [],          # 購物車項目
+        "selected_product": None,  # 選中的商品
+    }
 
 
-# 参数化 Fixture
-@pytest.fixture(params=["chrome", "firefox", "safari"])
-def browser(request):
-    browser_name = request.param
-    print(f"\n正在使用瀏覽器: {browser_name}")
-    yield browser_name
-    print(f"\n關閉瀏覽器: {browser_name}")
+def test_search_product(driver, test_context):
+    """搜索商品並記錄結果到 test_context"""
+    search_input = driver.find_element(AppiumBy.ID, "com.example.shop:id/search_input")
+    search_input.send_keys("藍牙耳機")
+    driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_search").click()
+
+    wait = WebDriverWait(driver, 10)
+    results = wait.until(
+        EC.presence_of_all_elements_located((AppiumBy.ID, "com.example.shop:id/product_name"))
+    )
+
+    # 將搜索結果存入 test_context
+    for elem in results[:3]:
+        test_context["searched_products"].append(elem.text)
+
+    # 選中第一個商品，記錄其名稱和價格
+    first_product = results[0]
+    first_product.click()
+    price_elem = driver.find_element(AppiumBy.ID, "com.example.shop:id/product_price")
+
+    test_context["selected_product"] = {
+        "name": first_product.text,
+        "price": price_elem.text,
+    }
+    assert len(test_context["searched_products"]) > 0
 
 
-def test_browser_support(browser):
-    assert browser in ["chrome", "firefox", "safari"]
+def test_add_to_cart(driver, test_context):
+    """將選中的商品加入購物車"""
+    assert test_context["selected_product"] is not None, "必須先執行搜索測試"
 
-# === 運行結果範例（使用 pytest -s 執行時） ===
-# test_browser_support[chrome]
-# 正在使用瀏覽器: chrome
-# PASSED
-# 關閉瀏覽器: chrome
-# 
-# test_browser_support[firefox]
-# 正在使用瀏覽器: firefox
-# PASSED
-# 關閉瀏覽器: firefox
-# 
-# test_browser_support[safari]
-# 正在使用瀏覽器: safari
-# PASSED
-# 關閉瀏覽器: safari</code></pre>
+    driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_add_cart").click()
+    toast = driver.find_element(AppiumBy.ID, "com.example.shop:id/toast_message")
+    assert "已加入購物車" in toast.text
+
+    # 記錄到購物車清單
+    test_context["cart_items"].append(test_context["selected_product"])
+
+
+def test_verify_cart_content(driver, test_context):
+    """驗證購物車中的商品與之前記錄的一致"""
+    driver.find_element(AppiumBy.ID, "com.example.shop:id/btn_cart").click()
+
+    wait = WebDriverWait(driver, 10)
+    cart_items = wait.until(
+        EC.presence_of_all_elements_located((AppiumBy.ID, "com.example.shop:id/cart_item_name"))
+    )
+    cart_names = [item.text for item in cart_items]
+
+    # 驗證之前加入的商品確實出現在購物車中
+    for item in test_context["cart_items"]:
+        assert item["name"] in cart_names, f"購物車中找不到：{item['name']}"
+
+
+# ============================================================
+# 範例 4：參數化 Fixture（跨平台測試）
+# ============================================================
+# 同一組測試邏輯，自動在 Android 和 iOS 上各跑一次
+
+@pytest.fixture(params=["android", "ios"], ids=["Android", "iOS"])
+def platform_driver(request):
+    """參數化 fixture：為每個平台建立獨立的 driver"""
+    platform = request.param
+
+    if platform == "android":
+        options = UiAutomator2Options()
+        options.platform_name = "Android"
+        options.device_name = "emulator-5554"
+        options.app_package = "com.example.shop"
+        options.app_activity = ".MainActivity"
+    else:
+        options = XCUITestOptions()
+        options.platform_name = "iOS"
+        options.device_name = "iPhone 15"
+        options.bundle_id = "com.example.shop"
+
+    options.automation_name = "UiAutomator2" if platform == "android" else "XCUITest"
+    options.no_reset = True
+
+    drv = webdriver.Remote("http://localhost:4723", options=options)
+    yield drv
+    drv.quit()
+
+
+def test_login_flow_cross_platform(platform_driver):
+    """登入流程在兩個平台上都應該正常運作"""
+    driver = platform_driver
+    wait = WebDriverWait(driver, 15)
+
+    profile_btn = wait.until(
+        EC.presence_of_element_located((AppiumBy.ACCESSIBILITY_ID, "profile_tab"))
+    )
+    profile_btn.click()
+
+    user_input = wait.until(
+        EC.presence_of_element_located((AppiumBy.ACCESSIBILITY_ID, "username_input"))
+    )
+    user_input.send_keys("test@example.com")
+    assert user_input.text == "test@example.com"
+
+
+# ============================================================
+# 範例 5：失敗時自動截圖（Autouse Fixture）
+# ============================================================
+@pytest.fixture(autouse=True)
+def screenshot_on_failure(request, driver):
+    """測試失敗時自動截圖，方便除錯"""
+    yield
+    # teardown 階段：檢查測試是否失敗
+    if request.node.rep_call and request.node.rep_call.failed:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        test_name = request.node.name
+        screenshot_dir = "screenshots"
+        os.makedirs(screenshot_dir, exist_ok=True)
+        filepath = os.path.join(screenshot_dir, f"{test_name}_{timestamp}.png")
+        driver.save_screenshot(filepath)
+        print(f"\n[截圖] 測試失敗截圖已儲存：{filepath}")
+
+
+# 需要在 conftest.py 中添加以下 hook 來記錄測試結果：
+# @pytest.hookimpl(tryfirst=True, hookwrapper=True)
+# def pytest_runtest_makereport(item, call):
+#     import pluggy
+#     outcome = yield
+#     rep = outcome.get_result()
+#     setattr(item, f"rep_{rep.when}", rep)</code></pre>
           </article>
         </div>
 
@@ -3716,6 +4013,7 @@ def test_browser_support(browser):
             <h3>7. 參數化測試</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">參數化測試透過 <code>@pytest.mark.parametrize</code> 裝飾器，讓<strong>單一測試函式</strong>能根據多組輸入數據自動生成多個測試案例，避免重複撰寫結構相似的測試函式。裝飾器的第一個參數是逗號分隔的參數名稱字串，第二個參數是對應的數據列表（元組或字典）。透過 <code>ids</code> 參數可以為每個測試案例自訂易讀的名稱，讓測試報告更清晰。多個 <code>@pytest.mark.parametrize</code> 疊加使用時會產生<strong>笛卡爾積</strong>組合。此外，<code>indirect</code> 參數化可將參數值先傳遞給同名 fixture 進行預處理，再注入測試函式，適合需要動態生成測試資源的場景。</p>
           <pre><code class="language-python">import pytest
 
 
@@ -3767,6 +4065,7 @@ def test_upper_case(data):
               <h3>8. 標記 (Markers)</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">Markers 是 pytest 用來<strong>分類與篩選測試</strong>的機制，常見的標記包括 <code>smoke</code>（煙霧測試）、<code>regression</code>（回歸測試）、<code>android</code> 和 <code>ios</code>（平台專屬測試）等。使用 <code>@pytest.mark.標記名稱</code> 裝飾器即可為測試函式加上標記。為了避免 <code>PytestUnknownMarkWarning</code> 警告，建議在 <code>pytest.ini</code> 的 <code>[pytest]</code> 區塊或 <code>pyproject.toml</code> 的 <code>[tool.pytest.ini_options]</code> 中，透過 <code>markers</code> 選項註冊自訂標記並附上說明。執行測試時使用 <code>-m</code> 旗標即可按標記篩選，例如 <code>pytest -m smoke</code> 只跑煙霧測試、<code>pytest -m "not slow"</code> 排除慢速測試、<code>pytest -m "android and not slow"</code> 支援布林邏輯組合。</p>
             <pre><code class="language-python">import pytest
 
 
@@ -3830,6 +4129,7 @@ def test_skip_example():
               <h3>9. pytest 與 Appium 整合</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">將 pytest 與 Appium 整合的核心在於利用 <strong>fixture 機制管理 WebDriver 的生命週期</strong>。透過 <code>scope="session"</code> 的 fixture，整個測試會話只會建立一次 Appium Driver 連線，所有測試共用同一個 driver 實例，大幅減少重複啟動模擬器與建立連線的開銷。fixture 中使用 <code>yield</code> 或 <code>request.addfinalizer()</code> 確保測試結束後正確呼叫 <code>driver.quit()</code> 釋放資源。在測試隔離的最佳實踐上，session 級別適合共享 driver，而每個測試函式應透過 function 級別 fixture 重置應用狀態（如登出、清除數據），避免測試之間相互影響；若需要完全隔離，則可改用 <code>scope="function"</code> 讓每個測試擁有獨立的 driver 實例。</p>
             <pre><code class="language-python">import pytest                                            # 導入 pytest 框架
 from appium import webdriver                              # 導入 Appium WebDriver
 from appium.webdriver.common.appiumby import AppiumBy      # 導入 Appium 定位器
@@ -3903,6 +4203,7 @@ def test_login_button_visible(driver):
             <h3>10. 創建配置管理模組</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">配置管理模組將所有測試相關設定（如 Appium capabilities、測試數據、環境變數）集中到外部檔案統一管理，避免將設定硬編碼在測試程式碼中。Python 可使用 <code>configparser</code> 讀取 INI 格式，或使用 <code>yaml</code>（PyYAML 套件）讀取結構更清晰的 YAML 格式。此範例採用<strong>單例模式（Singleton Pattern）</strong>，透過模組級別的 <code>get_config_manager()</code> 函式確保整個專案只建立一個 ConfigManager 實例，避免重複讀取檔案造成效能浪費與狀態不一致。同時支援<strong>環境專屬配置</strong>，可依據開發、測試、生產環境載入不同的配置區塊，並提供 <code>reload_config()</code> 方法在運行時重新載入配置。</p>
           <pre><code class="language-bash"># 2) 創建配置管理文件
 touch config/__init__.py
 cat > config/config_manager.py << 'EOF'
@@ -4025,6 +4326,7 @@ EOF
             <h3>11. 在 pytest 中使用配置管理器</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">將配置管理器與 pytest 整合時，最佳做法是在 <code>conftest.py</code> 中定義<strong>共享 fixture</strong>，讓所有測試模組都能直接使用。此範例建立了層層依賴的 fixture 鏈：<code>platform</code> 和 <code>config_file</code> 從命令行參數取得值，<code>config_manager</code> 依賴 <code>config_file</code> 載入配置，<code>capabilities</code> 再根據 <code>platform</code> 從配置管理器中提取對應平台的啟動參數，最終 <code>driver</code> fixture 使用 capabilities 建立 Appium 連線。所有 fixture 皆為 <code>scope="session"</code>，確保整個測試會話只載入一次配置、建立一次連線。此外，也可透過 <code>@pytest.mark.parametrize</code> 搭配配置值對測試進行參數化，例如從配置檔讀取多組測試賬號自動生成測試案例。</p>
           <pre><code class="language-python">import pytest
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
@@ -4149,6 +4451,7 @@ def driver(capabilities, request):
             <h3>12. 在測試中使用配置數據</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">數據驅動測試（Data-Driven Testing）的核心原則是<strong>將測試邏輯與測試數據分離</strong>。測試數據存放在外部檔案（YAML 或 JSON）中，測試函式只負責讀取數據並執行驗證，這樣當測試數據需要變更時，完全不必修改測試程式碼。此範例展示了如何透過配置管理器的 <code>get_test_data()</code> 方法，以點號路徑（如 <code>'login.valid'</code>）讀取巢狀配置中的特定數據區塊。搭配 <code>@pytest.mark.parametrize</code> 可將外部數據自動展開為多個測試案例，實現真正的數據驅動。這種模式讓測試更易於維護，非開發人員（如 QA）也能直接編輯 YAML/JSON 檔案來新增或修改測試情境。</p>
           <pre><code class="language-python">import pytest
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
@@ -4395,6 +4698,7 @@ def test_login_empty_fields(login_page, username, password):
             <h3>13. 使用命令行參數執行平台專屬測試</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">pytest 允許透過 <code>conftest.py</code> 中的 <code>pytest_addoption</code> 鉤子（hook）註冊<strong>自訂命令行參數</strong>，例如 <code>--platform</code> 和 <code>--device</code>，讓使用者在執行測試時動態指定目標平台或設備。在 fixture 中透過 <code>request.config.getoption("--platform")</code> 即可取得參數值，再根據該值決定要載入哪組 capabilities 或執行哪些測試。結合 <code>@pytest.mark.skipif</code> 或 marker 篩選，可實現<strong>條件式測試執行</strong>——例如只在 Android 平台上執行特定測試。也可在 <code>pytest.ini</code> 的 <code>addopts</code> 中設定預設參數，免去每次手動輸入。這種方式讓同一套測試程式碼能靈活服務多平台、多設備的測試需求。</p>
           <pre><code class="language-bash"># 基本執行方式
 pytest test_appium.py
 
@@ -4471,6 +4775,7 @@ pytest test_appium.py --help
               <h3>4. uv 詳細教學</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">uv 是由 Astral（Ruff 的開發團隊）使用 Rust 語言編寫的<strong>極速 Python 套件安裝與依賴解析工具</strong>。它的速度比 pip 快 10 到 100 倍，支援虛擬環境管理，可以完全取代 pip、pip-tools 和 virtualenv。核心指令包括 <code>uv venv</code>（建立虛擬環境）、<code>uv pip install</code>（安裝套件）和 <code>uv run</code>（在虛擬環境中執行命令），讓日常開發流程更加簡潔高效。</p>
             <pre><code class="language-bash"># 1) 安裝 uv (Windows)
 # 使用 Scoop: scoop install uv
 # 使用 Winget: winget install astral-sh.uv
@@ -4526,6 +4831,7 @@ uv run python -m pip install --upgrade pip  # 更新 pip 到最新版本</code><
               <h3>5. Poetry 詳細教學</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
+            <p style="margin-bottom: 1rem; color: #BCF7F2;">Poetry 是 Python 的<strong>依賴管理與專案打包工具</strong>。它使用 <code>pyproject.toml</code> 作為統一配置檔，自動管理虛擬環境，透過 <code>poetry.lock</code> 檔案確保依賴的確定性建置（deterministic builds），並支援將套件發佈到 PyPI。核心指令包括 <code>poetry init</code>（初始化專案）、<code>poetry add</code>（新增依賴）、<code>poetry install</code>（安裝所有依賴）和 <code>poetry run</code>（在虛擬環境中執行命令）。</p>
             <pre><code class="language-bash"># 1) 安裝 Poetry (Windows)
 # 使用 PowerShell: (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
@@ -4590,6 +4896,7 @@ poetry config virtualenvs.in-project true</code></pre>
             <h3>6. pyproject.toml 範例</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;"><code>pyproject.toml</code> 是現代 Python 專案配置的<strong>標準格式（PEP 621）</strong>，用來取代傳統的 setup.py、setup.cfg 和 requirements.txt。這個範例展示了一份完整的配置檔，包含專案中繼資料（名稱、版本、作者）、依賴套件清單、選用開發依賴（optional dev dependencies）、工具配置（pytest、black、flake8、coverage）以及建置系統設定（build system）。</p>
           <pre><code class="language-toml">[project]
 name = "appium-automation"
 version = "0.1.0"
@@ -4733,6 +5040,7 @@ fail_under = 80</code></pre>
             <h3>7. 實務工作流程範例</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">以下是從零開始建立 Appium 測試專案的<strong>實務工作流程</strong>，分別展示使用 uv 和 poetry 兩種方式。流程涵蓋建立虛擬環境、安裝依賴套件、撰寫測試檔案、執行測試並產生 HTML 報告，以及設定 .gitignore 等步驟，幫助你快速上手實際的自動化測試專案開發。</p>
           <pre><code class="language-bash"># 使用 uv 的工作流程
 mkdir appium-test-project
 cd appium-test-project
