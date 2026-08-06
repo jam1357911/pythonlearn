@@ -615,7 +615,7 @@ button {
 
 .two-column {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 1fr;
   gap: var(--spacing-2xl);
   margin-top: var(--spacing-2xl);
 }
@@ -666,6 +666,71 @@ button {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--spacing-xl);
+}
+
+.memory-card {
+  background-color: rgba(251, 191, 36, 0.05);
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  border-left: 4px solid #fbbf24;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+}
+
+.memory-head {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.memory-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.memory-head h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #fbbf24;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.memory-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin: 0;
+  padding: 0;
+}
+
+.memory-card ul li {
+  color: #fde8b8;
+  font-size: 14px;
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.memory-card ul li::before {
+  content: "★";
+  position: absolute;
+  left: 0;
+  color: #fbbf24;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.memory-card ul li code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  background-color: rgba(251, 191, 36, 0.12);
+  color: #fcd34d;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 13px;
 }
 
 .compare-card {

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
     <!-- 版本號：20260725v2 -->
@@ -154,6 +154,19 @@ num_str = "100"
 num_int = int(num_str)  # 100
 num_float = float(num_int)  # 100.0</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>單行註解用 <code>#</code>；<code>"""</code> 包起來的多行字串常作為 docstring 說明。</li>
+              <li>變數直接賦值即可使用，<code>str</code>、<code>int</code>、<code>float</code>、<code>bool</code> 都不需宣告型別。</li>
+              <li><code>input()</code> 會讀取使用者輸入並回傳字串；<code>print()</code> 搭配 f-string <code>f"..."</code> 格式化輸出。</li>
+              <li>型別轉換：<code>int()</code> 把字串轉為整數、<code>float()</code> 轉為浮點數。</li>
+            </ul>
+          </aside>
         </div>
 
         <article class="code-panel" data-reveal>
@@ -232,6 +245,20 @@ if data is None:
 # 資料不存在</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>數字有三種型別：<code>int</code>、<code>float</code>、<code>complex</code>；用 <code>type()</code> 檢查型別、<code>isinstance()</code> 判斷型別。</li>
+            <li>字串支援 <code>+</code> 串接、<code>*</code> 重複、切片 <code>[0:5]</code>，以及 <code>upper()</code>、<code>split()</code> 等方法。</li>
+            <li><code>list</code> 有序可變（<code>append()</code>、<code>remove()</code>）；<code>tuple</code> 不可變，單元素元組要寫成 <code>(10,)</code>。</li>
+            <li><code>dict</code> 用 <code>.get()</code> 安全取值；<code>set</code> 自動去重，可用 <code>&</code> 交集、<code>|</code> 聯集。</li>
+            <li><code>None</code> 表示空值，用 <code>is None</code> 判斷。</li>
+          </ul>
+        </aside>
+
 
 
         <article class="code-panel" data-reveal>
@@ -260,6 +287,19 @@ if score < 70:                    # 如果分數小於 70
 # 你是成年人
 # 良好</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>if</code> 條件後要加冒號 <code>:</code>，條件成立時執行縮排區塊。</li>
+            <li>比較運算子：<code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code>，結果是布林值。</li>
+            <li>邏輯運算子 <code>and</code>、<code>or</code>、<code>not</code> 可組合多個條件，例如 <code>score &gt;= 80 and score &lt; 90</code>。</li>
+            <li>多個獨立的 <code>if</code> 會各自判斷，可能同時執行多個區塊。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -293,6 +333,19 @@ else:                            # 未登錄時執行
 # 密碼長度符合要求
 # 請先登錄</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>if-else</code> 是二元判斷：條件成立執行 <code>if</code> 區塊，不成立執行 <code>else</code> 區塊。</li>
+            <li>取餘數運算 <code>num % 2 == 0</code> 可判斷偶數。</li>
+            <li><code>len()</code> 可取得字串或容器的長度，例如 <code>len(password) &gt;= 8</code>。</li>
+            <li>布林值可直接作為條件：<code>if is_logged_in:</code> 表示值為 <code>True</code> 時執行。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -345,6 +398,19 @@ else:                         # 如果是晚上（大於等於 18 點）
 # 秋季：穿厚外套
 # 下午好</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>elif</code> 是 else if 的縮寫，可串接多個條件；一旦某個條件成立，就跳過後續所有分支。</li>
+            <li>條件由上往下依序檢查，整個結構最多只會執行一個分支區塊。</li>
+            <li>Python 支援鏈式比較，例如 <code>3 &lt;= month &lt;= 5</code>，寫法更直覺。</li>
+            <li><code>else</code> 負責兜底，處理前面所有條件都不成立的情況。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -403,6 +469,19 @@ else:
 # 密碼強度: 強</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>if</code> 內再包 <code>if</code> 形成多層條件結構，適合「必須同時滿足多個條件」的場景（如年齡＋駕照）。</li>
+            <li>嵌套太深會降低可讀性，可改用 <code>and</code> 合併條件來簡化。</li>
+            <li><code>any()</code> 搭配生成式可檢查「任一字元符合條件」，常用於密碼強度判斷。</li>
+            <li><code>isupper()</code>、<code>islower()</code>、<code>isdigit()</code> 等字串方法可判斷字元類型。</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
             <div class="code-head">
               <h3>4.1 for 迴圈 - 固定次數重複</h3>
@@ -442,6 +521,19 @@ for i in range(1, 10):
 # 1×8=8	2×8=16	3×8=24	4×8=32	5×8=40	6×8=48	7×8=56	8×8=64	
 # 1×9=9	2×9=18	3×9=27	4×9=36	5×9=45	6×9=54	7×9=63	8×9=72	9×9=81</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>for</code> 搭配 <code>range()</code> 是最常用的固定次數迴圈：<code>range(1, 6)</code> 產生 1 到 5，不含 6。</li>
+            <li><code>range(start, stop, step)</code> 可指定步長；<code>range()</code> 是惰性序列，不會一次佔用大量記憶體。</li>
+            <li>累加模式：先初始化 <code>total = 0</code>，迴圈內用 <code>total += num</code> 逐步累加。</li>
+            <li>巢狀 <code>for</code> 迴圈可產生乘法表；<code>print(..., end="\t")</code> 可讓輸出不換行。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -493,6 +585,19 @@ for key, value in person.items():
 # email: ken@example.com</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>for</code> 可遍歷 <code>list</code>、<code>tuple</code>、<code>dict</code>、字串等可迭代物件，依序取出每個元素。</li>
+            <li><code>enumerate(fruits, start=1)</code> 可在遍歷時同時取得索引與值。</li>
+            <li>遍歷字典用 <code>for key, value in person.items()</code> 一次取出鍵與值。</li>
+            <li>計算元素總和：先設 <code>sum_numbers = 0</code>，再於迴圈中 <code>sum_numbers += num</code>。</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>4.3 while 迴圈 - 條件滿足時重複</h3>
@@ -541,6 +646,19 @@ print(f"恭喜你，猜對了！用了 {attempts} 次")
 # 請猜一個1到10之間的數字: 7
 # 恭喜你，猜對了！用了 3 次</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>while</code> 在條件成立時重複執行，務必在迴圈內更新變數（如 <code>count += 1</code>），否則會造成無窮迴圈。</li>
+            <li>適合「不知道要執行多少次，但知道何時停止」的情境，例如猜數字遊戲。</li>
+            <li><code>random.randint(1, 10)</code> 可隨機產生 1 到 10 的整數（需先 <code>import random</code>）。</li>
+            <li><code>input()</code> 回傳字串，要用 <code>int()</code> 轉成數字才能做數值比較。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -603,6 +721,19 @@ for i in range(1, 4):
 # 外層迴圈 i=3</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>break</code> 立即終止整個迴圈；<code>continue</code> 跳過本次迭代剩餘部分，直接進入下一輪。</li>
+            <li><code>while True:</code> 搭配 <code>break</code> 是「先執行、再決定何時離開」的常用模式。</li>
+            <li>在嵌套迴圈中，<code>break</code> 只會終止它所在的那一層內層迴圈。</li>
+            <li>用 <code>continue</code> 跳過不符合條件的元素（如奇數），比 if-else 更簡潔。</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>4.5 列表解析式 - 快速創建列表</h3>
@@ -645,6 +776,19 @@ print("名字長度字典:", name_lengths)
 # 名字長度字典: {'Alice': 5, 'Bob': 3, 'Charlie': 7}</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>列表解析式語法：<code>[運算式 for 變數 in 可迭代物件 if 條件]</code>，一行取代 for 迴圈建立新列表。</li>
+            <li>帶條件過濾：<code>[x**2 for x in numbers if x % 2 == 0]</code> 只保留符合條件的元素。</li>
+            <li>嵌套解析式可扁平化矩陣：<code>[num for row in matrix for num in row]</code>。</li>
+            <li>字典解析式用花括號建立鍵值對：<code>{name: len(name) for name in names}</code>。</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>5.1 基本函式定義</h3>
@@ -678,6 +822,19 @@ print(result)  # 7
 # 你好！歡迎來到 Python 世界
 # 7</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>用 <code>def</code> 關鍵字定義函式，函式名稱應具描述性並遵循 snake_case。</li>
+            <li>函式第一行的 <code>"""docstring"""</code> 用來說明函式用途。</li>
+            <li><code>return</code> 回傳運算結果；沒有 <code>return</code> 的函式預設回傳 <code>None</code>。</li>
+            <li>函式可無參數（如 <code>say_hello()</code>）或多參數（如 <code>add_numbers(x, y)</code>），讓程式碼可重複使用。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -725,6 +882,19 @@ print(user2)
 # {'name': 'Jane', 'email': 'jane@example.com', 'role': 'admin'}</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>預設參數（如 <code>tax_rate=0.05</code>）：呼叫時可省略引數，也可傳入自訂值覆蓋。</li>
+            <li><code>*args</code> 接收任意數量的位置引數，會收集成 tuple，可搭配 <code>sum(args)</code> 求和。</li>
+            <li><code>**kwargs</code> 接收任意數量的命名引數，會收集成 dict。</li>
+            <li>在字典內用 <code>{**kwargs}</code> 可展開並合併其他鍵值對。</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>5.3 高階函式</h3>
@@ -769,6 +939,19 @@ print(double(5))    # 10
 print(square(4))    # 16
 print(add(3, 4))    # 7</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>高階函式可以把「函式」當作參數傳遞，例如 <code>apply_operation(x, y, operation)</code>。</li>
+            <li>函式也可以回傳另一個函式；回傳的是函式本身，不是執行結果。</li>
+            <li>閉包（closure）：內部函式會記住外部變數，例如 <code>create_multiplier(factor)</code> 記住 <code>factor</code>。</li>
+            <li><code>lambda x: x * 2</code> 是匿名函式，適合建立簡單的一行運算。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -829,6 +1012,20 @@ slow_function()             # 會顯示約 0.5 秒
 # 呼叫函式 multiply，參數: (5, 6), {}
 # 函式 multiply 回傳: 30
 # slow_function 執行時間: 0.5012 秒</code></pre>
+        </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>修飾器接收函式、包裝它、再回傳新函式；<code>@decorator_name</code> 等同於 <code>func = decorator(func)</code>。</li>
+            <li><code>@functools.wraps(func)</code> 可保留原函式的 <code>__name__</code> 與 docstring，實務上必加。</li>
+            <li><code>wrapper(*args, **kwargs)</code> 讓包裝函式能接受任意參數並轉交給原函式。</li>
+            <li>計時修飾器用 <code>time.time()</code> 在執行前後取時間差，即可測量耗時。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -878,6 +1075,19 @@ print(cos(pi))    # -1.0：cos(π)
 # 1.0
 # -1.0</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>import math</code> 匯入整個模組，使用時要加 <code>math.</code> 前綴，例如 <code>math.sqrt(16)</code>。</li>
+            <li><code>from datetime import datetime</code> 只匯入特定名稱，可直接使用不需前綴。</li>
+            <li><code>import numpy as np</code> 用別名簡化模組名稱，是第三方套件的常見寫法。</li>
+            <li><code>from math import *</code> 會引入全部名稱，容易造成命名衝突，通常不建議使用。</li>
+          </ul>
+        </aside>
       </section>
 
       <section id="oop" class="section section-emphasis" aria-labelledby="oop-title">
@@ -967,6 +1177,19 @@ print(isinstance(person1, Person))      # 檢查物件是否為 Person 類型，
 # True</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>用 <code>class</code> 定義類別，<code>__init__</code> 是建構函式，建立物件時自動呼叫</li>
+            <li>方法的第一個參數永遠是 <code>self</code>，代表物件實例本身</li>
+            <li>類別屬性（如 <code>species</code>）所有實例共享，實例屬性（如 <code>name</code>）每個物件獨有</li>
+            <li>用 <code>type()</code> 與 <code>isinstance()</code> 檢查物件的類型</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>2. 屬性和方法的詳細說明</h3>
@@ -1017,6 +1240,19 @@ print(obj2.instance_attr)            # 輸出: second，其他實例不受影響
 # modified
 # second</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>類別屬性定義在方法外部，所有實例共享同一份值</li>
+            <li>實例屬性寫在 <code>__init__</code> 中用 <code>self.</code> 開頭，每個實例獨有</li>
+            <li>修改類別屬性會影響所有實例，修改實例屬性只影響該實例</li>
+            <li>在 <code>__init__</code> 中用 <code>MyClass.class_attr += 1</code> 可統計建立的實例數</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -1088,6 +1324,19 @@ print(issubclass(Cat, Animal))  # True
 # True</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>子類別在括號中寫入父類別名稱即可繼承，例如 <code>class Dog(Animal)</code></li>
+            <li>子類別的 <code>__init__</code> 中用 <code>super().__init__()</code> 呼叫父類別建構函式</li>
+            <li>子類別可以覆寫父類別方法（如 <code>make_sound</code>），也能新增自己的方法</li>
+            <li>用 <code>isinstance()</code> 與 <code>issubclass()</code> 檢查繼承關係</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>4. 多重繼承和方法解析順序</h3>
@@ -1148,6 +1397,19 @@ fish.make_sound()   # 輸出: 魚冒泡
 # 會游泳
 # 魚冒泡</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>多重繼承語法：<code>class Duck(Flyable, Swimmable)</code>，同時繼承多個父類別</li>
+            <li>方法解析順序 <code>MRO</code> 決定同名方法的呼叫順序，用 <code>Duck.mro()</code> 查看</li>
+            <li>多個父類別有同名方法時，以 MRO 中排在前面的類別優先</li>
+            <li>多重繼承會讓程式碼變複雜，建議謹慎使用</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -1241,6 +1503,19 @@ print_shape_info(rectangle)
 # 周長: 20.00</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>父類別用 <code>raise NotImplementedError</code> 強制子類別必須實作方法</li>
+            <li>子類別重寫（override）<code>area()</code> 與 <code>perimeter()</code> 提供自己的實作</li>
+            <li>多型：對不同形狀物件呼叫同名方法，會依實際類型執行不同版本</li>
+            <li>函式接收任意 <code>Shape</code> 子類物件（如 <code>print_shape_info</code>），程式更易擴充</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>6. 封裝和屬性裝飾器</h3>
@@ -1311,6 +1586,19 @@ account.deposit(-50)    # 存款金額無效
 # 存款金額必須大於0</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>單一底線 <code>_</code> 開頭表示受保護屬性，雙底線 <code>__</code> 表示私有屬性（名稱改寫）</li>
+            <li><code>@property</code> 裝飾器把方法包裝成屬性來存取（getter）</li>
+            <li>外部不能直接存取 <code>__balance</code>，必須透過 <code>deposit()</code>、<code>withdraw()</code> 方法</li>
+            <li>在方法中加入驗證（如 <code>amount > 0</code>）可保護資料完整性</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>7. 類別方法和靜態方法</h3>
@@ -1378,6 +1666,19 @@ print(f"靜態方法計算結果: {result}")
 # 靜態方法計算結果: 8
 # 靜態方法計算結果: 30</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>實例方法第一個參數是 <code>self</code>，用來存取實例屬性</li>
+            <li><code>@classmethod</code> 第一個參數是 <code>cls</code>，可存取與修改類別屬性</li>
+            <li><code>@staticmethod</code> 不需要 <code>self</code> 或 <code>cls</code>，適合當與類別相關的工具函式</li>
+            <li>類別屬性 <code>class_variable</code> 所有實例共享，可用類別名稱直接修改</li>
+          </ul>
+        </aside>
 
         <div class="table-card" data-reveal>
           <h3>OOP 核心觀念速查</h3>
@@ -1481,6 +1782,19 @@ print(User.how_many_users())
 # {'name': 'Ken', 'email': 'ken@example.com', 'login_count': 1, 'role': 'super_admin'}
 # 1</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>類別屬性 <code>total_users</code> 在 <code>__init__</code> 中累加，統計所有使用者</li>
+              <li><code>@classmethod</code> 的 <code>how_many_users()</code> 透過 <code>cls</code> 存取類別共用資料</li>
+              <li><code>@staticmethod</code> 的 <code>is_valid_email()</code> 不依賴物件狀態，只做驗證</li>
+              <li><code>AdminUser(User)</code> 繼承 <code>User</code>，用 <code>super().profile()</code> 重用並擴充父類別方法</li>
+            </ul>
+          </aside>
 
           <article class="info-card deep-dive" data-reveal>
             <h3>這段 OOP 範例要怎樣讀</h3>
@@ -1612,6 +1926,19 @@ print(User.how_many_users())
 # Xcode (Mac 用於 iOS 測試)
 # Appium Inspector (元素定位工具)</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>用 <code>npm install -g appium</code> 安裝 Appium Server，需要先安裝 Node.js</li>
+            <li>Android 安裝 <code>uiautomator2</code> 驅動，iOS 安裝 <code>xcuitest</code> 驅動</li>
+            <li>用 <code>pip install Appium-Python-Client</code> 安裝 Python 客戶端套件</li>
+            <li>Android 還需要 Android SDK，Appium Inspector 可輔助元素定位</li>
+          </ul>
+        </aside>
       </section>
 
       <section id="yaml-config" class="section" aria-labelledby="yaml-config-title">
@@ -1701,6 +2028,19 @@ EOF
 
 echo "✅ 配置文件創建完成"</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>YAML 用 <code>platforms</code> 區塊分開管理 <code>android</code> 與 <code>ios</code> 的專屬 capability：Android 需要 <code>appPackage</code>/<code>appActivity</code>，iOS 則用 <code>bundleId</code>。</li>
+            <li>所有平台共用的參數放在 <code>common</code> 區塊，測試帳號數據放在 <code>test_data</code> 區塊，修改配置只需改檔案、不動程式碼。</li>
+            <li>Android 推薦 <code>automationName: "UiAutomator2"</code>、iOS 推薦 <code>"XCUITest"</code>；<code>noReset: true</code> 不重置 App 數據可加速測試。</li>
+            <li><code>unicodeKeyboard: true</code> 支援中文等 Unicode 輸入，並搭配 <code>resetKeyboard: true</code> 在測試後還原鍵盤。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal id="appium-3">
           <div class="code-head">
@@ -1868,6 +2208,19 @@ if __name__ == "__main__":
     print("=" * 50)</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>用 <code>os.path.exists()</code> 先檢查配置文件是否存在，再用 <code>yaml.safe_load()</code> 解析 YAML（比 <code>load()</code> 更安全），讀檔時記得加 <code>encoding="utf-8"</code>。</li>
+            <li>取出平台配置後用 <code>dict.copy()</code> 避免修改原始數據，再用 <code>capabilities.update()</code> 合併 <code>common</code> 共用參數。</li>
+            <li>Appium 2.x 推薦用 <code>AppiumOptions().load_capabilities()</code> 封裝配置，再以 <code>webdriver.Remote(command_executor, options)</code> 建立連線，Server 地址不再需要 <code>/wd/hub</code> 尾綴。</li>
+            <li>連線成功後可從 <code>driver.capabilities</code> 讀取 <code>deviceName</code>、<code>platformVersion</code> 等設備資訊；測試結束務必呼叫 <code>driver.quit()</code> 釋放資源。</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal>
           <div class="code-head">
             <h3>運行結果範例</h3>
@@ -1902,6 +2255,18 @@ Appium YAML 配置管理器測試
 測試完成
 ==================================================</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>執行腳本前必須確認 <strong>Appium Server 已啟動</strong>且設備或模擬器已連接，否則 <code>webdriver.Remote</code> 會連線失敗。</li>
+            <li>輸出中的裝置名稱、平台版本、自動化工具都來自 <code>driver.capabilities</code>（如 <code>deviceName</code>、<code>platformVersion</code>、<code>automationName</code>），可用来確認配置是否正確載入。</li>
+            <li>同一個 <code>initialize_driver()</code> 流程只要切換 platform 參數即可分別初始化 Android（<code>UiAutomator2</code>）與 iOS（<code>XCUITest</code>）。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal id="appium-4">
           <div class="code-head">
@@ -2153,6 +2518,20 @@ if __name__ == "__main__":
     print("="*60)</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>load_test_data(test_type, platform, data_type)</code> 依「測試類型 → 平台 → valid/invalid」三層鍵值逐層導航 YAML，任一层不存在就拋出 <code>ValueError</code> 並列出可用選項。</li>
+            <li>共用數據（如管理員帳號）放在 <code>test_data.login.shared</code>，用 <code>get_shared_test_data()</code> 以鏈式 <code>.get()</code> 讀取。</li>
+            <li>顯示密碼時用 <code>'*' * len(password)</code> 遮蔽，避免敏感資訊出現在日誌中。</li>
+            <li>登入流程用 <code>AppiumBy.ACCESSIBILITY_ID</code> 定位，並搭配 <code>WebDriverWait</code> + <code>EC.presence_of_element_located</code>/<code>EC.element_to_be_clickable</code> 等元素就緒再操作。</li>
+            <li>用 <code>home_page</code> 元素的 <code>is_displayed()</code> 驗證登入成功，每個平台的 Driver 用完都要 <code>driver.quit()</code>。</li>
+          </ul>
+        </aside>
+
         <article class="code-panel" data-reveal id="appium-5">
           <div class="code-head">
             <h3>5. 測試數據讀取結果範例</h3>
@@ -2195,6 +2574,18 @@ if __name__ == "__main__":
 所有平台測試完成！
 ============================================================</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>運行結果證明<strong>同一套測試代碼</strong>可自動選擇平台帳號：Android 用 <code>android_test_user</code>、iOS 用 <code>ios_test_user</code>，不需為每個平台寫一份腳本。</li>
+            <li>日誌中密碼以 <code>*</code> 遮蔽顯示，敏感資訊不會外洩。</li>
+            <li>每個平台登入成功後都以 <code>driver.quit()</code> 關閉 session，才不會殘留 Appium 連線。</li>
+          </ul>
+        </aside>
 
         <div class="two-column">
           <article class="info-card highlight" data-reveal>
@@ -2273,6 +2664,19 @@ element = driver.find_element(
     'new UiSelector().resourceId("com.android.calculator2:id/digit_1")'  # 根據 resource-id 定位
 )</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>跨平台優先用 <code>AppiumBy.ACCESSIBILITY_ID</code>（最穩定）；Android 專用可用 <code>AppiumBy.ID</code> 定位 <code>resource-id</code>。</li>
+              <li>XPath 要用<strong>相對路徑</strong>（如 <code>//*[@text='1']</code>），絕對路徑難維護且容易失效。</li>
+              <li>Android 高階定位用 <code>AppiumBy.ANDROID_UIAUTOMATOR</code> 搭配 <code>new UiSelector()</code>；iOS 用 <code>AppiumBy.IOS_PREDICATE</code> 與 <code>AppiumBy.IOS_CLASS_CHAIN</code>（比 XPath 更快）。</li>
+              <li><code>AppiumBy.CLASS_NAME</code> 容易匹配到多個同類元件要慎用；<code>AppiumBy.NAME</code> 已棄用不要再寫。</li>
+            </ul>
+          </aside>
           
           <article class="code-panel" data-reveal id="appium-6-1">
             <div class="code-head">
@@ -2341,6 +2745,19 @@ actions.pointer_action.pause(1)                                    # 暫停 1 �
 actions.pointer_action.pointer_up()                                # 抬起手指
 actions.perform()                                                  # 執行整個動作序列</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>基礎操作四件套：<code>element.click()</code> 點擊、<code>send_keys()</code> 輸入、<code>clear()</code> 清空、<code>element.text</code> 讀文字；屬性用 <code>get_attribute()</code> 取得（如 <code>resource-id</code>、<code>text</code>）。</li>
+              <li>狀態判斷用 <code>is_displayed()</code>（可見）、<code>is_enabled()</code>（可啟用）、<code>is_selected()</code>（已選中）；座標計算靠 <code>element.location</code> 與 <code>element.size</code>。</li>
+              <li>除錯用 <code>driver.save_screenshot()</code> 截圖；Android 實體鍵用 <code>driver.press_keycode()</code>（4=返回、3=Home）。</li>
+              <li>Selenium 4 已移除 <code>TouchActions</code>，觸控、長按、多點手勢一律改用 <code>ActionBuilder</code> + <code>PointerInput("touch", "finger")</code>，最後呼叫 <code>actions.perform()</code> 執行。</li>
+            </ul>
+          </aside>
         </div>
 
         <article class="code-panel" data-reveal id="appium-7">
@@ -2483,6 +2900,19 @@ time.sleep(2)
 # 測試向左滑動...
 # 測試向右滑動...</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>先用 <code>driver.get_window_size()</code> 取得螢幕寬高，再以比例計算滑動起點與終點座標（例如從螢幕高度 80% 滑到 20%）。</li>
+            <li><code>scroll_to_element()</code> 用迴圈結合 <code>driver.find_element()</code> 與 <code>driver.swipe(start_x, start_y, end_x, end_y, duration)</code>，最多重試 5 次，找不到就拋出 Exception。</li>
+            <li><code>swipe_up</code> / <code>swipe_down</code> / <code>swipe_left</code> / <code>swipe_right</code> 四個通用函式把 <code>percentage</code> 與 <code>duration</code> 參數化，四面方向都能重用。</li>
+            <li>每次滑動後用 <code>time.sleep()</code> 等待動畫完成再继续，不要用 <code>implicitly_wait</code> 當 sleep。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal id="appium-8">
           <div class="code-head">
@@ -2964,6 +3394,20 @@ print("重置後的日期:", check_current_date(driver))
 # 重置後的日期: 2024/01/01</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>DatePicker</code> 類別在 <code>__init__</code> 讀取 <code>driver.capabilities["platformName"]</code> 自動偵測平台，對外只公開 <code>select_date(year, month, day)</code> 一個統一 API。</li>
+            <li>Android 用 <code>AppiumBy.ID</code> 定位 <code>year_picker</code>/<code>month_picker</code>/<code>day_picker</code>，以 while 迴圈比較 <code>picker.text</code> 與目標值，再用 <code>driver.swipe()</code> 滾動 NumberPicker 直到匹配。</li>
+            <li>iOS 定位 <code>XCUIElementTypePickerWheel</code>：先嘗試 <code>send_keys(date_str)</code> 直接設定，失敗再降級為 <code>send_keys("up"/"down")</code> 逐格滾動。</li>
+            <li>滑動座標靠 <code>element.rect</code>（含 x、y、width、height）計算元素中心與 20%/80% 位置。</li>
+            <li>所有操作前用 <code>WebDriverWait</code> + <code>EC.presence_of_element_located</code>/<code>EC.element_to_be_clickable</code> 等待元素就緒，滾動間隔 <code>time.sleep(0.5)</code> 避免讀到舊值。</li>
+          </ul>
+        </aside>
+
           <article class="code-panel" data-reveal id="appium-9">
             <div class="code-head">
               <h3>9. 跨平台 locator 管理</h3>
@@ -3100,6 +3544,19 @@ if __name__ == "__main__":
 # 正在查找 login_button 元素...
 # ✅ 成功找到元素：<selenium.webdriver.remote.webelement.WebElement (session="xxx", element="www")></code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>Page Object 模式把「元素名稱 → 平台 → 定位器」兩層映射集中在 <code>LOCATORS</code> 字典，修改定位邏輯只需改一處。</li>
+              <li>Android 用 <code>AppiumBy.ID</code>（resource-id），iOS 用 <code>AppiumBy.ACCESSIBILITY_ID</code> 或 <code>AppiumBy.IOS_PREDICATE</code>，測試代碼完全不需知道平台差異。</li>
+              <li>在 <code>__init__</code> 用 <code>driver.capabilities.get("platformName")</code> 取得當前平台並轉小寫，避免大小寫比較問題。</li>
+              <li><code>locator()</code> 依平台查表回傳 (By, value)，<code>find()</code> 解包後呼叫 <code>driver.find_element(by, value)</code>，測試端只需寫 <code>login_page.find("login_button")</code>。</li>
+            </ul>
+          </aside>
 
         <div class="two-column">
           <article class="info-card deep-dive" data-reveal>
@@ -3287,6 +3744,19 @@ def test_login_with_optional_popup(driver):
 # ✅ 登入成功</code></pre>
           </article>
 
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>顯式等待用 <code>WebDriverWait(driver, timeout).until()</code> 搭配 <code>expected_conditions</code>（<code>EC</code>），取代不穩定的固定 <code>sleep()</code>。</li>
+              <li><code>EC.presence_of_element_located</code> 只要元素存在於 DOM 即可；<code>EC.element_to_be_clickable</code> 更要求可見且可啟用，點擊按鈕前推薦用它。</li>
+              <li><code>is_element_present()</code> 用 <code>try/except</code> 捕獲 <code>TimeoutException</code> 並回傳 <code>False</code>，適合處理「可能出現」的彈窗、廣告或教學提示。</li>
+              <li>定位器以 tuple 傳遞時用 <code>*locator</code> 解包給 <code>driver.find_element()</code>；先檢查存在再操作，避免測試因元素不存在而失敗。</li>
+            </ul>
+          </aside>
+
           <article class="info-card" data-reveal>
             <h3>wait 的實戰建議</h3>
             <ul>
@@ -3424,6 +3894,19 @@ else:
 # 第 3 次點擊失敗: Message: element click intercepted
 # 所有點擊方法都失敗</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li><code>tap_by_coordinates(driver, x, y)</code> 用 <code>PointerInput("touch", "finger")</code> + <code>ActionBuilder</code>，依序 <code>move_to_location</code> → <code>pointer_down()</code> → <code>pause(0.1)</code> → <code>pointer_up()</code> 完成 W3C 標準觸控點擊。</li>
+              <li>用 <code>element.rect</code> 取得元素位置尺寸，中心點計算為 <code>x + width/2</code>、<code>y + height/2</code>，通常是最佳點擊位置。</li>
+              <li><code>tap_element_at_offset()</code> 可在元素內部指定偏移量點擊（從左上角算起），向內縮幾像素可避開邊緣。</li>
+              <li><code>safe_tap_element()</code> 重試機制：永遠先試 <code>element.click()</code>（最穩定），失敗才用座標點擊備援，全部失敗回傳 <code>False</code>。</li>
+            </ul>
+          </aside>
 
           <article class="info-card" data-reveal>
             <h3>什麼時候需要使用座標點擊</h3>
@@ -3573,6 +4056,20 @@ class TestMathOperations:
     def test_multiplication(self):
         assert 3 * 4 == 12</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>pytest 直接用 Python 原生 <code>assert</code> 斷言，不需記憶 <code>assertEqual</code> 等方法，失敗時自動顯示詳細差異比較。</li>
+            <li>成員檢查用 <code>in</code> / <code>not in</code>（如 <code>assert "banana" in fruits</code>），也可搭配 <code>.values()</code> 檢查字典內容。</li>
+            <li><code>assert</code> 的第二個參數是自訂失敗訊息，例如 <code>assert x == y, f"預期 {x} 等於 {y}"</code>。</li>
+            <li>斷言異常用 <code>pytest.raises(ValueError)</code>，搭配 <code>as excinfo</code> 可用 <code>excinfo.value</code> 進一步檢查異常內容。</li>
+            <li>測試類別以 <code>Test</code> 開頭（如 <code>TestMathOperations</code>），可將相關測試函式分組組織。</li>
+          </ul>
+        </aside>
 
         <div class="two-column">
           <article class="code-panel" data-reveal>
@@ -3727,6 +4224,20 @@ def reset_app_state(driver):
 #   def test_add_to_cart(driver, shared_data):  # 同樣直接使用
 #       ...</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>fixture 用 <code>yield</code> 分隔 setup 與 teardown：<code>yield drv</code> 之前建立 driver，之後執行 <code>drv.quit()</code> 自動清理。</li>
+              <li><code>scope</code> 控制生命週期：<code>function</code>（每個測試）、<code>module</code>(每個檔案)、<code>session</code>（整次執行只建立一次）。</li>
+              <li>測試函式只要在參數寫上 fixture 名稱（如 <code>driver</code>、<code>shared_data</code>），pytest 就會自動注入，無需 import。</li>
+              <li>把 fixture 放進 <code>conftest.py</code>，所有測試檔案都能直接使用，不需匯入。</li>
+              <li>用 <code>dict</code> 作為共享容器（如 <code>shared_data</code>）可跨測試傳遞 UI 擷取的資料，例如訂單編號。</li>
+            </ul>
+          </aside>
           
           <article class="code-panel" data-reveal>
             <div class="code-head">
@@ -4006,6 +4517,20 @@ def screenshot_on_failure(request, driver):
 #     rep = outcome.get_result()
 #     setattr(item, f"rep_{rep.when}", rep)</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>fixture 依賴鏈分層管理：<code>platform</code> → <code>capabilities</code> → <code>driver</code>，每層 fixture 只負責一件事。</li>
+              <li>fixture 工廠：fixture 回傳一個函式（如 <code>login_factory</code>），測試中按需呼叫即可建立不同登入狀態。</li>
+              <li><code>@pytest.fixture(params=[...])</code> 參數化 fixture 透過 <code>request.param</code> 取得目前參數，讓同一測試在 Android / iOS 各跑一次。</li>
+              <li><code>scope="module"</code> 的 fixture（如 <code>test_context</code>）可在同一檔案的測試間共享資料。</li>
+              <li><code>autouse=True</code> 的 fixture 在 teardown 階段檢查 <code>request.node.rep_call.failed</code>，失敗時用 <code>driver.save_screenshot()</code> 自動截圖。</li>
+            </ul>
+          </aside>
         </div>
 
         <article class="code-panel" data-reveal>
@@ -4058,6 +4583,19 @@ test_data = [
 def test_upper_case(data):
     assert data["input"].upper() == data["expected"]</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>@pytest.mark.parametrize</code> 讓單一測試函式自動產生多個測試案例：第一個參數是逗號分隔的參數名稱字串，第二個是數據列表。</li>
+            <li>多個 <code>@pytest.mark.parametrize</code> 疊加會產生笛卡爾積組合，例如 3 個 <code>username</code> × 2 個 <code>status</code> = 6 個案例。</li>
+            <li>用 <code>ids</code> 參數為每個案例自訂易讀名稱（如 <code>ids=["add", "multiply", "divide"]</code>），讓測試報告更清晰。</li>
+            <li>參數也可以是 <code>dict</code>（如 <code>test_data</code> 列表），在測試中以 <code>data["input"]</code> 方式取值，適合結構較複雜的數據。</li>
+          </ul>
+        </aside>
 
         <div class="two-column">
           <article class="code-panel" data-reveal>
@@ -4123,6 +4661,19 @@ def test_unfinished_feature():
 def test_skip_example():
     assert True</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>用 <code>@pytest.mark.標記名稱</code> 為測試分類，常見標記有 <code>smoke</code>、<code>slow</code>、<code>fast</code>、<code>android</code>、<code>ios</code>。</li>
+              <li><code>pytest -m</code> 依標記篩選測試並支援布林邏輯：<code>pytest -m "not slow"</code>、<code>pytest -m "fast or smoke"</code>。</li>
+              <li><code>@pytest.mark.xfail(reason=...)</code> 標記「預期失敗」的測試；<code>@pytest.mark.skipif(條件, reason=...)</code> 符合條件時跳過測試。</li>
+              <li>自訂標記建議在 <code>pytest.ini</code> 的 <code>markers</code> 選項中註冊，避免 <code>PytestUnknownMarkWarning</code> 警告。</li>
+            </ul>
+          </aside>
           
           <article class="code-panel" data-reveal>
             <div class="code-head">
@@ -4197,6 +4748,20 @@ def test_login_button_visible(driver):
     )
     assert login_button.is_displayed()</code></pre>
         </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>整合核心：用 <code>@pytest.fixture(scope="session")</code> 管理 Appium WebDriver，整次會話只建立一次連線、所有測試共用。</li>
+              <li><code>pytest_addoption</code> hook 在 <code>conftest.py</code> 註冊自訂命令行參數（如 <code>--platform</code>），fixture 內用 <code>request.config.getoption()</code> 取值。</li>
+              <li>fixture 中 <code>yield driver</code> 後呼叫 <code>driver.quit()</code> 釋放資源，確保測試結束自動清理。</li>
+              <li>capabilities 依平台分支：Android 用 <code>UiAutomator2</code>、iOS 用 <code>XCUITest</code>，並以 <code>AppiumOptions().load_capabilities()</code> 載入。</li>
+              <li>用 <code>WebDriverWait</code> 搭配 <code>EC.presence_of_element_located</code> 顯式等待元素出現，避免元素尚未載入就操作。</li>
+            </ul>
+          </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -4320,6 +4885,20 @@ EOF
 
         </code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>ConfigManager</code> 用 <code>yaml.safe_load()</code> 載入 YAML 配置檔，把 capabilities 與測試數據集中管理，避免硬編碼在測試程式碼中。</li>
+            <li>單例模式：模組級 <code>get_config_manager()</code> 確保全專案只建立一個實例，避免重複讀取檔案。</li>
+            <li><code>get_platform_capabilities(platform)</code> 會把平台專屬配置與 <code>common</code> 共用配置合併後回傳。</li>
+            <li><code>get_test_data('login.valid')</code> 用點號路徑逐層讀取巢狀配置；<code>get_config_value()</code> 可在項目不存在時回傳預設值。</li>
+            <li>找不到檔案或 YAML 格式錯誤時會拋出明確異常（<code>FileNotFoundError</code>、<code>yaml.YAMLError</code>），方便除錯。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -4445,6 +5024,20 @@ def driver(capabilities, request):
 # 
 # 正在關閉 Driver 連接...</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>共享 fixture 定義在 <code>conftest.py</code>，所有測試模組即可直接使用 <code>driver</code>、<code>capabilities</code> 等。</li>
+            <li>fixture 依賴鏈：<code>platform</code> / <code>config_file</code> → <code>config_manager</code> → <code>capabilities</code> → <code>driver</code>，層層注入。</li>
+            <li>所有 fixture 皆為 <code>scope="session"</code>：整次會話只載入一次配置、只建立一次連線。</li>
+            <li><code>driver</code> fixture 用 <code>request.addfinalizer(teardown)</code> 註冊清理函式，效果等同 <code>yield</code> 後呼叫 <code>driver.quit()</code>。</li>
+            <li><code>pytest_addoption</code> 可同時註冊多個命令行參數，如 <code>--platform</code> 與 <code>--config-file</code>。</li>
+          </ul>
+        </aside>
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
@@ -4691,6 +5284,20 @@ def test_login_empty_fields(login_page, username, password):
     login_page.login(username, password)        # 使用參數化的字段值登錄
     assert True  # 應顯示字段驗證訊息</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>數據驅動測試：測試邏輯與測試數據分離，數據放外部 YAML/JSON，改數據不需改程式碼。</li>
+              <li><code>get_test_data('login.valid')</code> 用點號路徑讀取巢狀測試數據；<code>get_config_value()</code> 項目不存在時回傳預設值。</li>
+              <li><code>LoginPageLocators</code> 依平台集中管理定位器：Android 用 <code>AppiumBy.ID</code>、iOS 用 <code>IOS_PREDICATE</code> 或 <code>ACCESSIBILITY_ID</code>，透過 <code>get_locator()</code> 選取。</li>
+              <li>Page Object 模式：<code>login_page</code> fixture 封裝 <code>login()</code>、<code>get_welcome_text()</code>、<code>get_error_message()</code> 等頁面操作。</li>
+              <li>搭配 <code>@pytest.mark.parametrize</code> 與 <code>@pytest.mark.smoke</code> / <code>@pytest.mark.negative</code> 標記，可自動展開案例並分類執行。</li>
+            </ul>
+          </aside>
         </div>
 
         <article class="code-panel" data-reveal>
@@ -4725,6 +5332,20 @@ pytest test_appium.py --help
 # [pytest]
 # addopts = --platform android</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li>自訂命令行參數（如 <code>--platform</code>）需在 <code>conftest.py</code> 用 <code>pytest_addoption</code> hook 註冊，fixture 內以 <code>request.config.getoption()</code> 讀取。</li>
+              <li>執行時指定平台：<code>pytest test_appium.py --platform android</code> 或 <code>--platform ios</code>，同一套程式碼服務多平台。</li>
+              <li><code>pytest 檔案::測試函式</code>（如 <code>test_appium.py::test_login_success</code>）只執行指定測試；<code>-v</code> 顯示詳細資訊、<code>-s</code> 顯示 print 輸出。</li>
+              <li>在 <code>pytest.ini</code> 的 <code>[pytest]</code> 區塊用 <code>addopts = --platform android</code> 設定預設參數，免每次手動輸入。</li>
+              <li>用 <code>pytest --help</code> 可查看所有可用參數與說明。</li>
+            </ul>
+          </aside>
         </div>
       </section>
 
@@ -4825,6 +5446,20 @@ uv self update                              # 更新 uv 工具本身
 # 12) 建立與執行指令
 uv run python -m pip install --upgrade pip  # 更新 pip 到最新版本</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li><code>uv venv</code> 建立虛擬環境，加 <code>--python 3.11</code> 可指定 Python 版本</li>
+              <li><code>uv pip install</code> 安裝套件，用 <code>==</code> 鎖定特定版本（如 <code>requests==2.31.0</code>）</li>
+              <li><code>uv run</code> 直接在虛擬環境中執行腳本或 pytest，無需手動啟動環境</li>
+              <li><code>uv pip freeze &gt; requirements.txt</code> 凍結當前環境的所有套件版本</li>
+              <li><code>uv self update</code> 用來升級 uv 工具本身</li>
+            </ul>
+          </aside>
           
           <article class="code-panel" data-reveal>
             <div class="code-head">
@@ -4889,6 +5524,20 @@ poetry config --list
 poetry config virtualenvs.create true
 poetry config virtualenvs.in-project true</code></pre>
           </article>
+
+          <aside class="memory-card" data-reveal>
+            <div class="memory-head">
+              <span class="memory-icon">💡</span>
+              <h4>重點記憶</h4>
+            </div>
+            <ul>
+              <li><code>poetry new</code> 建立新專案；<code>poetry init</code> 在現有目錄初始化</li>
+              <li><code>poetry add</code> 新增依賴，加 <code>--dev</code> 安裝開發依賴</li>
+              <li><code>poetry run</code> 在虛擬環境中執行命令；<code>poetry shell</code> 直接進入環境</li>
+              <li><code>poetry.lock</code> 確保確定性建置，優於 <code>poetry export</code> 產生的 requirements.txt</li>
+              <li><code>poetry config virtualenvs.in-project true</code> 把虛擬環境建立在專案目錄內</li>
+            </ul>
+          </aside>
         </div>
 
         <article class="code-panel" data-reveal>
@@ -5012,6 +5661,20 @@ show_missing = true
 fail_under = 80</code></pre>
         </article>
 
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>pyproject.toml</code> 是 PEP 621 標準配置格式，取代 setup.py 與 requirements.txt</li>
+            <li><code>[project]</code> 區塊定義專案名稱、版本、<code>requires-python</code> 與 <code>dependencies</code></li>
+            <li><code>[project.optional-dependencies]</code> 的 dev 群組專門放置開發依賴</li>
+            <li><code>[tool.pytest.ini_options]</code> 設定 <code>testpaths</code>、<code>addopts</code> 與自訂 markers</li>
+            <li><code>[build-system]</code> 指定 <code>poetry-core</code> 作為 build-backend</li>
+          </ul>
+        </aside>
+
         <div class="compare-grid">
           <article class="compare-card" data-reveal>
             <h3>uv 使用情境</h3>
@@ -5119,6 +5782,20 @@ ENV/
 .pytest_cache
 EOF</code></pre>
         </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li>uv 流程：<code>uv venv</code> 建立環境 → <code>uv pip install</code> 安裝依賴 → <code>uv run pytest</code> 執行測試</li>
+            <li>poetry 流程：<code>poetry new</code> 建立專案 → <code>poetry add</code> 安裝依賴 → <code>poetry run pytest</code> 執行測試</li>
+            <li>pytest 加上 <code>--html=report.html</code> 參數即可產生 HTML 測試報告</li>
+            <li>Appium 測試使用 <code>UiAutomator2Options</code> 設定平台、裝置與 app 資訊</li>
+            <li><code>.gitignore</code> 必須排除 <code>.venv</code>、<code>__pycache__</code> 等不需版本控制的檔案</li>
+          </ul>
+        </aside>
       </section>
 
       <section class="section final-section" aria-labelledby="next-title">
