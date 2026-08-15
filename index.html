@@ -4648,7 +4648,144 @@ def screenshot_on_failure(request, driver):
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
-            <h3>8. 參數化測試</h3>
+            <h3>8. conftest.py 詳解（共享 Fixture 的中樞）</h3>
+            <button class="copy-button" type="button">複製程式碼</button>
+          </div>
+          <p style="margin-bottom: 1rem; color: #BCF7F2;">conftest.py 是 pytest 的<strong>特殊檔案</strong>（檔名固定不能改），pytest 啟動時會<strong>自動搜尋並載入</strong>它，不需要也不應該用 import 匯入。它的主要用途是存放<strong>多個測試檔案共享的 fixture、hook 函式和命令列參數定義</strong>。放置位置決定作用範圍：專案根目錄的 conftest.py 影響所有測試；tests/ 子目錄的 conftest.py 只影響該目錄下的測試，多個層級的 conftest.py 會同時生效，離測試檔案越近的優先級越高。在 Appium 專案中，標準做法是把 driver 建立、命令列參數（如 --platform）、失敗截圖 hook 都集中放在 tests/conftest.py，讓每個測試檔案保持乾淨——只寫測試邏輯本身。</p>
+          <pre><code class="language-python"># =====================================================
+# 檔案：tests/conftest.py（pytest 自動載入，不需 import）
+# =====================================================
+import os
+import pytest
+from datetime import datetime
+from appium import webdriver
+from appium.options.android import UiAutomator2Options
+from appium.options.ios import XCUITestOptions
+
+
+# -----------------------------------------------------
+# 用途 1：定義命令列參數（hook 函式）
+# 執行：pytest --platform=ios --env=staging
+# -----------------------------------------------------
+def pytest_addoption(parser):
+    parser.addoption("--platform", action="store", default="android",
+                     help="目標平台：android 或 ios")
+    parser.addoption("--env", action="store", default="dev",
+                     help="測試環境：dev 或 staging")
+
+
+@pytest.fixture(scope="session")
+def platform(request):
+    """把命令列參數包裝成 fixture，讓其他 fixture 可以使用"""
+    return request.config.getoption("--platform")
+
+
+# -----------------------------------------------------
+# 用途 2：共享的核心 fixture（所有測試檔案直接用）
+# -----------------------------------------------------
+@pytest.fixture(scope="session")
+def driver(platform):
+    """建立 Appium driver，整次執行共享，結束自動關閉"""
+    if platform == "android":
+        options = UiAutomator2Options()
+        options.platform_name = "Android"
+        options.device_name = "emulator-5554"
+        options.app_package = "com.example.shop"
+        options.app_activity = ".MainActivity"
+        options.automation_name = "UiAutomator2"
+    else:
+        options = XCUITestOptions()
+        options.platform_name = "iOS"
+        options.device_name = "iPhone 15"
+        options.bundle_id = "com.example.shop"
+        options.automation_name = "XCUITest"
+    options.no_reset = True
+
+    drv = webdriver.Remote("http://localhost:4723", options=options)
+    drv.implicitly_wait(10)
+    yield drv
+    drv.quit()
+
+
+@pytest.fixture(scope="session")
+def shared_data():
+    """跨測試的共享資料容器（如訂單編號、UI 擷取的文字）"""
+    return {}
+
+
+# -----------------------------------------------------
+# 用途 3：hook 函式 — 記錄每個測試的執行結果
+# （配合失敗自動截圖使用）
+# -----------------------------------------------------
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, f"rep_{rep.when}", rep)  # rep_setup / rep_call / rep_teardown
+
+
+@pytest.fixture(autouse=True)
+def screenshot_on_failure(request, driver):
+    """每個測試結束後自動檢查：失敗就截圖"""
+    yield
+    rep_call = getattr(request.node, "rep_call", None)
+    if rep_call and rep_call.failed:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        os.makedirs("screenshots", exist_ok=True)
+        path = f"screenshots/{request.node.name}_{timestamp}.png"
+        driver.save_screenshot(path)
+        print(f"\n[截圖] 失敗截圖：{path}")
+
+
+# =====================================================
+# 檔案：tests/test_login.py（測試檔案保持乾淨，不需 import fixture）
+# =====================================================
+# from appium.webdriver.common.appiumby import AppiumBy
+#
+# def test_login_success(driver):          # driver 自動來自 conftest.py
+#     user_input = driver.find_element(AppiumBy.ID, "com.example.shop:id/input_username")
+#     user_input.send_keys("ken@example.com")
+#     ...
+#
+# def test_save_order_info(driver, shared_data):  # 兩個 fixture 都自動注入
+#     shared_data["order_id"] = "ORD-20260801-0042"
+#
+# =====================================================
+# 檔案：tests/test_cart.py（同樣直接使用，完全不用 import）
+# =====================================================
+# def test_check_order(driver, shared_data):
+#     assert shared_data["order_id"].startswith("ORD-")
+#
+# =====================================================
+# 多層 conftest.py 的作用範圍：
+# appium_test_project/
+# ├── conftest.py                # 根目錄：全專案共享（如環境設定）
+# └── tests/
+#     ├── conftest.py            # 影響 tests/ 下所有測試
+#     ├── android/
+#     │   └── conftest.py        # 只影響 tests/android/ 下的測試
+#     └── test_login.py
+# → 執行 tests/android/ 的測試時，三個 conftest.py 都生效，
+#   同名 fixture 以「離測試檔案最近」的為準</code></pre>
+        </article>
+
+        <aside class="memory-card" data-reveal>
+          <div class="memory-head">
+            <span class="memory-icon">💡</span>
+            <h4>重點記憶</h4>
+          </div>
+          <ul>
+            <li><code>conftest.py</code> 檔名固定不能改，pytest <strong>自動載入</strong>，裡面的 fixture 不需 import 就能被同層及下層測試直接使用。</li>
+            <li>作用範圍按目錄分層：根目錄的影響全專案、<code>tests/</code> 裡的只影響該目錄；多層同時生效時，<strong>離測試檔案最近的優先</strong>。</li>
+            <li>Appium 專案標準做法：把 <code>driver</code> fixture、<code>shared_data</code>、失敗截圖 hook 全放進 <code>tests/conftest.py</code>，測試檔案只寫測試邏輯。</li>
+            <li><code>pytest_addoption(parser)</code> hook 可定義命令列參數（如 <code>--platform=ios</code>），再用 <code>request.config.getoption()</code> 讀取。</li>
+            <li><code>pytest_runtest_makereport</code> hook 搭配 <code>setattr(item, "rep_call", rep)</code>，讓 autouse fixture 能判斷測試是否失敗並自動截圖。</li>
+          </ul>
+        </aside>
+
+        <article class="code-panel" data-reveal>
+          <div class="code-head">
+            <h3>9. 參數化測試</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <p style="margin-bottom: 1rem; color: #BCF7F2;">參數化測試透過 <code>@pytest.mark.parametrize</code> 裝飾器，讓<strong>單一測試函式</strong>能根據多組輸入數據自動生成多個測試案例，避免重複撰寫結構相似的測試函式。裝飾器的第一個參數是逗號分隔的參數名稱字串，第二個參數是對應的數據列表（元組或字典）。透過 <code>ids</code> 參數可以為每個測試案例自訂易讀的名稱，讓測試報告更清晰。多個 <code>@pytest.mark.parametrize</code> 疊加使用時會產生<strong>笛卡爾積</strong>組合。此外，<code>indirect</code> 參數化可將參數值先傳遞給同名 fixture 進行預處理，再注入測試函式，適合需要動態生成測試資源的場景。</p>
@@ -4713,7 +4850,7 @@ def test_upper_case(data):
         <div class="two-column">
           <article class="code-panel" data-reveal>
             <div class="code-head">
-              <h3>9. 標記 (Markers)</h3>
+              <h3>10. 標記 (Markers)</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <p style="margin-bottom: 1rem; color: #BCF7F2;">Markers 是 pytest 用來<strong>分類與篩選測試</strong>的機制，常見的標記包括 <code>smoke</code>（煙霧測試）、<code>regression</code>（回歸測試）、<code>android</code> 和 <code>ios</code>（平台專屬測試）等。使用 <code>@pytest.mark.標記名稱</code> 裝飾器即可為測試函式加上標記。為了避免 <code>PytestUnknownMarkWarning</code> 警告，建議在 <code>pytest.ini</code> 的 <code>[pytest]</code> 區塊或 <code>pyproject.toml</code> 的 <code>[tool.pytest.ini_options]</code> 中，透過 <code>markers</code> 選項註冊自訂標記並附上說明。執行測試時使用 <code>-m</code> 旗標即可按標記篩選，例如 <code>pytest -m smoke</code> 只跑煙霧測試、<code>pytest -m "not slow"</code> 排除慢速測試、<code>pytest -m "android and not slow"</code> 支援布林邏輯組合。</p>
@@ -4790,7 +4927,7 @@ def test_skip_example():
           
           <article class="code-panel" data-reveal>
             <div class="code-head">
-              <h3>10. pytest 與 Appium 整合</h3>
+              <h3>11. pytest 與 Appium 整合</h3>
               <button class="copy-button" type="button">複製程式碼</button>
             </div>
             <p style="margin-bottom: 1rem; color: #BCF7F2;">將 pytest 與 Appium 整合的核心在於利用 <strong>fixture 機制管理 WebDriver 的生命週期</strong>。透過 <code>scope="session"</code> 的 fixture，整個測試會話只會建立一次 Appium Driver 連線，所有測試共用同一個 driver 實例，大幅減少重複啟動模擬器與建立連線的開銷。fixture 中使用 <code>yield</code> 或 <code>request.addfinalizer()</code> 確保測試結束後正確呼叫 <code>driver.quit()</code> 釋放資源。在測試隔離的最佳實踐上，session 級別適合共享 driver，而每個測試函式應透過 function 級別 fixture 重置應用狀態（如登出、清除數據），避免測試之間相互影響；若需要完全隔離，則可改用 <code>scope="function"</code> 讓每個測試擁有獨立的 driver 實例。</p>
@@ -4878,7 +5015,7 @@ def test_login_button_visible(driver):
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
-            <h3>11. 創建配置管理模組</h3>
+            <h3>12. 創建配置管理模組</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <p style="margin-bottom: 1rem; color: #BCF7F2;">配置管理模組將所有測試相關設定（如 Appium capabilities、測試數據、環境變數）集中到外部檔案統一管理，避免將設定硬編碼在測試程式碼中。Python 可使用 <code>configparser</code> 讀取 INI 格式，或使用 <code>yaml</code>（PyYAML 套件）讀取結構更清晰的 YAML 格式。此範例採用<strong>單例模式（Singleton Pattern）</strong>，透過模組級別的 <code>get_config_manager()</code> 函式確保整個專案只建立一個 ConfigManager 實例，避免重複讀取檔案造成效能浪費與狀態不一致。同時支援<strong>環境專屬配置</strong>，可依據開發、測試、生產環境載入不同的配置區塊，並提供 <code>reload_config()</code> 方法在運行時重新載入配置。</p>
@@ -5015,7 +5152,7 @@ EOF
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
-            <h3>12. 在 pytest 中使用配置管理器</h3>
+            <h3>13. 在 pytest 中使用配置管理器</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <p style="margin-bottom: 1rem; color: #BCF7F2;">將配置管理器與 pytest 整合時，最佳做法是在 <code>conftest.py</code> 中定義<strong>共享 fixture</strong>，讓所有測試模組都能直接使用。此範例建立了層層依賴的 fixture 鏈：<code>platform</code> 和 <code>config_file</code> 從命令行參數取得值，<code>config_manager</code> 依賴 <code>config_file</code> 載入配置，<code>capabilities</code> 再根據 <code>platform</code> 從配置管理器中提取對應平台的啟動參數，最終 <code>driver</code> fixture 使用 capabilities 建立 Appium 連線。所有 fixture 皆為 <code>scope="session"</code>，確保整個測試會話只載入一次配置、建立一次連線。此外，也可透過 <code>@pytest.mark.parametrize</code> 搭配配置值對測試進行參數化，例如從配置檔讀取多組測試賬號自動生成測試案例。</p>
@@ -5154,7 +5291,7 @@ def driver(capabilities, request):
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
-            <h3>13. 在測試中使用配置數據</h3>
+            <h3>14. 在測試中使用配置數據</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <p style="margin-bottom: 1rem; color: #BCF7F2;">數據驅動測試（Data-Driven Testing）的核心原則是<strong>將測試邏輯與測試數據分離</strong>。測試數據存放在外部檔案（YAML 或 JSON）中，測試函式只負責讀取數據並執行驗證，這樣當測試數據需要變更時，完全不必修改測試程式碼。此範例展示了如何透過配置管理器的 <code>get_test_data()</code> 方法，以點號路徑（如 <code>'login.valid'</code>）讀取巢狀配置中的特定數據區塊。搭配 <code>@pytest.mark.parametrize</code> 可將外部數據自動展開為多個測試案例，實現真正的數據驅動。這種模式讓測試更易於維護，非開發人員（如 QA）也能直接編輯 YAML/JSON 檔案來新增或修改測試情境。</p>
@@ -5415,7 +5552,7 @@ def test_login_empty_fields(login_page, username, password):
 
         <article class="code-panel" data-reveal>
           <div class="code-head">
-            <h3>14. 使用命令行參數執行平台專屬測試</h3>
+            <h3>15. 使用命令行參數執行平台專屬測試</h3>
             <button class="copy-button" type="button">複製程式碼</button>
           </div>
           <p style="margin-bottom: 1rem; color: #BCF7F2;">pytest 允許透過 <code>conftest.py</code> 中的 <code>pytest_addoption</code> 鉤子（hook）註冊<strong>自訂命令行參數</strong>，例如 <code>--platform</code> 和 <code>--device</code>，讓使用者在執行測試時動態指定目標平台或設備。在 fixture 中透過 <code>request.config.getoption("--platform")</code> 即可取得參數值，再根據該值決定要載入哪組 capabilities 或執行哪些測試。結合 <code>@pytest.mark.skipif</code> 或 marker 篩選，可實現<strong>條件式測試執行</strong>——例如只在 Android 平台上執行特定測試。也可在 <code>pytest.ini</code> 的 <code>addopts</code> 中設定預設參數，免去每次手動輸入。這種方式讓同一套測試程式碼能靈活服務多平台、多設備的測試需求。</p>
